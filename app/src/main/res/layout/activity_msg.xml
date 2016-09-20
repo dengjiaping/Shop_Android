@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9"
+    android:orientation="vertical">
+
+    <include layout="@layout/com_title_system" />
+
+    <com.shop.Android.widget.RefreshListView
+        android:id="@+id/ay_msg_content_rlv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

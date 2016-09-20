@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="135dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/my_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ft_mine_left_iv"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/white_default_image" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/white_default_image" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ft_mine_icon_iv"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/mine_pic_bg"
+            android:src="@drawable/default_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ft_mine_icon_iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="万马奔腾"
+            android:textColor="#333"
+            android:textSize="16dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.shop.Android.widget.MineView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:mv_content="我的评价" />
+
+                <com.shop.Android.widget.MineView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:mv_content="我的收藏" />
+
+                <com.shop.Android.widget.MineView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:mv_content="积分等级" />
+
+                <com.shop.Android.widget.MineView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:mv_content="我的地址" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.shop.Android.widget.MineView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:mv_content="分享好友" />
+
+                <com.shop.Android.widget.MineView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:mv_content="意见反馈" />
+
+                <com.shop.Android.widget.MineView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:mv_content="疑问帮助" />
+
+                <com.shop.Android.widget.MineView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:mv_content="我的设置" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="联系客服"
+            android:textSize="16dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#333"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="400-020-1158"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:textColor="#159EEE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

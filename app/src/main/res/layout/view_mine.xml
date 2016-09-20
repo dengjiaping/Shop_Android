@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/view_left_icon_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/default_image" />
+
+        <TextView
+            android:id="@+id/view_content_text_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="我的评价"
+            android:textColor="#333"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_right_line_v"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="#F9F9F9" />
+
+    <View
+        android:id="@+id/view_bottom_line_v"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#F9F9F9" />
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MineView">
+        <attr name="mv_icon" format="reference" />
+        <attr name="mv_content" format="string" />
+        <attr name="mv_right_line_isvisible" format="boolean" />
+        <attr name="mv_bottom_line_isvisible" format="boolean" />
+    </declare-styleable>
+</resources>
