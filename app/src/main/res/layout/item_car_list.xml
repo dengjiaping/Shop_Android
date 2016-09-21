@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:minHeight="100dp"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F9F9F9" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/item_car_tick_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:src="@drawable/car_icon_tick" />
+
+        <ImageView
+            android:id="@+id/item_car_icon_iv"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@+id/item_car_tick_iv"
+            android:background="@drawable/eimage_bg"
+            android:scaleType="centerCrop"
+            android:src="@drawable/index_pic2" />
+
+        <TextView
+            android:id="@+id/item_car_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12.5dp"
+            android:layout_toRightOf="@+id/item_car_icon_iv"
+            android:text="美汁源锅里奶油芒果"
+            android:textColor="#333"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/item_car_weight_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_car_name_tv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/item_car_icon_iv"
+            android:text="450g"
+            android:textColor="#969696"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/item_car_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_car_weight_tv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/item_car_icon_iv"
+            android:text="￥15.9"
+            android:textColor="@color/my_color"
+            android:textSize="14dp" />
+
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="23dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/car_icon2"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="23dp" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="23dp"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="23dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
