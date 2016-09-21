@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_fe"/>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/item_mine_shop_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/item_mine_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/item_mine_shop_iv"
+            android:text="捷尔惠便利店"
+            android:textSize="14dp"
+            android:textColor="@color/text_color"
+            android:layout_marginLeft="10dp"/>
+        
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"/>
+
+
+        
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_fe"/>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/white">
+        
+        <ImageView
+            android:id="@+id/item_mine_goods_iv"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+        
+        <LinearLayout
+            android:id="@+id/item_mine_one_ll"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@+id/item_mine_goods_iv">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="订单号:"
+                android:textSize="12dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/item_mine_num_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textSize="12dp"
+                android:text="123456789"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/item_mine_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="2016-9-25"
+                android:textSize="12dp"
+                android:layout_marginLeft="110dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item_mine_two_ll"
+            android:layout_below="@+id/item_mine_one_ll"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@+id/item_mine_goods_iv">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="综合:"
+                android:textSize="12dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/item_mine_all_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="12dp"
+                android:text="123456789"
+                android:layout_marginLeft="23dp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_below="@+id/item_mine_two_ll"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@+id/item_mine_goods_iv">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:text="评价:"
+                android:textSize="12dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/item_mine_evaluate_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:textSize="12dp"
+                android:text="123456789"
+                android:layout_marginLeft="23dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_fe"/>
+
+</LinearLayout>
