@@ -14,7 +14,6 @@ import com.shop.R;
 public class MineCollectActivity extends BaseActvity {
     private String TAG = "collect";
     private RefreshListView mListRv;
-    private ImageView mLeftIv;
     private MineCollectAdapter mineCollectAdapter;
     @Override
     protected int loadLayout() {
@@ -22,11 +21,17 @@ public class MineCollectActivity extends BaseActvity {
     }
 
     @Override
+    protected void initTitleBar() {
+        initTitle("我的收藏");
+        mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
+        mTitleLeftIv.setImageResource(R.mipmap.back);
+    }
+
+    @Override
     protected void init() {
         F();
         mineCollectAdapter = new MineCollectAdapter(3,R.layout.activity_mine_collect_item,new CollectViewHolder());
         mListRv.setAdapter(mineCollectAdapter);
-        setOnClicks(mLeftIv);
 
 
 
@@ -34,11 +39,7 @@ public class MineCollectActivity extends BaseActvity {
 
     @Override
     protected void onClickSet(int i) {
-       switch (i){
-           case R.id.ay_collect_left_iv:
-               animFinsh();
-               break;
-       }
+
     }
     class MineCollectAdapter extends KingAdapter{
 

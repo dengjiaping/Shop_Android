@@ -18,10 +18,15 @@ public class MsgActivity extends BaseActvity {
         return R.layout.activity_msg;
     }
 
+    @Override
+    protected void initTitleBar() {
+        initTitle("消息中心");
+        mTitleLeftIv.setImageResource(R.mipmap.back);
+        mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
+    }
 
     @Override
     protected void init() {
-        initTitle("消息中心");
         F();
         mContentRlv.setAdapter(new TestAdapter(10, R.layout.item_ay_msg));
     }

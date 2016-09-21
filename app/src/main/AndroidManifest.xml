@@ -29,6 +29,28 @@
             android:theme="@android:style/Theme.Translucent">
 
         </activity>
+        <activity
+            android:name=".Android.activity.MineCollectActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+
+        <activity
+            android:name=".Android.activity.IntegralActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+        <activity
+            android:name=".Android.activity.AddressManagerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
     </application>
 
 </manifest>

@@ -3,6 +3,9 @@ package com.shop.Android.fragment;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.shop.Android.activity.AddressManagerActivity;
+import com.shop.Android.activity.IntegralActivity;
+import com.shop.Android.activity.MineCollectActivity;
 import com.shop.Android.activity.MineEvaluateActivity;
 import com.shop.Android.activity.MsgActivity;
 import com.shop.Android.base.BaseActvity;
@@ -49,8 +52,10 @@ public class MineFragment extends BaseFragment {
             case R.id.ft_mine_icon_iv:
                 break;
             case R.id.ft_mine_address_mv:
+                openActivity(AddressManagerActivity.class);
                 break;
             case R.id.ft_mine_collect_mv:
+                openActivity(MineCollectActivity.class);
                 break;
             case R.id.ft_mine_contact_ll:
                 break;
@@ -60,6 +65,7 @@ public class MineFragment extends BaseFragment {
             case R.id.ft_mine_help_mv:
                 break;
             case R.id.ft_mine_integral_mv:
+                openActivity(IntegralActivity.class);
                 break;
             case R.id.ft_mine_opinion_mv:
                 break;

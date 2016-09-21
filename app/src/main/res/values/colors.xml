@@ -4,4 +4,6 @@
     <color name="bg">#f9f9f9</color>
     <color name="color_fe">#efefef</color>
     <color name="text_color">#333333</color>
+    <color name="color_888">#888888</color>
+    <color name="color_green">#089D09</color>
 </resources>
