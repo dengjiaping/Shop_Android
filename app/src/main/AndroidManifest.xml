@@ -21,6 +21,14 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
+
+        <activity
+            android:name=".Android.activity.MineEvaluateActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
     </application>
 
 </manifest>
