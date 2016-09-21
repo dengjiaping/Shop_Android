@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="210dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="210dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="13dp"
+        android:paddingRight="8dp">
+
+        <com.shop.Android.widget.EImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/index_pic5" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="8dp"
+            android:lines="2"
+            android:text="安卓12进口儿童牛奶1安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml25ml"
+            android:textColor="#333"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
+            android:text="￥59.9  ￥12.8 "
+            android:textColor="@color/my_color"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

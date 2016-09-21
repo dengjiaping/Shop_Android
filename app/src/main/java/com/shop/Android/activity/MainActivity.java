@@ -1,7 +1,9 @@
 package com.shop.Android.activity;
 
 import android.support.v4.app.Fragment;
+import android.view.MotionEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.king.FlycoTableLayout.CommonTabLayout;
 import com.king.FlycoTableLayout.listener.CustomTabEntity;
@@ -77,4 +79,7 @@ public class MainActivity extends BaseActvity {
     protected void onClickSet(int i) {
 
     }
+
+
+
 }
