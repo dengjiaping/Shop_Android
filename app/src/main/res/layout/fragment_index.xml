@@ -11,7 +11,7 @@
         android:id="@+id/ft_index_refresh_xrv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff">
+        android:background="#F9F9F9">
 
         <com.king.View.refreshview.XScrollView
             android:id="@+id/ft_index_gradution_gsv"

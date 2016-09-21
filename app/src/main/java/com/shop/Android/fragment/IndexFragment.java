@@ -58,9 +58,9 @@ public class IndexFragment extends BaseFragment {
 
 
     private String[] urls = new String[]{
-            "http://img12.360buyimg.com/da/jfs/t2695/3/4114524600/99151/7fca55b2/57ad8e86N314092f5.webp",
-            "http://img12.360buyimg.com/da/jfs/t2695/3/4114524600/99151/7fca55b2/57ad8e86N314092f5.webp",
-            "http://img30.360buyimg.com/da/jfs/t3199/95/2309082525/55586/9688d644/57dfb2feNcb45c27e.jpg"
+            "http://img12.360buyimg.com/cms/jfs/t3094/223/2369067449/150948/d6251ab7/57e091f4N8ebf5a20.jpg",
+            "http://img11.360buyimg.com/cms/jfs/t3085/88/2377100707/165269/ad578270/57e09f82Nbc26248a.jpg",
+            "http://img14.360buyimg.com/cms/jfs/t3256/282/2324505968/175172/2448654d/57e09e13Nceacbce1.jpg"
     };
 
 
