@@ -8,6 +8,7 @@ import com.shop.Android.activity.IntegralActivity;
 import com.shop.Android.activity.MineCollectActivity;
 import com.shop.Android.activity.MineEvaluateActivity;
 import com.shop.Android.activity.MsgActivity;
+import com.shop.Android.activity.ShareActivity;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.widget.MineView;
@@ -17,7 +18,6 @@ import com.shop.R;
  * Created by admin on 2016/9/9.
  */
 public class MineFragment extends BaseFragment {
-
     private String TAG = "mine";
     private ImageView mLeftIv;
     private ImageView mIconIv;
@@ -30,12 +30,10 @@ public class MineFragment extends BaseFragment {
     private MineView mHelpMv;
     private MineView mSetMv;
     private LinearLayout mContactLl;
-
     @Override
     protected int loadLayout() {
         return R.layout.fragment_mine;
     }
-
     @Override
     protected void init() {
         F();
@@ -72,6 +70,7 @@ public class MineFragment extends BaseFragment {
             case R.id.ft_mine_set_mv:
                 break;
             case R.id.ft_mine_share_mv:
+                openActivity(ShareActivity.class);
                 break;
         }
 

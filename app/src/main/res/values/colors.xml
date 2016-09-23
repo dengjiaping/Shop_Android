@@ -6,4 +6,10 @@
     <color name="text_color">#333333</color>
     <color name="color_888">#888888</color>
     <color name="color_green">#089D09</color>
+    <!--umeng分享-->
+    <color name="umeng_white">#ffffff</color>
+    <color name="umeng_blue">#469ef8</color>
+    <color name="umeng_black">#000000</color>
+
+
 </resources>
