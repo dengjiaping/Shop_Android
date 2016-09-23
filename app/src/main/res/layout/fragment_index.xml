@@ -11,7 +11,7 @@
         android:id="@+id/ft_index_refresh_xrv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff">
+        android:background="#F9F9F9">
 
         <com.king.View.refreshview.XScrollView
             android:id="@+id/ft_index_gradution_gsv"
@@ -38,6 +38,7 @@
                     android:orientation="horizontal">
 
                     <com.shop.Android.widget.MineView
+                        android:id="@+id/ft_index_class_mv"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -242,6 +243,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/ft_index_search_iv"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
@@ -260,6 +262,7 @@
             android:textSize="18dp" />
 
         <ImageView
+            android:id="@+id/ft_index_msg_iv"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"

@@ -29,9 +29,13 @@ import com.king.View.refreshview.XRefreshView;
 import com.king.View.refreshview.listener.OnBottomLoadMoreTime;
 import com.king.View.refreshview.listener.OnTopRefreshTime;
 import com.king.View.refreshview.ui.smileyloadingview.SmileyHeaderView;
+import com.shop.Android.activity.ClassActivity;
 import com.shop.Android.activity.MainActivity;
+import com.shop.Android.activity.MsgActivity;
+import com.shop.Android.activity.SearchActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.base.TestAdapter;
+import com.shop.Android.widget.MineView;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.Android.widget.PlayViewPager;
 import com.shop.Android.widget.RefreshView;
@@ -53,14 +57,16 @@ public class IndexFragment extends BaseFragment {
     private RecyclerView mRecycleRv;
     private NoScrollListView mListNlv;
     private ImageView mUpIv;
+    private ImageView mMsgIv;
+    private ImageView mSearchIv;
 
     private XRefreshView mRefreshXrv;
 
 
     private String[] urls = new String[]{
-            "http://img12.360buyimg.com/da/jfs/t2695/3/4114524600/99151/7fca55b2/57ad8e86N314092f5.webp",
-            "http://img12.360buyimg.com/da/jfs/t2695/3/4114524600/99151/7fca55b2/57ad8e86N314092f5.webp",
-            "http://img30.360buyimg.com/da/jfs/t3199/95/2309082525/55586/9688d644/57dfb2feNcb45c27e.jpg"
+            "http://img12.360buyimg.com/cms/jfs/t3094/223/2369067449/150948/d6251ab7/57e091f4N8ebf5a20.jpg",
+            "http://img11.360buyimg.com/cms/jfs/t3085/88/2377100707/165269/ad578270/57e09f82Nbc26248a.jpg",
+            "http://img14.360buyimg.com/cms/jfs/t3256/282/2324505968/175172/2448654d/57e09e13Nceacbce1.jpg"
     };
 
 
@@ -87,8 +93,6 @@ public class IndexFragment extends BaseFragment {
         mRecycleRv.setVisibility(View.VISIBLE);
 
 
-        setOnClicks(mUpIv);
-
         // 设置是否可以下拉刷新
         mRefreshXrv.setPullRefreshEnable(true);
         // 设置是否可以上拉加载
@@ -99,12 +103,13 @@ public class IndexFragment extends BaseFragment {
         mRefreshXrv.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mTitleLl.setVisibility(View.GONE);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //模拟数据加载失败的情况
                         mRefreshXrv.stopRefresh();
+                        mTitleLl.setVisibility(View.VISIBLE);
                     }
                 }, 1000);
             }
@@ -113,6 +118,8 @@ public class IndexFragment extends BaseFragment {
             public void onLoadMore(boolean isSilence) {
             }
         });
+
+        setOnClicks(mUpIv, mMsgIv, mSearchIv, mClassMv);
     }
 
     private void addTitleSlideChange() {
@@ -134,10 +141,14 @@ public class IndexFragment extends BaseFragment {
                             mUpIv.setVisibility(View.VISIBLE);
                             float scale = (float) i1 / height;
                             float alpha = (255 * scale);
-                            mTitleLl.setBackgroundColor(Color.argb((int) alpha, 0xEA, 0x59, 0x3A));
+                            if (alpha > 0xE5) {
+                                mTitleLl.setBackgroundColor(Color.argb(0xE5, 0xEA, 0x59, 0x3A));
+                            } else {
+                                mTitleLl.setBackgroundColor(Color.argb((int) alpha, 0xEA, 0x59, 0x3A));
+                            }
                         } else {    //滑动到banner下面设置普通颜色
                             mUpIv.setVisibility(View.VISIBLE);
-                            mTitleLl.setBackgroundColor(Color.argb((int) 255, 0xEA, 0x59, 0x3A));
+                            mTitleLl.setBackgroundColor(Color.argb(0xE5, 0xEA, 0x59, 0x3A));
                         }
                     }
                 });
@@ -145,11 +156,22 @@ public class IndexFragment extends BaseFragment {
         });
     }
 
+    private MineView mClassMv;
+
     @Override
     protected void onClickSet(int i) {
         switch (i) {
             case R.id.ft_index_up_iv:
                 mGradutionGsv.smoothScrollTo(0, 0);
+                break;
+            case R.id.ft_index_msg_iv:
+                openActivity(MsgActivity.class);
+                break;
+            case R.id.ft_index_search_iv:
+                openActivity(SearchActivity.class);
+                break;
+            case R.id.ft_index_class_mv:
+                openActivity(ClassActivity.class);
                 break;
         }
 
