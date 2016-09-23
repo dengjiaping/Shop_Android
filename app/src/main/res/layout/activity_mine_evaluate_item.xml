@@ -18,9 +18,10 @@
 
         <ImageView
             android:id="@+id/item_mine_shop_iv"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_centerVertical="true"
+            android:src="@mipmap/store3x"
             android:layout_marginLeft="10dp"/>
 
         <TextView
@@ -35,8 +36,9 @@
             android:layout_marginLeft="10dp"/>
         
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@mipmap/right"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"/>
@@ -56,9 +58,10 @@
         
         <ImageView
             android:id="@+id/item_mine_goods_iv"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_centerVertical="true"
+            android:src="@mipmap/hader3x"
             android:layout_marginLeft="10dp"/>
         
         <LinearLayout

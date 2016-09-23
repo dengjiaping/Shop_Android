@@ -73,10 +73,10 @@
 
         <activity
             android:name=".Android.wxapi.WXPayEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".Android.activity.ClassActivity"
             android:launchMode="singleTask"
@@ -133,6 +133,54 @@
 
         <activity
             android:name=".Android.activity.ShareActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+
+        <activity
+            android:name=".Android.activity.PersonalInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+
+        <activity
+            android:name=".Android.activity.SetActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+
+        <activity
+            android:name=".Android.activity.UserAgreementActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+
+        <activity
+            android:name=".Android.activity.UserServiceActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+
+        <activity
+            android:name=".Android.activity.SuggestionFeedbackActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+
+        <activity
+            android:name=".Android.activity.UserHelperActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
