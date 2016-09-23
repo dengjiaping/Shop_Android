@@ -6,4 +6,16 @@
     <color name="text_color">#333333</color>
     <color name="color_888">#888888</color>
     <color name="color_green">#089D09</color>
+
+    <!--惠生活风格色-->
+    <color name="benefit_style">#EB6100</color>
+    <color name="shopping_cart_bg">#DC5914</color>
+    <color name="dark_gray">#1e1e1e</color>
+    <!-- 蓟色 -->
+    <color name="lightgray">#D3D3D3</color>
+    <color name="user_center_group_white_bg">#f8f8f8</color>
+    <color name="user_center_black_text">#313131</color>
+    <color name="user_center_divide_line">#dcdcdc</color>
+    <color name="consumer_bg">#f3f3f3</color>
+    <color name="left_list">#F4F4F5</color>
 </resources>

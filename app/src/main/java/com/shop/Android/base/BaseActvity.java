@@ -1,5 +1,6 @@
 package com.shop.Android.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -21,5 +22,13 @@ public abstract class BaseActvity extends KingActivity {
             mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
         } catch (Exception e) {
         }
+    }
+
+    protected Intent openDataAct(Class cla, String data) {
+        Intent intent = new Intent(mContext, cla);
+        intent.putExtra("data", data);
+        startActivity(intent);
+        overridePendingTransition(com.king.R.anim.in_from_right, com.king.R.anim.out_to_left);
+        return intent;
     }
 }

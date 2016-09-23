@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.shop.Android.widget.EImageView
+        android:id="@+id/item_hist_icon_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/test_pic1" />
+
+    <TextView
+        android:id="@+id/item_hist_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:singleLine="true"
+        android:text="江山如此多娇江山如此多娇江山如此多娇江山如此多娇"
+        android:textColor="#333"
+        android:textSize="16dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_hist_weight_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="单果约100g/个"
+                android:textColor="#A2A3A5"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/item_hist_price_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="￥27.90"
+                android:textColor="@color/my_color"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+
+        <ImageView
+            android:id="@+id/item_hist_car_iv"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/search_car_bg_gray"
+            android:padding="6dp"
+            android:src="@drawable/serach_car" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/white" />
+</LinearLayout>

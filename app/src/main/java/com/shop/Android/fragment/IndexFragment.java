@@ -29,9 +29,13 @@ import com.king.View.refreshview.XRefreshView;
 import com.king.View.refreshview.listener.OnBottomLoadMoreTime;
 import com.king.View.refreshview.listener.OnTopRefreshTime;
 import com.king.View.refreshview.ui.smileyloadingview.SmileyHeaderView;
+import com.shop.Android.activity.ClassActivity;
 import com.shop.Android.activity.MainActivity;
+import com.shop.Android.activity.MsgActivity;
+import com.shop.Android.activity.SearchActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.base.TestAdapter;
+import com.shop.Android.widget.MineView;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.Android.widget.PlayViewPager;
 import com.shop.Android.widget.RefreshView;
@@ -53,6 +57,8 @@ public class IndexFragment extends BaseFragment {
     private RecyclerView mRecycleRv;
     private NoScrollListView mListNlv;
     private ImageView mUpIv;
+    private ImageView mMsgIv;
+    private ImageView mSearchIv;
 
     private XRefreshView mRefreshXrv;
 
@@ -87,8 +93,6 @@ public class IndexFragment extends BaseFragment {
         mRecycleRv.setVisibility(View.VISIBLE);
 
 
-        setOnClicks(mUpIv);
-
         // 设置是否可以下拉刷新
         mRefreshXrv.setPullRefreshEnable(true);
         // 设置是否可以上拉加载
@@ -99,12 +103,13 @@ public class IndexFragment extends BaseFragment {
         mRefreshXrv.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mTitleLl.setVisibility(View.GONE);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //模拟数据加载失败的情况
                         mRefreshXrv.stopRefresh();
+                        mTitleLl.setVisibility(View.VISIBLE);
                     }
                 }, 1000);
             }
@@ -113,6 +118,8 @@ public class IndexFragment extends BaseFragment {
             public void onLoadMore(boolean isSilence) {
             }
         });
+
+        setOnClicks(mUpIv, mMsgIv, mSearchIv, mClassMv);
     }
 
     private void addTitleSlideChange() {
@@ -134,10 +141,14 @@ public class IndexFragment extends BaseFragment {
                             mUpIv.setVisibility(View.VISIBLE);
                             float scale = (float) i1 / height;
                             float alpha = (255 * scale);
-                            mTitleLl.setBackgroundColor(Color.argb((int) alpha, 0xEA, 0x59, 0x3A));
+                            if (alpha > 0xE5) {
+                                mTitleLl.setBackgroundColor(Color.argb(0xE5, 0xEA, 0x59, 0x3A));
+                            } else {
+                                mTitleLl.setBackgroundColor(Color.argb((int) alpha, 0xEA, 0x59, 0x3A));
+                            }
                         } else {    //滑动到banner下面设置普通颜色
                             mUpIv.setVisibility(View.VISIBLE);
-                            mTitleLl.setBackgroundColor(Color.argb((int) 255, 0xEA, 0x59, 0x3A));
+                            mTitleLl.setBackgroundColor(Color.argb(0xE5, 0xEA, 0x59, 0x3A));
                         }
                     }
                 });
@@ -145,11 +156,22 @@ public class IndexFragment extends BaseFragment {
         });
     }
 
+    private MineView mClassMv;
+
     @Override
     protected void onClickSet(int i) {
         switch (i) {
             case R.id.ft_index_up_iv:
                 mGradutionGsv.smoothScrollTo(0, 0);
+                break;
+            case R.id.ft_index_msg_iv:
+                openActivity(MsgActivity.class);
+                break;
+            case R.id.ft_index_search_iv:
+                openActivity(SearchActivity.class);
+                break;
+            case R.id.ft_index_class_mv:
+                openActivity(ClassActivity.class);
                 break;
         }
 
