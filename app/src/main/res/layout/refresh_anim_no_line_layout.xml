@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refresh_top"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.king.View.refreshview.XRefreshView
+        android:id="@+id/refresh_xrv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.king.View.refreshview.XScrollView
+            android:id="@+id/slide_xsv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.king.View.slidelistview.SlideListView
+                    android:id="@+id/refresh_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:listSelector="@color/transparent"
+                    android:scrollbars="none"
+                    app:slideMode="right"
+                    app:slideRightAction="scroll" />
+            </LinearLayout>
+
+
+        </com.king.View.refreshview.XScrollView>
+    </com.king.View.refreshview.XRefreshView>
+
+
+</LinearLayout>

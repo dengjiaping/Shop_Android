@@ -128,7 +128,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/ay_class_car_iv"
-                    android:text="合计:¥"
+                    android:text="合计:¥ 0.00"
                     android:textColor="@color/my_color"
                     android:textSize="18dp" />
 

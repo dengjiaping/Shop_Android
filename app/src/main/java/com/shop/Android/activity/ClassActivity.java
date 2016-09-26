@@ -322,7 +322,6 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
         final View view = addViewToAnimLayout(animation_viewGroup, iview,
                 start_location);
 
-
         view.setAlpha(0.6f);
 
         int[] end_location = new int[2];
@@ -506,7 +505,7 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
         if (sum > 0) {
             mPriceTv.setVisibility(View.VISIBLE);
         } else {
-            mPriceTv.setVisibility(View.GONE);
+            mDefaultTv.setVisibility(View.VISIBLE);
         }
         mPriceTv.setText("合计:¥" + " " + (new DecimalFormat("0.00")).format(sum));
         mNumTv.setText(String.valueOf(shopNum));

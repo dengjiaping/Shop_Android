@@ -1,9 +1,21 @@
 <resources>
+
     <style name="SwitchButtonStyle">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">4dp</item>
     </style>
-    <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar"></style>
+
+    <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar" />
+
+    <style name="StyleProgressBarMini" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:maxHeight">50dip</item>
+        <item name="android:minHeight">10dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
+        <item name="android:progressDrawable">@drawable/shape_progressbar_mini</item>
+    </style>
 </resources>

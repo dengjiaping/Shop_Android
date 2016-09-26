@@ -38,6 +38,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Android.activity.EachOtherActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name=".Android.activity.SpecialSellActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <activity
+            android:name=".Android.activity.GoodsClassActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" />
 
         <meta-data
             android:name="UMENG_APPKEY"
@@ -64,6 +80,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Android.activity.GoodsDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="behind"
@@ -73,10 +95,10 @@
 
         <activity
             android:name=".Android.wxapi.WXPayEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".Android.activity.ClassActivity"
             android:launchMode="singleTask"

@@ -15,6 +15,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -30,9 +31,14 @@ import com.king.View.refreshview.listener.OnBottomLoadMoreTime;
 import com.king.View.refreshview.listener.OnTopRefreshTime;
 import com.king.View.refreshview.ui.smileyloadingview.SmileyHeaderView;
 import com.shop.Android.activity.ClassActivity;
+import com.shop.Android.activity.EachOtherActivity;
+import com.shop.Android.activity.GoodsClassActivity;
+import com.shop.Android.activity.GoodsDetailActivity;
+import com.shop.Android.activity.IntegralActivity;
 import com.shop.Android.activity.MainActivity;
 import com.shop.Android.activity.MsgActivity;
 import com.shop.Android.activity.SearchActivity;
+import com.shop.Android.activity.SpecialSellActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.base.TestAdapter;
 import com.shop.Android.widget.MineView;
@@ -59,6 +65,7 @@ public class IndexFragment extends BaseFragment {
     private ImageView mUpIv;
     private ImageView mMsgIv;
     private ImageView mSearchIv;
+    private LinearLayout mSpecialLl;
 
     private XRefreshView mRefreshXrv;
 
@@ -84,6 +91,13 @@ public class IndexFragment extends BaseFragment {
         mPlayviewPvp.setUrls(urls);
         addTitleSlideChange();
         mListNlv.setAdapter(new TestAdapter(10, R.layout.item_index_list));
+        mListNlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                openActivity(GoodsClassActivity.class);
+            }
+        });
+
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(KingApplication.getAppContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -119,7 +133,8 @@ public class IndexFragment extends BaseFragment {
             }
         });
 
-        setOnClicks(mUpIv, mMsgIv, mSearchIv, mClassMv);
+        setOnClicks(mUpIv, mMsgIv, mSearchIv, mClassMv, mCreditMv, mPiconeIv, mPictwoIv, mSpecialLl,
+                mPicthreeIv, mPicfourIv, mEachMv);
     }
 
     private void addTitleSlideChange() {
@@ -157,6 +172,12 @@ public class IndexFragment extends BaseFragment {
     }
 
     private MineView mClassMv;
+    private MineView mCreditMv;
+    private ImageView mPiconeIv;
+    private ImageView mPictwoIv;
+    private ImageView mPicthreeIv;
+    private ImageView mPicfourIv;
+    private MineView mEachMv;
 
     @Override
     protected void onClickSet(int i) {
@@ -172,6 +193,21 @@ public class IndexFragment extends BaseFragment {
                 break;
             case R.id.ft_index_class_mv:
                 openActivity(ClassActivity.class);
+                break;
+            case R.id.ft_index_credit_mv:
+                openActivity(IntegralActivity.class);
+                break;
+            case R.id.ft_index_picone_iv:
+            case R.id.ft_index_pictwo_iv:
+            case R.id.ft_index_picthree_iv:
+            case R.id.ft_index_picfour_iv:
+                openActivity(GoodsDetailActivity.class);
+                break;
+            case R.id.ft_index_special_ll:
+                openActivity(SpecialSellActivity.class);
+                break;
+            case R.id.ft_index_each_mv:
+                openActivity(EachOtherActivity.class);
                 break;
         }
 

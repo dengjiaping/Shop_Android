@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/white"
+    android:minHeight="100dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/item_time_icon_iv"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/eimage_bg"
+        android:padding="2dp"
+        android:src="@drawable/index_pic5" />
+
+    <TextView
+        android:id="@+id/item_time_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@+id/item_time_icon_iv"
+        android:maxEms="10"
+        android:singleLine="true"
+        android:text="一品与，和田枣和田枣和田枣和田枣和田枣"
+        android:textColor="@color/black"
+        android:textSize="14dp" />
+
+    <LinearLayout
+        android:id="@id/flag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_time_name_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/item_time_icon_iv"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="15"
+            android:singleLine="true"
+            android:text="￥19.8"
+            android:textColor="@color/my_color"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/item_time_weight_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:maxEms="10"
+            android:singleLine="true"
+            android:text="参考价￥29.8"
+            android:textColor="#B1b1b1"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/item_time_bar_pb"
+        style="@style/StyleProgressBarMini"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/flag"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@id/item_time_icon_iv"
+        android:background="@drawable/shape_progressbar_bg"
+        android:max="100"
+        android:progress="72" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/flag"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="11dp"
+        android:layout_toRightOf="@+id/item_time_bar_pb"
+        android:text="已售72%"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:id="@+id/item_time_car_iv"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/search_car_bg_gray"
+        android:padding="6dp"
+        android:src="@drawable/serach_car" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#F9F9F9" />
+
+</RelativeLayout>

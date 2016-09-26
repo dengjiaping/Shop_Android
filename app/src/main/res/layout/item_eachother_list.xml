@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/eimage_bg_black"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="13dp"
+            android:background="@drawable/circle_bg_line"
+            android:src="@drawable/default_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:text="小方便利"
+            android:textColor="#8B8B8B"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:text="2016-09-08"
+            android:textColor="#8B8B8B"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:background="#FF6100" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="我觉得这些懂事超级好用的家伙"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="13dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="6dp"
+        android:maxLines="2"
+        android:lines="2"
+        android:text="小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利"
+        android:textColor="#8B8B8B"
+        android:textSize="14dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:background="#EFEFEF" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="13dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/msg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="1"
+            android:textColor="#8B8B8B"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+</LinearLayout>

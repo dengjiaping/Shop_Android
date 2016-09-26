@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.king.Base.KingActivity;
-import com.king.Config;
 import com.shop.R;
 
 /**

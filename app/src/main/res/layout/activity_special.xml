@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ay_search_bg_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/com_title_system" />
+
+        <com.king.FlycoTableLayout.SlidingTabLayout
+            android:id="@+id/ay_special_tab_stl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            app:tl_indicator_color="#EA593A"
+            app:tl_indicator_margin_left="30dp"
+            app:tl_indicator_margin_right="30dp"
+            app:tl_indicator_style="NORMAL"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="#FE6E25"
+            app:tl_textUnselectColor="#333"
+            app:tl_textsize="16dp"
+            app:tl_underline_color="#D8D8D8"
+            app:tl_underline_height="1dp" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/ay_special_content_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/ay_search_car_fl"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="20dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/search_car_bg_white"
+            android:padding="15dp"
+            android:src="@drawable/serach_car" />
+
+        <TextView
+            android:id="@+id/ay_search_red_tv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/point_red"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white" />
+    </FrameLayout>
+</RelativeLayout>

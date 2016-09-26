@@ -79,12 +79,19 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
         viewHolder.name.setText(product.getGoods());
         viewHolder.prise.setText(String.valueOf(product.getPrice()));
         viewHolder.shoppingNum.setText(String.valueOf(product.getNumber()));
-
+        if (product.getNumber() == 0) {
+            viewHolder.reduce.setVisibility(View.INVISIBLE);
+            viewHolder.shoppingNum.setVisibility(View.INVISIBLE);
+        }
         viewHolder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int num = product.getNumber();
                 num++;
+                if (num == 1) {
+                    ((LinearLayout) (v.getParent())).getChildAt(0).setVisibility(View.VISIBLE);
+                    ((LinearLayout) (v.getParent())).getChildAt(1).setVisibility(View.VISIBLE);
+                }
                 product.setNumber(num);
                 viewHolder.shoppingNum.setText(product.getNumber() + "");
                 if (callBackListener != null) {
@@ -100,12 +107,17 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                 }
             }
         });
+
         viewHolder.reduce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int num = product.getNumber();
                 if (num > 0) {
                     num--;
+                    if (num == 0) {
+                        ((LinearLayout) (v.getParent())).getChildAt(0).setVisibility(View.INVISIBLE);
+                        ((LinearLayout) (v.getParent())).getChildAt(1).setVisibility(View.INVISIBLE);
+                    }
                     product.setNumber(num);
                     viewHolder.shoppingNum.setText(product.getNumber() + "");
                     if (callBackListener != null) {

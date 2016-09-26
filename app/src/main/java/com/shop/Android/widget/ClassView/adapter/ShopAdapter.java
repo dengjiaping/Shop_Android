@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shop.Android.widget.ClassView.assistant.ShopToDetailListener;
@@ -24,8 +25,10 @@ public class ShopAdapter extends BaseAdapter {
     public void setShopToDetailListener(ShopToDetailListener callBackListener) {
         this.shopToDetailListener = callBackListener;
     }
+
     private List<ShopProduct> shopProducts;
     private LayoutInflater mInflater;
+
     public ShopAdapter(Context context, List<ShopProduct> shopProducts) {
         this.shopProducts = shopProducts;
         mInflater = LayoutInflater.from(context);
@@ -55,17 +58,17 @@ public class ShopAdapter extends BaseAdapter {
             viewHolder.commodityName = (TextView) convertView.findViewById(R.id.commodityName);
             viewHolder.commodityPrise = (TextView) convertView.findViewById(R.id.commodityPrise);
             viewHolder.commodityNum = (TextView) convertView.findViewById(R.id.commodityNum);
-            viewHolder.increase = (TextView)  convertView.findViewById(R.id.increase);
-            viewHolder.reduce = (TextView)  convertView.findViewById(R.id.reduce);
-            viewHolder.shoppingNum = (TextView)  convertView.findViewById(R.id.shoppingNum);
+            viewHolder.increase = (ImageView) convertView.findViewById(R.id.increase);
+            viewHolder.reduce = (ImageView) convertView.findViewById(R.id.reduce);
+            viewHolder.shoppingNum = (TextView) convertView.findViewById(R.id.shoppingNum);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.commodityName.setText(shopProducts.get(position).getGoods());
         viewHolder.commodityPrise.setText(shopProducts.get(position).getPrice());
-        viewHolder.commodityNum.setText(1+"");
-        viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber()+"");
+        viewHolder.commodityNum.setText(1 + "");
+        viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber() + "");
 
         viewHolder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +76,7 @@ public class ShopAdapter extends BaseAdapter {
                 int num = shopProducts.get(position).getNumber();
                 num++;
                 shopProducts.get(position).setNumber(num);
-                viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber()+"");
+                viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber() + "");
                 if (shopToDetailListener != null) {
                     shopToDetailListener.onUpdateDetailList(shopProducts.get(position), "1");
                 } else {
@@ -87,12 +90,12 @@ public class ShopAdapter extends BaseAdapter {
                 int num = shopProducts.get(position).getNumber();
                 if (num > 0) {
                     num--;
-                    if(num==0){
+                    if (num == 0) {
                         shopProducts.get(position).setNumber(num);
                         shopToDetailListener.onRemovePriduct(shopProducts.get(position));
-                    }else {
+                    } else {
                         shopProducts.get(position).setNumber(num);
-                        viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber()+"");
+                        viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber() + "");
                         if (shopToDetailListener != null) {
                             shopToDetailListener.onUpdateDetailList(shopProducts.get(position), "2");
                         } else {
@@ -122,11 +125,11 @@ public class ShopAdapter extends BaseAdapter {
         /**
          * 增加
          */
-        public TextView increase;
+        public ImageView increase;
         /**
          * 减少
          */
-        public TextView reduce;
+        public ImageView reduce;
         /**
          * 商品数目
          */

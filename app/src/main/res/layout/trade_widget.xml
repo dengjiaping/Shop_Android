@@ -9,23 +9,23 @@
 
 
     <TextView
-        android:layout_centerVertical="true"
-        android:text=""
         android:id="@+id/commodityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_weight="1"
         android:paddingLeft="20dp"
         android:singleLine="true"
+        android:text=""
         android:textColor="@color/black" />
 
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
         android:layout_toLeftOf="@+id/choiceLayout"
         android:layout_toRightOf="@+id/commodityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
         android:gravity="center|right">
 
         <TextView
@@ -57,47 +57,42 @@
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
         android:id="@+id/choiceLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:layout_marginRight="15dp"
-        android:background="@drawable/shopping_choice"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
+        <ImageView
             android:id="@+id/reduce"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:gravity="center"
-            android:text="—"
-            android:textColor="@color/black" />
+            android:src="@drawable/minus" />
 
         <TextView
             android:id="@+id/shoppingNum"
-            android:layout_width="0dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="center"
-            android:maxLength="10"
+            android:maxLength="4"
             android:textColor="@color/black"
             android:textSize="14dp" />
 
-        <TextView
+        <ImageView
             android:id="@+id/increase"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:gravity="center"
-            android:text="+"
-            android:textColor="@color/black" />
+            android:src="@drawable/add" />
 
     </LinearLayout>
 

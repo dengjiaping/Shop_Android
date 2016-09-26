@@ -39,7 +39,7 @@ public class RefreshView extends LinearLayout implements IHeaderCallBack {
     }
 
     public static void Glide(Object url, ImageView imageView) {
-        Glide.with(KingApplication.getAppContext()).load(url).skipMemoryCache(true).placeholder(com.king.Config.mDefaultImage).error(com.king.Config.mDefaultImage).centerCrop().dontAnimate().into(imageView);
+        Glide.with(KingApplication.getAppContext()).load(url).skipMemoryCache(true).placeholder(com.king.KingConfig.mDefaultImage).error(com.king.KingConfig.mDefaultImage).centerCrop().dontAnimate().into(imageView);
     }
 
 

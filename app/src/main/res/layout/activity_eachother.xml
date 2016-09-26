@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/com_title_system" />\
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp">
+
+        <com.shop.Android.widget.AnimNoLineRefreshListView
+            android:id="@+id/ay_eachother_list_lv"
+            android:layout_width="match_parent"
+            android:background="#F9F9F9"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+</LinearLayout>

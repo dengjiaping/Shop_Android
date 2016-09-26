@@ -4,189 +4,86 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.content.DialogInterface;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
-import android.media.Image;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.RelativeSizeSpan;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.king.Base.KingActivity;
 import com.king.Base.KingAdapter;
-import com.king.Dialog.CustomDialog;
-import com.king.KingConfig;
-import com.king.Utils.DialogUtil;
-import com.king.Utils.PixelUtil;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.base.TestAdapter;
-import com.shop.Android.widget.BgTextView;
 import com.shop.Android.widget.NoScrollGridView;
-import com.shop.Android.widget.NoScrollListView;
 import com.shop.R;
 
-import org.w3c.dom.Text;
-
 /**
- * Created by admin on 2016/9/22.
+ * Created by admin on 2016/9/26.
  */
-public class SearchActivity extends BaseActvity {
+public class GoodsClassActivity extends BaseActvity {
 
-    private String TAG = "search";
-    private LinearLayout mHotLl;
-    private TextView mHotTv;
-    private ListView mHistoryLl;
-    private TextView mHistoryTv;
-    private LinearLayout mDeleteLl;
-    private EditText mSearchEt;
-    private TextView mCancelTv;
+
+    private String TAG = "class";
     private NoScrollGridView mGridGv;
-    private LinearLayout mSearchLl;
-
-    private FrameLayout mCarFl;
-    private TextView mRedTv;
-    private RelativeLayout mBgRl;
-
-    private String[] data = new String[]{
-            "可", "可口可乐会可口可乐会", "可口可乐会可口可乐会", "可口可", "会理石榴", "可口可乐"
-    };
 
     @Override
     protected int loadLayout() {
-        return R.layout.activity_search;
+        return R.layout.activity_goodsclass;
     }
 
-    private LinearLayout hotll = null;
-    private BgTextView textView;
-
+    @Override
+    protected void initTitleBar() {
+        initTitle("奶乳制品");
+        mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
+        mTitleLeftIv.setImageResource(R.mipmap.back);
+    }
 
     @Override
     protected void init() {
         F();
-
-//        mGridGv.setVisibility(View.GONE);
-//        mCarFl.setVisibility(View.GONE);
-        mSearchLl.setVisibility(View.GONE);
-        //热门搜索添加数据
-        for (int i = 0; i < data.length; i++) {
-            if (i % 3 == 0) {
-                hotll = new LinearLayout(mContext);
-                hotll.setOrientation(LinearLayout.HORIZONTAL);
-                LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams1.topMargin = PixelUtil.dp2px(15);
-                hotll.setLayoutParams(layoutParams1);
-                mHotLl.addView(hotll);
-            }
-            textView = new BgTextView(mContext, data[i]);
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mSearchEt.setText(((TextView) (view)).getText().toString().trim());
-                }
-            });
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.leftMargin = PixelUtil.dp2px(15);
-            layoutParams.rightMargin = PixelUtil.dp2px(5);
-            textView.setLayoutParams(layoutParams);
-            hotll.addView(textView);
-        }
-
-        //历史记录添加数据
-        mHistoryLl.setAdapter(new TestAdapter(5, R.layout.item_search_history_list));
-        mHistoryLl.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mSearchEt.setText(((TextView) ((RelativeLayout) (view)).getChildAt(1)).getText().toString().trim());
-            }
-        });
-
         if (adapter == null) {
-            adapter = new HistoryAdapter(10, R.layout.item_search_goods_grid, new HistoryViewHolder());
+            adapter = new GridAdapter(10, R.layout.item_goodsclass_grid, new GridViewHolder());
+            mGridGv.setAdapter(adapter);
         } else {
             adapter.setSize(10);
         }
-        mGridGv.setAdapter(adapter);
 
-        setOnClicks(mDeleteLl, mCancelTv, mCarFl);
     }
 
     @Override
     protected void onClickSet(int i) {
-        switch (i) {
-            case R.id.ay_search_delete_ll:
-                CustomDialog.Builder ibuilder = new CustomDialog.Builder(KingConfig.currentActivity);
-                ibuilder.setTitle("提示");
-                ibuilder.setMessage("你确定要清除历史记录吗?");
-                ibuilder.setPositiveButton("清除", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        //删除历史记录的数据
-                        mHistoryTv.setVisibility(View.GONE);
-                        mHistoryLl.setVisibility(View.GONE);
-                        mDeleteLl.setVisibility(View.GONE);
-                    }
-                });
-                ibuilder.setNegativeButton("取消", null);
-                CustomDialog dialog = ibuilder.create();
-                dialog.setCancelable(false);
-                dialog.show();
-                break;
-            case R.id.ay_search_cancel_tv:
-                animFinsh();
-                break;
-            case R.id.ay_search_car_fl:
-                openDataAct(MainActivity.class, "1");
-                break;
-        }
+
     }
 
-    private HistoryAdapter adapter;
+    private GridAdapter adapter;
 
-    class HistoryAdapter extends KingAdapter {
+    class GridViewHolder {
 
-        public HistoryAdapter(int size, int layoutId, Object viewHolder) {
+        String TAG = "goodsclass";
+        ImageView mCarIv;
+        TextView mPriceTv;
+    }
+
+    class GridAdapter extends KingAdapter {
+
+        public GridAdapter(int size, int layoutId, Object viewHolder) {
             super(size, layoutId, viewHolder);
         }
 
         @Override
         public void padData(int i, Object o) {
-            final HistoryViewHolder viewHolder = (HistoryViewHolder) o;
+            GridViewHolder viewHolder = (GridViewHolder) o;
             viewHolder.mCarIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     addCart((ImageView) ((LinearLayout) ((view.getParent()).getParent())).getChildAt(0));
                 }
             });
-            SpannableString msp = new SpannableString(viewHolder.mPriceTv.getText().toString());
-            msp.setSpan(new RelativeSizeSpan(0.7f), viewHolder.mPriceTv.getText().toString().indexOf(".") + 1, viewHolder.mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
-            viewHolder.mPriceTv.setText(msp);
         }
-    }
-
-    class HistoryViewHolder {
-        String TAG = "hist";
-        ImageView mIconIv;
-        TextView mNameTv;
-        TextView mWeightTv;
-        TextView mPriceTv;
-        ImageView mCarIv;
     }
 
 
@@ -201,6 +98,9 @@ public class SearchActivity extends BaseActvity {
      */
     private float[] mCurrentPosition = new float[2];
     private int count = 0;
+    private RelativeLayout mBgRl;
+    private FrameLayout mCarFl;
+    private TextView mRedTv;
 
     private void addCart(ImageView iv) {
 //      一、创造出执行动画的主题---imageview
@@ -271,7 +171,7 @@ public class SearchActivity extends BaseActvity {
             ObjectAnimator animtion3 = ObjectAnimator.ofFloat(goods, "rotation", 0, 360);
             animtion3.setDuration(200);
             animtion3.setRepeatCount(5);
-    //      五、 开始执行动画
+            //      五、 开始执行动画
             AnimatorSet set = new AnimatorSet();    //创建动画集对象
             set.playTogether(valueAnimator, animtion3);       //添加位置变化动画
             set.setDuration(1300).start();

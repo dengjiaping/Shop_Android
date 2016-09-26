@@ -14,7 +14,6 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected void init() {
-
     }
 
     @Override
