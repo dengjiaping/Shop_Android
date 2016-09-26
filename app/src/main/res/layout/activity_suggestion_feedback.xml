@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/com_title_system"/>
+    
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/suggestion_relayout"
+        android:layout_margin="10dp">
+
+        <EditText
+            android:id="@+id/ay_suggestion_content_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:hint="请留下您的宝贵意见和建议，我们将努力改进(不少于5个字)"
+            android:gravity="top"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textSize="12dp"/>
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/suggestion_relayout"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        >
+        <EditText
+            android:id="@+id/ay_suggestion_phone_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:hint="请留下手机号码，以便我们回复您"
+            android:textSize="12dp"
+            android:inputType="phone"
+            android:paddingLeft="10dp"/>
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/ay_suggestion_submit_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/share_btn">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:text="提交"/>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -46,7 +46,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:background="@drawable/mine_pic_bg"
-            android:src="@drawable/default_image" />
+            android:src="@mipmap/hader3x" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -164,6 +164,7 @@
             android:textColor="#333"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/ft_mine_phone_tv"
             android:text="400-020-1158"
             android:layout_marginLeft="10dp"
             android:textSize="14dp"

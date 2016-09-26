@@ -1,10 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/com_title_system"/>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:text="订单"
-        android:layout_height="match_parent" />
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/ft_order_nopay_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/order_radio"
+                android:checked="true"
+                android:text="未付款"
+                style="@style/radio_style"/>
+
+            <RadioButton
+                android:id="@+id/ft_order_pay_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/order_radio"
+                style="@style/radio_style"
+                android:text="已付款"/>
+
+            <RadioButton
+                android:id="@+id/ft_order_finish_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/order_radio"
+                style="@style/radio_style"
+                android:text="已完成"/>
+            <RadioButton
+                android:id="@+id/ft_order_cancel_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                style="@style/radio_style"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/order_radio"
+                android:text="已取消"/>
+        </RadioGroup>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_fe"/>
+
+    <FrameLayout
+        android:id="@+id/ft_order_frame_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
 </LinearLayout>

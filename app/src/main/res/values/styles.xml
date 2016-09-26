@@ -10,12 +10,23 @@
     <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar" />
 
     <style name="StyleProgressBarMini" parent="@android:style/Widget.ProgressBar.Horizontal">
-        <item name="android:maxHeight">50dip</item>
-        <item name="android:minHeight">10dip</item>
-        <item name="android:indeterminateOnly">false</item>
-        <item name="android:indeterminateDrawable">
+        <item name="@android:maxHeight">50dip</item>
+        <item name="@android:minHeight">10dip</item>
+        <item name="@android:indeterminateOnly">false</item>
+        <item name="@android:indeterminateDrawable">
             @android:drawable/progress_indeterminate_horizontal
         </item>
-        <item name="android:progressDrawable">@drawable/shape_progressbar_mini</item>
+        <item name="@android:progressDrawable">@drawable/shape_progressbar_mini</item>
+    </style>
+
+    <style name="radio_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@drawable/order_fonts_color</item>
+        <item name="android:gravity">center|center_horizontal</item>
+
     </style>
 </resources>
