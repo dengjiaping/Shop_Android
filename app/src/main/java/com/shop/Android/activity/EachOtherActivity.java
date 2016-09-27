@@ -1,6 +1,8 @@
 package com.shop.Android.activity;
 
 import android.os.Handler;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.king.View.slidelistview.KingSlideAdapter;
 import com.king.View.slidelistview.SlideListView;
@@ -26,7 +28,6 @@ public class EachOtherActivity extends BaseActvity {
     @Override
     protected void initTitleBar() {
         initTitle("小方互动");
-        mTitleLeftIv.setImageResource(R.mipmap.back);
     }
 
     @Override
@@ -39,6 +40,12 @@ public class EachOtherActivity extends BaseActvity {
             adapter.setSize(10);
             mListLv.setAdapter(adapter);
         }
+        mListLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                openActivity(EvalueActivity.class);
+            }
+        });
 
         mListLv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override

@@ -28,7 +28,7 @@
             android:layout_marginLeft="15dp"
             android:text="小方便利"
             android:textColor="#8B8B8B"
-            android:textSize="16dp" />
+            android:textSize="14dp" />
 
         <TextView
             android:layout_width="0dp"
@@ -43,7 +43,7 @@
             android:layout_marginRight="20dp"
             android:text="2016-09-08"
             android:textColor="#8B8B8B"
-            android:textSize="16dp" />
+            android:textSize="14dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -63,7 +63,7 @@
             android:gravity="center_vertical"
             android:text="我觉得这些懂事超级好用的家伙"
             android:textColor="@color/black"
-            android:textSize="16dp" />
+            android:textSize="14dp" />
     </LinearLayout>
 
 
@@ -80,7 +80,7 @@
         android:lines="2"
         android:text="小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利小方便利"
         android:textColor="#8B8B8B"
-        android:textSize="14dp" />
+        android:textSize="12dp" />
 
     <View
         android:layout_width="match_parent"

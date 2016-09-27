@@ -94,9 +94,10 @@ public class AnimRefreshListView extends LinearLayout {
 
     /**
      * scrollview嵌套listview
+     *
      * @param listView
      */
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+    private void setListViewHeightBasedOnChildren(ListView listView) {
         // 获取ListView对应的Adapter
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
@@ -114,10 +115,11 @@ public class AnimRefreshListView extends LinearLayout {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         // listView.getDividerHeight()获取子项间分隔符占用的高度
         // params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
+
     }
 
 
@@ -127,8 +129,7 @@ public class AnimRefreshListView extends LinearLayout {
         void onLoadMore();
     }
 
-    public void startRefresh(){
-        mRefreshXrv.scrollTo(0,0);
+    public void startRefresh() {
         mRefreshXrv.startRefresh();
     }
 
