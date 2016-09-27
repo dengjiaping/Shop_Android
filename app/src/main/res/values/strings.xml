@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">便利店</string>
-     <!--umeng分享-->
+    <string name="app_name">e闪生活购</string>
+    <!--umeng分享-->
     <string name="umeng_socialize_text_tencent_no_connection">无法连接到腾讯微博客户端</string>
     <string name="umeng_socialize_text_tencent_oauth_login_fail">授权登录失败</string>
     <string name="umeng_socialize_text_tencent_version_no_match">版本不匹配，SSO只对微博客户端V3.8.1及以上的版本提供支持</string>

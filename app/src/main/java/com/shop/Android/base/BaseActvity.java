@@ -19,6 +19,7 @@ public abstract class BaseActvity extends KingActivity {
         //初始化框架的参数
         try {
             mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
+            mTitleLeftIv.setImageResource(R.mipmap.back);
         } catch (Exception e) {
         }
     }

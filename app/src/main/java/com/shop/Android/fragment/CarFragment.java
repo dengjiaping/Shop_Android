@@ -71,11 +71,7 @@ public class CarFragment extends BaseFragment {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mListLv.startRefresh();
-    }
+
 
     @Override
     protected void onClickSet(int i) {
@@ -97,7 +93,7 @@ public class CarFragment extends BaseFragment {
         }
 
         public CarAdapter(int size, Object viewHolder) {
-            super(mActivity);
+            super(CarFragment.this.mContext);
             this.size = size;
             this.viewHolder = viewHolder;
         }
@@ -138,9 +134,9 @@ public class CarFragment extends BaseFragment {
 
         public View getView(int i, View view, ViewGroup viewGroup) {
             if (view == null) {
-                view = this.createConvertView(i);
-                FUtil.findViewInItem(this.viewHolder, view);
-                view.setTag(this.viewHolder);
+                view = createConvertView(i);
+                FUtil.findViewInItem(viewHolder, view);
+                view.setTag(viewHolder);
             } else {
                 viewHolder = view.getTag();
             }
