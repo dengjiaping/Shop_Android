@@ -1,11 +1,16 @@
 package com.shop.Android.fragment;
 
 
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
+import com.shop.Android.activity.OrderDetailsActivity;
 import com.shop.Android.base.BaseFragment;
+import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.Android.widget.RefreshListView;
 import com.shop.R;
@@ -15,7 +20,8 @@ import com.shop.R;
  */
 public class WaitPayOrderFragment extends BaseFragment {
     private String TAG = "wait";
-    private RefreshListView mListRv;
+    private AnimNoLineRefreshListView mListRv;
+    private RelativeLayout mRelayoutRl;
     private WaitPayOrderAdapter waitPayOrderAdapter;
     private GoodsAdapter goodsAdapter;
     @Override
@@ -28,6 +34,12 @@ public class WaitPayOrderFragment extends BaseFragment {
         F();
         waitPayOrderAdapter = new WaitPayOrderAdapter(3,R.layout.fragment_order_item,new WaitPayViewHolder());
         mListRv.setAdapter(waitPayOrderAdapter);
+        mListRv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                openActivity(OrderDetailsActivity.class);
+            }
+        });
     }
 
     @Override

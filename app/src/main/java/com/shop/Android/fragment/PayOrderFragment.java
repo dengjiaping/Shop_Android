@@ -2,10 +2,12 @@ package com.shop.Android.fragment;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
 import com.shop.Android.base.BaseFragment;
+import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.Android.widget.RefreshListView;
 import com.shop.R;
@@ -15,7 +17,8 @@ import com.shop.R;
  */
 public class PayOrderFragment extends BaseFragment {
     private String TAG = "pay";
-    private RefreshListView mListRv;
+    private AnimNoLineRefreshListView mListRv;
+    private RelativeLayout mRelayoutRl;
     private PayOrderAdapter payOrderAdapter;
     private PayGoodsAdapter payGoodsAdapter;
 

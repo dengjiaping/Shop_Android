@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
 import com.shop.Android.base.BaseActvity;
+import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.RefreshListView;
 import com.shop.R;
 
@@ -13,7 +14,7 @@ import com.shop.R;
  */
 public class MineEvaluateActivity extends BaseActvity {
     private String TAG = "evaluate";
-    private RefreshListView mListRv;
+    private AnimNoLineRefreshListView mListRv;
     private MineEvaluateAdapter mineEvaluateAdapter;
 
 

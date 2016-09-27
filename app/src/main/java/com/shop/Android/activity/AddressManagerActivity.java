@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
 import com.shop.Android.base.BaseActvity;
+import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.RefreshListView;
 import com.shop.R;
 
@@ -16,7 +17,7 @@ import com.shop.R;
  */
 public class AddressManagerActivity extends BaseActvity {
     private String TAG = "address";
-    private RefreshListView mListRv;
+    private AnimNoLineRefreshListView mListRv;
     private RelativeLayout mAddRl;
     private RelativeLayout mNoneRl;
     private LinearLayout mDatasLl;

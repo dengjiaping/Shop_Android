@@ -20,14 +20,14 @@
 
 
 
-    <com.shop.Android.widget.RefreshListView
+    <com.shop.Android.widget.AnimNoLineRefreshListView
         android:id="@+id/ay_address_list_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
         android:layout_weight="1">
 
-    </com.shop.Android.widget.RefreshListView>
+    </com.shop.Android.widget.AnimNoLineRefreshListView>
 
         <View
             android:layout_width="match_parent"

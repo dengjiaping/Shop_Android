@@ -1,10 +1,15 @@
 package com.shop.Android.activity;
 
+import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
+import com.king.View.slidelistview.KingSlideAdapter;
+import com.king.View.slidelistview.SlideListView;
+import com.king.View.slidelistview.wrap.SlideItemWrapLayout;
 import com.shop.Android.base.BaseActvity;
+import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.RefreshListView;
 import com.shop.R;
 
@@ -13,7 +18,7 @@ import com.shop.R;
  */
 public class MineCollectActivity extends BaseActvity {
     private String TAG = "collect";
-    private RefreshListView mListRv;
+    private AnimNoLineRefreshListView mListRv;
     private MineCollectAdapter mineCollectAdapter;
     @Override
     protected int loadLayout() {
@@ -30,9 +35,29 @@ public class MineCollectActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-        mineCollectAdapter = new MineCollectAdapter(3,R.layout.activity_mine_collect_item,new CollectViewHolder());
+        mineCollectAdapter = new MineCollectAdapter(3,R.layout.activity_mine_collect_item,R.layout.slide_right_collect,new CollectViewHolder());
         mListRv.setAdapter(mineCollectAdapter);
+        mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListRv.onRefreshComplete();
+                    }
+                },1000);
+            }
 
+            @Override
+            public void onLoadMore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListRv.onLoadComplete();
+                    }
+                },1000);
+            }
+        });
 
 
     }
@@ -41,15 +66,21 @@ public class MineCollectActivity extends BaseActvity {
     protected void onClickSet(int i) {
 
     }
-    class MineCollectAdapter extends KingAdapter{
+    class MineCollectAdapter extends KingSlideAdapter{
 
-        public MineCollectAdapter(int size, int layoutId, Object viewHolder) {
-            super(size, layoutId, viewHolder);
+
+        public MineCollectAdapter(int size, int layout, int rightLayout, Object viewHolder) {
+            super(size, layout, 0, rightLayout, viewHolder);
         }
 
         @Override
-        public void padData(int i, Object o) {
+        public void padData(int i, SlideItemWrapLayout slideItemWrapLayout, Object o) {
 
+        }
+
+        @Override
+        public SlideListView.SlideMode padMode(int i) {
+            return SlideListView.SlideMode.RIGHT;
         }
     }
     class CollectViewHolder{

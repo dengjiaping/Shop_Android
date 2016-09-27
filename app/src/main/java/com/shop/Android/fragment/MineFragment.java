@@ -11,6 +11,7 @@ import com.shop.Android.activity.IntegralActivity;
 import com.shop.Android.activity.MineCollectActivity;
 import com.shop.Android.activity.MineEvaluateActivity;
 import com.shop.Android.activity.MsgActivity;
+import com.shop.Android.activity.OrderDetailsActivity;
 import com.shop.Android.activity.PersonalInfoActivity;
 import com.shop.Android.activity.SetActivity;
 import com.shop.Android.activity.ShareActivity;

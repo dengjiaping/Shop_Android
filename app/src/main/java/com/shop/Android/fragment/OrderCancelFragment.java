@@ -2,10 +2,12 @@ package com.shop.Android.fragment;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
 import com.shop.Android.base.BaseFragment;
+import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.Android.widget.RefreshListView;
 import com.shop.R;
@@ -15,7 +17,8 @@ import com.shop.R;
  */
 public class OrderCancelFragment extends BaseFragment {
     private String TAG = "cancel";
-    private RefreshListView mListRv;
+    private AnimNoLineRefreshListView mListRv;
+    private RelativeLayout mRelayoutRl;
     private CancelOrderAdapter cancelOrderAdapter;
     private CancelGoodsAdapter cancelGoodsAdapter;
 
