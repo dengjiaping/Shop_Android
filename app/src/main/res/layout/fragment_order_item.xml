@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_fe"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/item_order_home_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/store3x" />
+
+        <TextView
+            android:id="@+id/item_order_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/item_order_home_iv"
+            android:text="捷尔惠便利店"
+            android:textColor="@color/text_color"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/item_order_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/item_order_name_tv"
+            android:text="00:09:06"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/my_color"
+            android:textSize="12dp"
+            android:visibility="visible"
+
+            />
+        <TextView
+            android:id="@+id/item_order_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="12dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/my_color"
+            android:text="未配送"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_fe"/>
+
+    <com.shop.Android.widget.NoScrollListView
+        android:id="@+id/item_order_list_sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:scrollbars="none"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent">
+
+    </com.shop.Android.widget.NoScrollListView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_fe"/>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/item_order_fee_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="配送费: ￥3"
+            android:textSize="12dp"
+            android:textColor="@color/color_888"
+            />
+
+        <TextView
+            android:id="@+id/item_order_total_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:textSize="12dp"
+            android:textColor="@color/text_color"
+            android:layout_centerVertical="true"
+            android:text="￥247"/>
+
+        <TextView
+            android:id="@+id/item_order_he_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/item_order_total_tv"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/color_888"
+            android:textSize="12dp"
+            android:text="合计"/>
+
+        <TextView
+            android:id="@+id/item_order_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/item_order_he_tv"
+            android:layout_marginRight="10dp"
+            android:text="共 2 件"
+            android:textColor="@color/color_888"
+            android:textSize="12dp"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_fe"/>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/item_order_pay_tv"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="立即支付"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:textColor="@color/my_color"
+            android:background="@drawable/order_btn_selector"
+            />
+
+        <TextView
+            android:id="@+id/item_order_del_tv"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/item_order_pay_tv"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/order_btn"
+            android:textColor="@color/text_color"
+            android:gravity="center"
+            android:textSize="12dp"
+            android:text="删除订单"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/color_fe"/>
+
+</LinearLayout>
