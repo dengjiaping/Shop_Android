@@ -212,7 +212,7 @@ public class IndexFragment extends BaseFragment {
             public void onRefresh() {
                 if(network.getNetworkState() == Network.NETWORN_NONE){
                     ToastInfo("请检查网络");
-                    noWifi();
+                    
                     //模拟数据加载失败的情况
                     mRefreshXrv.stopRefresh();
                     mTitleLl.setVisibility(View.VISIBLE);
