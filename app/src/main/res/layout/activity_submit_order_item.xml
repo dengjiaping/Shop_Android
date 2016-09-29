@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/item_submits_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:textSize="12dp"
+            android:text="美汁源果粒奶优芒果"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+
+            />
+
+        <TextView
+            android:id="@+id/item_submits_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="12dp"
+            android:textColor="@color/color_888"
+            android:layout_toRightOf="@+id/item_submits_name_tv"
+            android:text="x1"
+            android:layout_marginLeft="30dp"/>
+
+        <TextView
+            android:id="@+id/item_submits_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/text_color"
+            android:textSize="12dp"
+            android:text="￥12"/>
+    </RelativeLayout>
+
+</LinearLayout>
