@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/item_index_icon_iv"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:scaleType="centerCrop"
@@ -22,7 +23,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white"
             android:orientation="vertical"
@@ -30,26 +31,29 @@
             android:paddingRight="10dp">
 
             <com.shop.Android.widget.EImageView
+                android:id="@+id/item_index_one_iv"
                 android:background="@drawable/eimage_bg"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:src="@drawable/default_image" />
 
             <TextView
+                android:id="@+id/item_index_onename_tv"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:lineSpacingExtra="8dp"
-                android:lines="2"
-                android:text="安卓12进口儿童牛奶1安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml25ml"
+                android:maxLines="1"
+                android:text="安卓"
+                android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
             <TextView
+                android:id="@+id/item_index_oneprice_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:text="￥59.9"
                 android:textColor="@color/my_color"
                 android:textSize="16dp" />
@@ -66,24 +70,27 @@
             android:paddingRight="10dp">
 
             <com.shop.Android.widget.EImageView
+                android:id="@+id/item_index_two_iv"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:src="@drawable/index_pic3" />
 
             <TextView
+                android:id="@+id/item_index_twoname_tv"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:lineSpacingExtra="8dp"
-                android:lines="2"
-                android:text="Anchor   安卓12进口儿童牛奶1安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml25ml"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="AnchorAnchorAnchorAnchorAnchorAnchor "
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
             <TextView
+                android:id="@+id/item_index_twoprice_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:text="￥59.9"
                 android:textColor="@color/my_color"
                 android:textSize="16dp" />
@@ -100,24 +107,27 @@
             android:paddingRight="10dp">
 
             <com.shop.Android.widget.EImageView
+                android:id="@+id/item_index_three_iv"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:src="@drawable/index_pic4" />
 
             <TextView
+                android:id="@+id/item_index_threename_tv"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:lineSpacingExtra="8dp"
-                android:lines="2"
-                android:text="Anchor   安卓进口儿童牛奶125ml"
+                android:maxLines="1"
+                android:text="An"
+                android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
             <TextView
+                android:id="@+id/item_index_threeprice_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:text="￥59.9"
                 android:textColor="@color/my_color"
                 android:textSize="16dp" />

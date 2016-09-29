@@ -4,8 +4,14 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StrikethroughSpan;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,8 +29,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.king.Base.KingAdapter;
 import com.king.KingApplication;
 import com.king.Utils.LogCat;
+import com.king.Utils.UIUtil;
 import com.king.View.gradationscroll.GradationScrollView;
 import com.king.View.refreshview.XRefreshView;
 import com.king.View.refreshview.listener.OnBottomLoadMoreTime;
@@ -45,6 +53,9 @@ import com.shop.Android.widget.MineView;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.Android.widget.PlayViewPager;
 import com.shop.Android.widget.RefreshView;
+import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Bean.IndexBean;
 import com.shop.R;
 
 import java.util.ArrayList;
@@ -70,42 +81,94 @@ public class IndexFragment extends BaseFragment {
     private XRefreshView mRefreshXrv;
 
 
-    private String[] urls = new String[]{
-            "http://img12.360buyimg.com/cms/jfs/t3094/223/2369067449/150948/d6251ab7/57e091f4N8ebf5a20.jpg",
-            "http://img11.360buyimg.com/cms/jfs/t3085/88/2377100707/165269/ad578270/57e09f82Nbc26248a.jpg",
-            "http://img14.360buyimg.com/cms/jfs/t3256/282/2324505968/175172/2448654d/57e09e13Nceacbce1.jpg"
-    };
-
+    private String[] banUrls;
 
     @Override
     protected int loadLayout() {
+        Get(ActionKey.INDEX, IndexBean.class);
         return R.layout.fragment_index;
     }
 
     private int height;
     private final int mPinnedTime = 0;
 
+    private IndexBean indexBean;
+    private TextView mTitleoneTv;
+
+
+    @Override
+    public void onSuccess(String what, Object result) {
+        switch (what) {
+            case ActionKey.INDEX:
+                indexBean = (IndexBean) result;
+
+                //ban效果
+                banUrls = new String[indexBean.getData().getBan().size()];
+                for (int i = 0; i < banUrls.length; i++) {
+                    banUrls[i] = indexBean.getData().getBan().get(i).getImage();
+                }
+                mPlayviewPvp.setUrls(banUrls);
+                //四张图片的效果
+                for (int i = 0; i < indexBean.getData().getMid().size(); i++) {
+                    switch (indexBean.getData().getMid().get(i).getPosition()) {
+                        case "2"://左边大图
+                            Glide(indexBean.getData().getMid().get(i).getImage(), mPiconeIv);
+                            break;
+                        case "3"://右边上图
+                            Glide(indexBean.getData().getMid().get(i).getImage(), mPictwoIv);
+                            break;
+                        case "4"://右边左底图
+                            Glide(indexBean.getData().getMid().get(i).getImage(), mPicthreeIv);
+                            break;
+                        case "5"://右边右底图:
+                            Glide(indexBean.getData().getMid().get(i).getImage(), mPicfourIv);
+                            break;
+                    }
+                }
+                //底下的ListView的效果
+                if (indexBean.getData().getCgoods() != null && indexBean.getData().getCgoods().size() != 0) {
+                    if (adapter == null) {
+                        adapter = new IndexAdapter(indexBean.getData().getCgoods().size(), R.layout.item_index_list, new IndexViewHolder());
+                        mListNlv.setAdapter(adapter);
+                    } else {
+                        adapter.setSize(indexBean.getData().getCgoods().size());
+                        mListNlv.setAdapter(adapter);
+                    }
+                    mListNlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            openActivity(GoodsClassActivity.class);
+                        }
+                    });
+                }
+                //今日特卖
+                if (indexBean.getData().getAgood() != null && indexBean.getData().getAgood().size() != 0) {
+                    mTitleoneTv.setVisibility(View.INVISIBLE);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(KingApplication.getAppContext());
+                    layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    mRecycleRv.setLayoutManager(layoutManager);
+                    if (myAdapter == null) {
+                        myAdapter = new MyAdapter();
+                        mRecycleRv.setAdapter(myAdapter);
+                    } else {
+                        myAdapter.notifyDataSetChanged();
+                    }
+                    mRecycleRv.setNestedScrollingEnabled(true);
+                    mRecycleRv.setVisibility(View.VISIBLE);
+
+                } else {
+                    mTitleoneTv.setVisibility(View.VISIBLE);
+                    mRecycleRv.setVisibility(View.GONE);
+                }
+                break;
+        }
+    }
+
+
     @Override
     protected void init() {
         F();
-        mPlayviewPvp.setUrls(urls);
         addTitleSlideChange();
-        mListNlv.setAdapter(new TestAdapter(10, R.layout.item_index_list));
-        mListNlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                openActivity(GoodsClassActivity.class);
-            }
-        });
-
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(KingApplication.getAppContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRecycleRv.setLayoutManager(layoutManager);
-        mRecycleRv.setAdapter(new MyAdapter());
-        mRecycleRv.setNestedScrollingEnabled(true);
-        mRecycleRv.setVisibility(View.VISIBLE);
-
 
         // 设置是否可以下拉刷新
         mRefreshXrv.setPullRefreshEnable(true);
@@ -213,6 +276,7 @@ public class IndexFragment extends BaseFragment {
 
     }
 
+    private MyAdapter myAdapter;
 
     class MyAdapter extends RecyclerView.Adapter<ViewHolder> {
 
@@ -225,23 +289,103 @@ public class IndexFragment extends BaseFragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, final int position) {
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            try {
+                IndexBean.DataBean.AgoodBean bean = indexBean.getData().getAgood().get(position);
+                Glide(bean.getImage(), holder.mIconIv);
+                holder.mNameTv.setText(bean.getTitle());
+                SpannableString msp = new SpannableString(bean.getActivity_price());
+                msp.setSpan(new RelativeSizeSpan(0.8f), bean.getActivity_price().indexOf(".") + 1, bean.getActivity_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                SpannableString msp1 = new SpannableString("￥" + bean.getPrice() + " ");
+                msp1.setSpan(new RelativeSizeSpan(0.8f), 0, bean.getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                msp1.setSpan(new StrikethroughSpan(), 0, bean.getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, bean.getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                holder.mPriceTv.setText("");
+                holder.mPriceTv.append("￥");
+                holder.mPriceTv.append(msp);
+                holder.mPriceTv.append("  ");
+                holder.mPriceTv.append(msp1);
+                holder.mPriceTv.append(" ");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         public int getItemCount() {
-            return 10;
+            return indexBean.getData().getAgood().size();
         }
     }
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mContentTv;
+        TextView mNameTv;
+        ImageView mIconIv;
+        TextView mPriceTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mIconIv = UIUtil.findViewById(itemView, R.id.item_index_icon_iv);
+            mNameTv = UIUtil.findViewById(itemView, R.id.item_index_name_tv);
+            mPriceTv = UIUtil.findViewById(itemView, R.id.item_index_price_tv);
         }
+    }
+
+    private IndexAdapter adapter;
+
+    class IndexAdapter extends KingAdapter {
+
+        public IndexAdapter(int size, int layoutId, Object viewHolder) {
+            super(size, layoutId, viewHolder);
+        }
+
+        @Override
+        public void padData(int i, Object o) {
+            IndexBean.DataBean.CgoodsBean bean = indexBean.getData().getCgoods().get(i);
+            IndexViewHolder viewHolder = (IndexViewHolder) o;
+            try {
+                Glide(bean.getImage(), viewHolder.mIconIv);
+
+                Glide(bean.getList().get(0).getImage(), viewHolder.mOneIv);
+                viewHolder.mOnenameTv.setText(bean.getList().get(0).getTitle());
+                viewHolder.mOnepriceTv.setText("￥" + bean.getList().get(0).getPrice());
+                SpannableString msp = new SpannableString(viewHolder.mOnepriceTv.getText().toString());
+                msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mOnepriceTv.getText().toString().indexOf(".") + 1, viewHolder.mOnepriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                viewHolder.mOnepriceTv.setText(msp);
+
+                Glide(bean.getList().get(1).getImage(), viewHolder.mTwoIv);
+                viewHolder.mTwonameTv.setText(bean.getList().get(1).getTitle());
+                viewHolder.mTwopriceTv.setText("￥" + bean.getList().get(1).getPrice());
+                msp = new SpannableString(viewHolder.mTwopriceTv.getText().toString());
+                msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mTwopriceTv.getText().toString().indexOf(".") + 1, viewHolder.mTwopriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                viewHolder.mTwopriceTv.setText(msp);
+
+                Glide(bean.getList().get(2).getImage(), viewHolder.mThreeIv);
+                viewHolder.mThreenameTv.setText(bean.getList().get(2).getTitle());
+                viewHolder.mThreepriceTv.setText("￥" + bean.getList().get(2).getPrice());
+                msp = new SpannableString(viewHolder.mThreepriceTv.getText().toString());
+                msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mThreepriceTv.getText().toString().indexOf(".") + 1, viewHolder.mThreepriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                viewHolder.mThreepriceTv.setText(msp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    class IndexViewHolder {
+        String TAG = "index";
+        ImageView mIconIv;
+        ImageView mOneIv;
+        TextView mOnenameTv;
+        TextView mOnepriceTv;
+        ImageView mTwoIv;
+        TextView mTwonameTv;
+        TextView mTwopriceTv;
+        ImageView mThreeIv;
+        TextView mThreenameTv;
+        TextView mThreepriceTv;
     }
 
 }

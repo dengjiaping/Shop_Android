@@ -200,6 +200,7 @@
                             android:textSize="14dp" />
 
                         <TextView
+                            android:id="@+id/ft_index_titleone_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -219,7 +220,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/ft_index_recycle_rv"
                         android:layout_width="match_parent"
-                        android:layout_height="210dp" />
+                        android:layout_height="wrap_content" />
 
                     <View
                         android:layout_width="match_parent"
@@ -289,6 +290,4 @@
         android:layout_marginRight="15dp"
         android:src="@drawable/up_arrow"
         android:visibility="gone" />
-
-
 </RelativeLayout>

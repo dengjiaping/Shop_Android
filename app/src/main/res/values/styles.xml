@@ -27,6 +27,14 @@
         <item name="android:button">@null</item>
         <item name="android:textColor">@drawable/order_fonts_color</item>
         <item name="android:gravity">center|center_horizontal</item>
-
     </style>
+
+    <style name="MyCustom">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!-- Base style for animations.  This style specifies no animations. -->
+
 </resources>
