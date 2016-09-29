@@ -10,9 +10,9 @@ import com.shop.R;
  */
 public class OrderDetailsActivity extends BaseActvity {
     private String TAG = "details";
-    private TextView mName;
-    private TextView mPhone;
-    private TextView mAddress;
+    private TextView mNameTv;
+    private TextView mPhoneTv;
+    private TextView mAddressTv;
     private TextView mFeeTv;
     private TextView mPriceTv;
     private TextView mNumTv;
@@ -21,6 +21,7 @@ public class OrderDetailsActivity extends BaseActvity {
     private TextView mSendTv;
     private TextView mPayTv;
     private TextView mCancelTv;
+
     @Override
     protected int loadLayout() {
         return R.layout.activity_order_details;
@@ -35,11 +36,16 @@ public class OrderDetailsActivity extends BaseActvity {
 
     @Override
     protected void init() {
-      F();
+        F();
+        setOnClicks(mPayTv);
     }
 
     @Override
     protected void onClickSet(int i) {
-
+        switch (i) {
+            case R.id.ay_details_pay_tv:
+                openActivity(SubmitOrderActivity.class);
+                break;
+        }
     }
 }
