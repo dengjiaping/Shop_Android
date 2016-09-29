@@ -53,6 +53,12 @@ public class OrderFragment extends BaseFragment {
         tx.hide(cache.get("mFinishRb"));
         tx.hide(cache.get("mCancelRb"));
         tx.commit();
+        mTitleRightIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override

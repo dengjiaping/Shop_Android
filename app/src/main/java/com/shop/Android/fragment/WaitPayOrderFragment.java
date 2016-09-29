@@ -1,7 +1,6 @@
 package com.shop.Android.fragment;
 
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -13,7 +12,6 @@ import com.shop.Android.activity.OrderDetailsActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.NoScrollListView;
-import com.shop.Android.widget.RefreshListView;
 import com.shop.R;
 
 /**
