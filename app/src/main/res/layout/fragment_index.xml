@@ -1,293 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f9f9f9"
-    android:orientation="vertical">
-
-    <com.king.View.refreshview.XRefreshView
-
-        android:id="@+id/ft_index_refresh_xrv"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_no"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F9F9F9">
+        android:background="#f9f9f9"
+        android:orientation="vertical">
 
-        <com.king.View.refreshview.XScrollView
-            android:id="@+id/ft_index_gradution_gsv"
+        <com.king.View.refreshview.XRefreshView
+
+            android:id="@+id/ft_index_refresh_xrv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:background="#F9F9F9">
 
-
-            <LinearLayout
+            <com.king.View.refreshview.XScrollView
+                android:id="@+id/ft_index_gradution_gsv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:scrollbars="none">
 
-                <com.shop.Android.widget.PlayViewPager
-                    android:id="@+id/ft_index_playview_pvp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.shop.Android.widget.MineView
-                        android:id="@+id/ft_index_class_mv"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:mv_bottom_line_isvisible="false"
-                        app:mv_content="小方分类"
-                        app:mv_icon="@drawable/index_icon1"
-                        app:mv_right_line_isvisible="false" />
-
-                    <com.shop.Android.widget.MineView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:mv_bottom_line_isvisible="false"
-                        app:mv_content="小方解答"
-                        app:mv_icon="@drawable/index_icon2"
-                        app:mv_right_line_isvisible="false" />
-
-                    <com.shop.Android.widget.MineView
-                        android:id="@+id/ft_index_each_mv"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:mv_bottom_line_isvisible="false"
-                        app:mv_content="小方互动"
-                        app:mv_icon="@drawable/index_icon3"
-                        app:mv_right_line_isvisible="false" />
-
-                    <com.shop.Android.widget.MineView
-                        android:id="@+id/ft_index_credit_mv"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:mv_bottom_line_isvisible="false"
-                        app:mv_content="小方积分"
-                        app:mv_icon="@drawable/index_icon4"
-                        app:mv_right_line_isvisible="false" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.2"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/ft_index_picone_iv"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/index_icon5" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.8"
-                        android:orientation="vertical"
-                        android:weightSum="2.5">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:id="@+id/ft_index_pictwo_iv"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/index_icon6" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1.5">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <ImageView
-                                    android:id="@+id/ft_index_picthree_iv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/index_icon7" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="2dp"
-                                android:layout_height="match_parent" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <ImageView
-                                    android:id="@+id/ft_index_picfour_iv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/index_icon8" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp" />
-
-                <LinearLayout
-                    android:id="@+id/ft_index_special_ll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <com.shop.Android.widget.PlayViewPager
+                        android:id="@+id/ft_index_playview_pvp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp">
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:text="今日特卖"
-                            android:textColor="#333"
-                            android:textSize="14dp" />
-
-                        <TextView
-                            android:id="@+id/ft_index_titleone_tv"
+                        <com.shop.Android.widget.MineView
+                            android:id="@+id/ft_index_class_mv"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:paddingLeft="20dp"
-                            android:text="特卖限时抢，每天10点准时上新"
-                            android:textColor="#959595"
-                            android:textSize="12dp" />
+                            app:mv_bottom_line_isvisible="false"
+                            app:mv_content="小方分类"
+                            app:mv_icon="@drawable/index_icon1"
+                            app:mv_right_line_isvisible="false" />
 
-                        <ImageView
-                            android:layout_width="10dp"
-                            android:layout_height="20dp"
-                            android:layout_marginRight="15dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/right_arrow" />
+                        <com.shop.Android.widget.MineView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            app:mv_bottom_line_isvisible="false"
+                            app:mv_content="小方解答"
+                            app:mv_icon="@drawable/index_icon2"
+                            app:mv_right_line_isvisible="false" />
+
+                        <com.shop.Android.widget.MineView
+                            android:id="@+id/ft_index_each_mv"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            app:mv_bottom_line_isvisible="false"
+                            app:mv_content="小方互动"
+                            app:mv_icon="@drawable/index_icon3"
+                            app:mv_right_line_isvisible="false" />
+
+                        <com.shop.Android.widget.MineView
+                            android:id="@+id/ft_index_credit_mv"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            app:mv_bottom_line_isvisible="false"
+                            app:mv_content="小方积分"
+                            app:mv_icon="@drawable/index_icon4"
+                            app:mv_right_line_isvisible="false" />
                     </LinearLayout>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/ft_index_recycle_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="15dp" />
 
-                    <com.shop.Android.widget.NoScrollListView
-                        android:id="@+id/ft_index_list_nlv"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.2"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/ft_index_picone_iv"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/index_icon5" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.8"
+                            android:orientation="vertical"
+                            android:weightSum="2.5">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:id="@+id/ft_index_pictwo_iv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/index_icon6" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1.5">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+                                    <ImageView
+                                        android:id="@+id/ft_index_picthree_iv"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/index_icon7" />
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="2dp"
+                                    android:layout_height="match_parent" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+                                    <ImageView
+                                        android:id="@+id/ft_index_picfour_iv"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/index_icon8" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp" />
+
+                    <LinearLayout
+                        android:id="@+id/ft_index_special_ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:listSelector="@color/transparent" />
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text="今日特卖"
+                                android:textColor="#333"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:id="@+id/ft_index_titleone_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingLeft="20dp"
+                                android:text="特卖限时抢，每天10点准时上新"
+                                android:textColor="#959595"
+                                android:textSize="12dp" />
+
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="15dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/right_arrow" />
+                        </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/ft_index_recycle_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp" />
+
+                        <com.shop.Android.widget.NoScrollListView
+                            android:id="@+id/ft_index_list_nlv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:listSelector="@color/transparent" />
 
 
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <!--内容主页-->
-        </com.king.View.refreshview.XScrollView>
-
-
-    </com.king.View.refreshview.XRefreshView>
+                <!--内容主页-->
+            </com.king.View.refreshview.XScrollView>
 
 
-    <LinearLayout
-        android:id="@+id/ft_index_title_ll"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/transparent"
-        android:orientation="horizontal">
+        </com.king.View.refreshview.XRefreshView>
+
+
+        <LinearLayout
+            android:id="@+id/ft_index_title_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/transparent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ft_index_search_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/search_white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="定位 : 合肥市"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/ft_index_msg_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/message_white" />
+
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/ft_index_search_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/search_white" />
+            android:id="@+id/ft_index_up_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/up_arrow"
+            android:visibility="gone" />
+    </RelativeLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="定位 : 合肥市"
-            android:textColor="@color/white"
-            android:textSize="18dp" />
-
-        <ImageView
-            android:id="@+id/ft_index_msg_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/message_white" />
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/ft_index_up_iv"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="15dp"
-        android:src="@drawable/up_arrow"
-        android:visibility="gone" />
-</RelativeLayout>
+</LinearLayout>

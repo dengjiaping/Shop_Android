@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.king.Base.KingAdapter;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.ClassView.adapter.ShopAdapter;
 import com.shop.Android.widget.ClassView.adapter.TestSectionedAdapter;
@@ -33,6 +34,8 @@ import com.shop.Android.widget.ClassView.assistant.onCallBackListener;
 import com.shop.Android.widget.ClassView.mode.ProductType;
 import com.shop.Android.widget.ClassView.mode.ShopProduct;
 import com.shop.Android.widget.ClassView.view.PinnedHeaderListView;
+import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.ClassBean;
 import com.shop.R;
 import com.shop.Utils.DoubleUtil;
 
@@ -55,17 +58,31 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
     private TextView mNumTv;
     private TextView mBackTv;
 
+
     @Override
     protected int loadLayout() {
+        Get(ActionKey.CLASS, ClassBean.class);
         return R.layout.activity_class;
+    }
+
+    private ClassBean bean;
+
+    @Override
+    public void onSuccess(String what, Object result) {
+        switch (what) {
+            case ActionKey.CLASS:
+                bean = (ClassBean) result;
+                getData();
+                initData();
+                break;
+        }
     }
 
     @Override
     protected void init() {
-        getData();
+
         animation_viewGroup = createAnimLayout();
         F();
-        initData();
         setOnClicks(mBgV, mOverTv, mCarIv, mBackTv);
     }
 
@@ -125,15 +142,17 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
 
     public List<ProductType> getData() {
         productCategorizes = new ArrayList<>();
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < bean.getData().size(); i++) {
             ProductType productCategorize = new ProductType();
-            productCategorize.setType("分类信息" + i);
+            productCategorize.setType(bean.getData().get(i).getName());
             shopProductsAll = new ArrayList<>();
-            for (int j = 1; j < 6; j++) {
+            for (int j = 0; j < bean.getData().get(i).getList().size(); j++) {
                 ShopProduct product = new ShopProduct();
-                product.setId(154788 + i + j);
-                product.setGoods("衬衫" + i);
-                product.setPrice(18 + "");
+                product.setId(bean.getData().get(i).getList().get(j).getId());
+                product.setGoods(bean.getData().get(i).getList().get(j).getTitle());
+                product.setPrice(bean.getData().get(i).getList().get(j).getPrice());
+                product.setPicture(bean.getData().get(i).getList().get(j).getImage());
+                product.setType(bean.getData().get(i).getList().get(j).getSubtitled());
                 shopProductsAll.add(product);
             }
             productCategorize.setProduct(shopProductsAll);
@@ -148,6 +167,35 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
      * TODO:考虑保存购物车缓存
      */
     private List<ShopProduct> productList;
+
+    private LeftAdapter adapter;
+    private int count = 0;
+
+    class LeftAdapter extends KingAdapter {
+
+        public LeftAdapter(int size, int layoutId, Object viewHolder) {
+            super(size, layoutId, viewHolder);
+        }
+
+        @Override
+        public void padData(int i, Object o) {
+            LeftViewHolder viewHolder = (LeftViewHolder) o;
+            viewHolder.mTextTv.setText(strings.get(i));
+            if (i == count) {
+                viewHolder.mTextTv.setBackgroundColor(
+                        Color.rgb(255, 255, 255));
+            } else {
+                viewHolder.mTextTv.setBackgroundColor(
+                        Color.TRANSPARENT);
+            }
+
+        }
+    }
+
+    class LeftViewHolder {
+        String TAG = "main";
+        TextView mTextTv;
+    }
 
     public void initData() {
         productList = new ArrayList<>();
@@ -168,9 +216,14 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
         }
         mHeaderPhlv.setAdapter(sectionedAdapter);
         sectionedAdapter.setCallBackListener(this);
-        mListLv.setAdapter(new ArrayAdapter<String>(mActivity,
-                R.layout.categorize_item, strings));
 
+        if (adapter == null) {
+            adapter = new LeftAdapter(strings.size(), R.layout.categorize_item, new LeftViewHolder());
+            mListLv.setAdapter(adapter);
+        } else {
+            adapter.setSize(strings.size());
+            mListLv.setAdapter(adapter);
+        }
         shopAdapter = new ShopAdapter(mContext, productList);
         mShoplistLv.setAdapter(shopAdapter);
         shopAdapter.setShopToDetailListener(this);
@@ -178,25 +231,17 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
         mListLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> arg0, View view,
-                                    int position, long arg3) {
-                isScroll = false;
-
-                for (int i = 0; i < mListLv.getChildCount(); i++) {
-                    if (i == position) {
-                        mListLv.getChildAt(i).setBackgroundColor(
-                                Color.rgb(255, 255, 255));
-                    } else {
-                        mListLv.getChildAt(i).setBackgroundColor(
-                                Color.TRANSPARENT);
-                    }
-                }
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+                isScroll = true;
+                count = position;
+                mListLv.setAdapter(adapter);
 
                 int rightSection = 0;
-                for (int i = 0; i < position; i++) {
+                for (int i = 0; i < position + 1; i++) {
                     rightSection += sectionedAdapter.getCountForSection(i) + 1;
                 }
                 mHeaderPhlv.setSelection(rightSection);
+                isScroll = false;
 
             }
 
@@ -212,7 +257,7 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
-                if (isScroll) {
+                if (!isScroll) {
                     for (int i = 0; i < mListLv.getChildCount(); i++) {
 
                         if (i == sectionedAdapter
@@ -225,9 +270,6 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
 
                         }
                     }
-
-                } else {
-                    isScroll = true;
                 }
             }
         });

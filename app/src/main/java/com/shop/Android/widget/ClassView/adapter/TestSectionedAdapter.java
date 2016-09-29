@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.king.Utils.PictureUtil;
 import com.shop.Android.widget.ClassView.assistant.onCallBackListener;
 import com.shop.Android.widget.ClassView.mode.ProductType;
 import com.shop.Android.widget.ClassView.mode.ShopProduct;
@@ -71,6 +72,7 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
             viewHolder.increase = (ImageView) convertView.findViewById(R.id.increase);
             viewHolder.reduce = (ImageView) convertView.findViewById(R.id.reduce);
             viewHolder.shoppingNum = (TextView) convertView.findViewById(R.id.shoppingNum);
+            viewHolder.type = (TextView) convertView.findViewById(R.id.type);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -79,6 +81,8 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
         viewHolder.name.setText(product.getGoods());
         viewHolder.prise.setText(String.valueOf(product.getPrice()));
         viewHolder.shoppingNum.setText(String.valueOf(product.getNumber()));
+        PictureUtil.Glide(product.getPicture(),viewHolder.head);
+        viewHolder.type.setText(product.getType());
         if (product.getNumber() == 0) {
             viewHolder.reduce.setVisibility(View.INVISIBLE);
             viewHolder.shoppingNum.setVisibility(View.INVISIBLE);
@@ -144,6 +148,10 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
     }
 
     class ViewHolder {
+        /**
+         * 商品图片
+         */
+        public TextView type;
         /**
          * 商品图片
          */

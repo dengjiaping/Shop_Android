@@ -31,13 +31,17 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.king.Base.KingAdapter;
 import com.king.KingApplication;
+import com.king.Service.Network;
+import com.king.Utils.GsonUtil;
 import com.king.Utils.LogCat;
+import com.king.Utils.SPrefUtil;
 import com.king.Utils.UIUtil;
 import com.king.View.gradationscroll.GradationScrollView;
 import com.king.View.refreshview.XRefreshView;
 import com.king.View.refreshview.listener.OnBottomLoadMoreTime;
 import com.king.View.refreshview.listener.OnTopRefreshTime;
 import com.king.View.refreshview.ui.smileyloadingview.SmileyHeaderView;
+import com.shop.Android.SPKey;
 import com.shop.Android.activity.ClassActivity;
 import com.shop.Android.activity.EachOtherActivity;
 import com.shop.Android.activity.GoodsClassActivity;
@@ -85,7 +89,6 @@ public class IndexFragment extends BaseFragment {
 
     @Override
     protected int loadLayout() {
-        Get(ActionKey.INDEX, IndexBean.class);
         return R.layout.fragment_index;
     }
 
@@ -96,69 +99,89 @@ public class IndexFragment extends BaseFragment {
     private TextView mTitleoneTv;
 
 
+    public void addData(Object result){
+        SPrefUtil.Function.putData(SPKey.INDEX, GsonUtil.Bean2Str(result));
+        indexBean = (IndexBean) result;
+
+        //ban效果
+        banUrls = new String[indexBean.getData().getBan().size()];
+        for (int i = 0; i < banUrls.length; i++) {
+            banUrls[i] = indexBean.getData().getBan().get(i).getImage();
+        }
+        mPlayviewPvp.setUrls(banUrls);
+        //四张图片的效果
+        for (int i = 0; i < indexBean.getData().getMid().size(); i++) {
+            switch (indexBean.getData().getMid().get(i).getPosition()) {
+                case "2"://左边大图
+                    Glide(indexBean.getData().getMid().get(i).getImage(), mPiconeIv);
+                    break;
+                case "3"://右边上图
+                    Glide(indexBean.getData().getMid().get(i).getImage(), mPictwoIv);
+                    break;
+                case "4"://右边左底图
+                    Glide(indexBean.getData().getMid().get(i).getImage(), mPicthreeIv);
+                    break;
+                case "5"://右边右底图:
+                    Glide(indexBean.getData().getMid().get(i).getImage(), mPicfourIv);
+                    break;
+            }
+        }
+        //底下的ListView的效果
+        if (indexBean.getData().getCgoods() != null && indexBean.getData().getCgoods().size() != 0) {
+            if (adapter == null) {
+                adapter = new IndexAdapter(indexBean.getData().getCgoods().size(), R.layout.item_index_list, new IndexViewHolder());
+                mListNlv.setAdapter(adapter);
+            } else {
+                adapter.setSize(indexBean.getData().getCgoods().size());
+                mListNlv.setAdapter(adapter);
+            }
+            mListNlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    openActivity(GoodsClassActivity.class);
+                }
+            });
+        }
+        //今日特卖
+        if (indexBean.getData().getActivity().getGoods() != null && indexBean.getData().getActivity().getGoods().size() != 0) {
+            mTitleoneTv.setVisibility(View.INVISIBLE);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(KingApplication.getAppContext());
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            mRecycleRv.setLayoutManager(layoutManager);
+            if (myAdapter == null) {
+                myAdapter = new MyAdapter();
+                mRecycleRv.setAdapter(myAdapter);
+            } else {
+                myAdapter.notifyDataSetChanged();
+            }
+            mRecycleRv.setNestedScrollingEnabled(true);
+            mRecycleRv.setVisibility(View.VISIBLE);
+
+        } else {
+            mTitleoneTv.setVisibility(View.VISIBLE);
+            mTitleoneTv.setText(indexBean.getData().getActivity().getName());
+            mRecycleRv.setVisibility(View.GONE);
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                has();
+            }
+        },1000);
+    }
+
+
     @Override
     public void onSuccess(String what, Object result) {
         switch (what) {
             case ActionKey.INDEX:
-                indexBean = (IndexBean) result;
-
-                //ban效果
-                banUrls = new String[indexBean.getData().getBan().size()];
-                for (int i = 0; i < banUrls.length; i++) {
-                    banUrls[i] = indexBean.getData().getBan().get(i).getImage();
-                }
-                mPlayviewPvp.setUrls(banUrls);
-                //四张图片的效果
-                for (int i = 0; i < indexBean.getData().getMid().size(); i++) {
-                    switch (indexBean.getData().getMid().get(i).getPosition()) {
-                        case "2"://左边大图
-                            Glide(indexBean.getData().getMid().get(i).getImage(), mPiconeIv);
-                            break;
-                        case "3"://右边上图
-                            Glide(indexBean.getData().getMid().get(i).getImage(), mPictwoIv);
-                            break;
-                        case "4"://右边左底图
-                            Glide(indexBean.getData().getMid().get(i).getImage(), mPicthreeIv);
-                            break;
-                        case "5"://右边右底图:
-                            Glide(indexBean.getData().getMid().get(i).getImage(), mPicfourIv);
-                            break;
-                    }
-                }
-                //底下的ListView的效果
-                if (indexBean.getData().getCgoods() != null && indexBean.getData().getCgoods().size() != 0) {
-                    if (adapter == null) {
-                        adapter = new IndexAdapter(indexBean.getData().getCgoods().size(), R.layout.item_index_list, new IndexViewHolder());
-                        mListNlv.setAdapter(adapter);
-                    } else {
-                        adapter.setSize(indexBean.getData().getCgoods().size());
-                        mListNlv.setAdapter(adapter);
-                    }
-                    mListNlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            openActivity(GoodsClassActivity.class);
-                        }
-                    });
-                }
-                //今日特卖
-                if (indexBean.getData().getAgood() != null && indexBean.getData().getAgood().size() != 0) {
-                    mTitleoneTv.setVisibility(View.INVISIBLE);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(KingApplication.getAppContext());
-                    layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    mRecycleRv.setLayoutManager(layoutManager);
-                    if (myAdapter == null) {
-                        myAdapter = new MyAdapter();
-                        mRecycleRv.setAdapter(myAdapter);
-                    } else {
-                        myAdapter.notifyDataSetChanged();
-                    }
-                    mRecycleRv.setNestedScrollingEnabled(true);
-                    mRecycleRv.setVisibility(View.VISIBLE);
-
-                } else {
-                    mTitleoneTv.setVisibility(View.VISIBLE);
-                    mRecycleRv.setVisibility(View.GONE);
+                //模拟数据加载失败的情况
+                mRefreshXrv.stopRefresh();
+                mTitleLl.setVisibility(View.VISIBLE);
+                if(!SPrefUtil.Function.getData(SPKey.INDEX,"").equals(GsonUtil.Bean2Str(result))){
+                    addData(result);
+                }else {
+                    LogCat.e("没有数据被更新");
                 }
                 break;
         }
@@ -168,6 +191,13 @@ public class IndexFragment extends BaseFragment {
     @Override
     protected void init() {
         F();
+        loading();
+        if(SPrefUtil.Function.getData(SPKey.INDEX,"").isEmpty()){
+            Get(ActionKey.INDEX, IndexBean.class);
+        }else {
+            addData(GsonUtil.Str2Bean(SPrefUtil.Function.getData(SPKey.INDEX,""),IndexBean.class));
+            Get(ActionKey.INDEX, IndexBean.class);
+        }
         addTitleSlideChange();
 
         // 设置是否可以下拉刷新
@@ -180,15 +210,17 @@ public class IndexFragment extends BaseFragment {
         mRefreshXrv.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
             @Override
             public void onRefresh() {
+                if(network.getNetworkState() == Network.NETWORN_NONE){
+                    ToastInfo("请检查网络");
+                    noWifi();
+                    //模拟数据加载失败的情况
+                    mRefreshXrv.stopRefresh();
+                    mTitleLl.setVisibility(View.VISIBLE);
+                    return;
+                }
                 mTitleLl.setVisibility(View.GONE);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //模拟数据加载失败的情况
-                        mRefreshXrv.stopRefresh();
-                        mTitleLl.setVisibility(View.VISIBLE);
-                    }
-                }, 1000);
+                Get(ActionKey.INDEX, IndexBean.class);
+
             }
 
             @Override
@@ -291,7 +323,7 @@ public class IndexFragment extends BaseFragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             try {
-                IndexBean.DataBean.AgoodBean bean = indexBean.getData().getAgood().get(position);
+                IndexBean.DataBean.ActivityBean.GoodsBean bean = indexBean.getData().getActivity().getGoods().get(position);
                 Glide(bean.getImage(), holder.mIconIv);
                 holder.mNameTv.setText(bean.getTitle());
                 SpannableString msp = new SpannableString(bean.getActivity_price());
@@ -313,7 +345,7 @@ public class IndexFragment extends BaseFragment {
 
         @Override
         public int getItemCount() {
-            return indexBean.getData().getAgood().size();
+            return indexBean.getData().getActivity().getGoods().size();
         }
     }
 
