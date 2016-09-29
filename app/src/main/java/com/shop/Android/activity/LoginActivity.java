@@ -46,7 +46,7 @@ public class LoginActivity extends BaseActvity {
     protected void onClickSet(int i) {
         switch (i) {
             case R.id.ay_login_code_tv:
-                if (tempPhone.equals(getText(mUserEt))) {
+                if (tempPhone.equals(getText(mUserEt)) && !tempPhone.isEmpty()) {
                     if (mCodeTv.equals("发送验证码")) {
                         if (CheckUtil.isPhone(mUserEt)) {
                             Post(ActionKey.CODE, new CodeParam(getText(mUserEt)), BaseBean.class);

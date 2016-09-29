@@ -116,6 +116,18 @@
         </LinearLayout>
 
 
+        <RelativeLayout
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="380dp">
+            <ImageView
+                android:background="@drawable/logo_bg"
+                android:src="@drawable/default_image"
+                android:layout_width="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="120dp" />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_alignParentBottom="true"
             android:gravity="center"
@@ -152,13 +164,6 @@
                 android:textSize="16dp" />
         </LinearLayout>
 
-        <ImageView
-            android:background="@drawable/logo_bg"
-            android:src="@drawable/default_image"
-            android:layout_width="120dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="110dp"
-            android:layout_height="120dp" />
 
     </RelativeLayout>
 </LinearLayout>

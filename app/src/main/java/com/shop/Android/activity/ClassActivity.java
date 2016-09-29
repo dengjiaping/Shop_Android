@@ -19,6 +19,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
+import com.king.Utils.UIUtil;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.ClassView.adapter.ShopAdapter;
 import com.shop.Android.widget.ClassView.adapter.TestSectionedAdapter;
@@ -171,15 +173,43 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
     private LeftAdapter adapter;
     private int count = 0;
 
-    class LeftAdapter extends KingAdapter {
+    class LeftAdapter extends BaseAdapter {
 
-        public LeftAdapter(int size, int layoutId, Object viewHolder) {
-            super(size, layoutId, viewHolder);
+        private int size;
+        private LeftViewHolder viewHolder;
+        private int mLayout;
+
+        public LeftAdapter(int size, int layoutId) {
+            this.size = size;
+            this.mLayout = layoutId;
+        }
+
+
+        @Override
+        public int getCount() {
+            return size;
         }
 
         @Override
-        public void padData(int i, Object o) {
-            LeftViewHolder viewHolder = (LeftViewHolder) o;
+        public Object getItem(int i) {
+            return i;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            if (view == null) {
+                view = View.inflate(mContext, mLayout, null);
+                viewHolder = new LeftViewHolder();
+                viewHolder.mTextTv = UIUtil.findViewById(view, R.id.item_main_text_tv);
+                view.setTag(viewHolder);
+            } else {
+                viewHolder = (LeftViewHolder) view.getTag();
+            }
             viewHolder.mTextTv.setText(strings.get(i));
             if (i == count) {
                 viewHolder.mTextTv.setBackgroundColor(
@@ -188,12 +218,11 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
                 viewHolder.mTextTv.setBackgroundColor(
                         Color.TRANSPARENT);
             }
-
+            return view;
         }
     }
 
     class LeftViewHolder {
-        String TAG = "main";
         TextView mTextTv;
     }
 
@@ -218,11 +247,10 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
         sectionedAdapter.setCallBackListener(this);
 
         if (adapter == null) {
-            adapter = new LeftAdapter(strings.size(), R.layout.categorize_item, new LeftViewHolder());
+            adapter = new LeftAdapter(strings.size(), R.layout.categorize_item);
             mListLv.setAdapter(adapter);
         } else {
-            adapter.setSize(strings.size());
-            mListLv.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
         shopAdapter = new ShopAdapter(mContext, productList);
         mShoplistLv.setAdapter(shopAdapter);
@@ -233,16 +261,14 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
                 isScroll = true;
-                count = position;
-                mListLv.setAdapter(adapter);
-
+               count = position;
+                adapter.notifyDataSetChanged();
                 int rightSection = 0;
-                for (int i = 0; i < position + 1; i++) {
+                for (int i = 0; i < position; i++) {
                     rightSection += sectionedAdapter.getCountForSection(i) + 1;
                 }
-                mHeaderPhlv.setSelection(rightSection);
+                mHeaderPhlv.setSelection(rightSection + 1);
                 isScroll = false;
-
             }
 
         });
