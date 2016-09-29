@@ -5,7 +5,7 @@ package com.shop.Android.widget.ClassView.mode;
  * 小区商圈商品属性
  */
 public class ShopProduct {
-    private int id;
+    private String id;
     private String shopName;//店名
     private String price;//单价
     private String goods;//货物名称
@@ -36,11 +36,11 @@ public class ShopProduct {
         this.number = number;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
