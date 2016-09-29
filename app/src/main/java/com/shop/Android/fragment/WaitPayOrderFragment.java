@@ -1,6 +1,7 @@
 package com.shop.Android.fragment;
 
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ public class WaitPayOrderFragment extends BaseFragment {
                 openActivity(OrderDetailsActivity.class);
             }
         });
+
     }
 
     @Override
@@ -59,6 +61,12 @@ public class WaitPayOrderFragment extends BaseFragment {
             WaitPayViewHolder viewHolder = (WaitPayViewHolder) o;
             goodsAdapter = new GoodsAdapter(3,R.layout.item_order_goods,new GoodsViewHolder());
             viewHolder.mListSv.setAdapter(goodsAdapter);
+            viewHolder.mPayTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openActivity(OrderDetailsActivity.class);
+                }
+            });
 
         }
     }
@@ -71,6 +79,8 @@ public class WaitPayOrderFragment extends BaseFragment {
         TextView mTotalTv;
         TextView mNumTv;
         TextView mFeeTv;
+        TextView mPayTv;
+        TextView mDelTv;
 
 
     }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/bg">
+
+        <include layout="@layout/com_title_system"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="@color/color_888"
+                android:text="搜索“"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="泡面"
+                android:textSize="12dp"
+                android:textColor="@color/text_color"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_888"
+                android:textSize="12dp"
+                android:text="”相关订单结果"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <com.shop.Android.widget.AnimNoLineRefreshListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+        </com.shop.Android.widget.AnimNoLineRefreshListView>
+
+    </LinearLayout>
+
+</LinearLayout>

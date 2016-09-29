@@ -38,4 +38,5 @@ dependencies {
     compile files('libs/mta-sdk-1.6.2.jar')
     compile files('libs/libammsdk.jar')
     compile 'com.nineoldandroids:library:2.4.0'
+    compile files('libs/alipaySdk-20160516.jar')
 }

@@ -5,6 +5,508 @@
     android:background="@color/bg"
     android:orientation="vertical">
 
+    <include layout="@layout/com_title_system" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:background="@color/bg"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ay_submit_add_ll"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/addressbjx"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/ay_submit_add_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/ay_submit_add_iv"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/tjx" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/ay_submit_add_iv"
+                        android:text="选择收货地址"
+                        android:textColor="@color/my_color"
+                        android:textSize="14dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/ay_submit_address_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/ay_submit_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="默默"
+                        android:textColor="@color/color_888"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/ay_submit_phone_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/ay_submit_name_tv"
+                        android:text="15055889770"
+                        android:textColor="@color/color_888"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/ay_submit_address_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ay_submit_name_tv"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="合肥市政务区蔚蓝商务港"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/ay_submit_details_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ay_submit_address_tv"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="A幢2单元13层02室"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_fe" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="送达时间"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/ay_submit_delivery_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:text="立即送出(预计14:40送达)"
+                        android:textColor="@color/color_ea"
+                        android:textSize="12dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_fe" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="支付方式"
+                    android:textColor="@color/text_color"
+                    android:textSize="12dp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/ay_submit_alipay_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawableLeft="@drawable/submit_order_select"
+                        android:paddingLeft="10dp"
+                        android:text="  支付宝支付"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+
+                    <RadioButton
+                        android:id="@+id/ay_submit_wechat_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/submit_order_select"
+                        android:paddingLeft="10dp"
+                        android:text="  微信支付"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+
+                    <RadioButton
+                        android:id="@+id/ay_submit_pay_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/submit_order_select"
+                        android:paddingLeft="10dp"
+                        android:text="  货到付款"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_fe" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_fe" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <ImageView
+                        android:id="@+id/ay_submit_store_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/storex" />
+
+                    <TextView
+                        android:id="@+id/ay_submit_shop_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/ay_submit_store_iv"
+                        android:text="捷尔惠便利店"
+                        android:textColor="@color/text_color"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:text="有商家配送"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_fe" />
+
+                <com.shop.Android.widget.NoScrollListView
+                    android:id="@+id/ay_submit_scroll_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:divider="@null">
+
+                </com.shop.Android.widget.NoScrollListView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_fe" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="配送费"
+                        android:textColor="@color/color_888"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/ay_submit_fee_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:text="￥3"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="优惠"
+                        android:textColor="@color/color_888"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/ay_submit_preferential_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:text="￥0"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="总计"
+                        android:textColor="@color/color_888"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/ay_submit_total_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:text="￥23.1"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="实付"
+                        android:textColor="@color/text_color"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/ay_submit_actual_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:text="￥23.1"
+                        android:textColor="@color/my_color"
+                        android:textSize="14dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_fe" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="满20元买配送费"
+                    android:textColor="@color/my_color"
+                    android:textSize="14dp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_fe" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/color_888"
+                    android:text="备注"/>
+
+                <EditText
+                    android:id="@+id/ay_submit_content_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:hint="口味,偏好等要求"
+                    android:textSize="12dp"
+                    android:paddingLeft="10dp"
+                    android:gravity="top"
+                    android:paddingTop="10dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_fe" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bg"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ay_submit_total_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/jgbjx"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="14dp"
+                android:textColor="@color/text_color"
+                android:text="待支付"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:id="@+id/ay_submit_price_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textSize="14dp"
+                android:textColor="@color/my_color"
+                android:text="￥23.1"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/ay_submit_order_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@mipmap/tjbjx">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="14dp"
+                android:textColor="@color/white"
+                android:text="提价订单"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
