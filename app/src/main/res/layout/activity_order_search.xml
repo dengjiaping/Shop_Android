@@ -31,6 +31,7 @@
                 />
 
             <TextView
+                android:id="@+id/ay_search_content_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="泡面"
@@ -48,6 +49,7 @@
         </LinearLayout>
 
         <com.shop.Android.widget.AnimNoLineRefreshListView
+            android:id="@+id/ay_search_al"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none">

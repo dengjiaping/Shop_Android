@@ -7,4 +7,6 @@ public class ActionKey {
 
     //首页
     public static final String INDEX = "index/index";
-}
+    /**地址列表*/
+    public static final String ADDRESS_INDEX  = "address/index";
+ }
