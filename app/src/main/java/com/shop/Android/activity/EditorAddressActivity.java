@@ -7,8 +7,10 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.king.Utils.GsonUtil;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.shop.Android.base.BaseActvity;
+import com.shop.Net.Bean.AddressBean;
 import com.shop.R;
 
 /**
@@ -35,20 +37,51 @@ public class EditorAddressActivity extends BaseActvity {
     private EditText mRoomEt;
     private LinearLayout mRoomLl;
     private SwitchButton mDefaultSb;
+    private int type;
+    private int sex;
+    private AddressBean.DataBean addressBean;
 
 
 
     @Override
     protected int loadLayout() {
+        type = getIntent().getIntExtra("type",0);
+        if (null!=getIntent().getStringExtra("address")){
+            addressBean = GsonUtil.Str2Bean(getIntent().getStringExtra("address"),AddressBean.DataBean.class) ;
+        }
         return R.layout.activity_address_editor;
     }
 
     @Override
     protected void initTitleBar() {
-        initTitle("新增收货地址");
-        mTitleLeftIv.setImageResource(R.mipmap.back);
-        mTitleRightTv.setText("保存");
-        mTitleRightTv.setVisibility(View.VISIBLE);
+        if (type==1){
+            initTitle("修改收货地址");
+            mTitleLeftIv.setImageResource(R.mipmap.back);
+            mTitleRightTv.setText("保存");
+            mTitleRightTv.setVisibility(View.VISIBLE);
+            mNameEt.setText(addressBean.getContact());
+            mPhoneEt.setText(addressBean.getPhone());
+            if (addressBean.getSex().equals("0")){
+                mBoysRb.setChecked(true);
+                sex=0;
+            }else {
+                mGirlsRb.setChecked(true);
+                sex=1;
+            }
+            mCityEt.setText(addressBean.getCity());
+            mAreaEt.setText(addressBean.getArea());
+            mCommunityEt.setText(addressBean.getVillage());
+            mLayerEt.setText(addressBean.getFloor());
+            mUnitEt.setText(addressBean.getUnit());
+            mBuildingEt.setText(addressBean.getBuild());
+            mRoomEt.setText(addressBean.getRoom());
+        }else {
+            initTitle("新增收货地址");
+            mTitleLeftIv.setImageResource(R.mipmap.back);
+            mTitleRightTv.setText("保存");
+            mTitleRightTv.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
