@@ -23,7 +23,7 @@
     <com.shop.Android.widget.AnimNoLineRefreshListView
         android:id="@+id/ay_address_list_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="none"
         android:layout_weight="1">
 
