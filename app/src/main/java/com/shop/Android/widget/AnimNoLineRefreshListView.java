@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.king.Utils.UIUtil;
 import com.king.View.refreshview.XRefreshView;
+import com.king.View.refreshview.listener.OnBottomLoadMoreTime;
 import com.king.View.slidelistview.SlideListView;
 import com.shop.R;
 
@@ -59,7 +60,6 @@ public class AnimNoLineRefreshListView extends LinearLayout {
         mListNlv = (SlideListView) view.findViewById(R.id.refresh_list);
 
         mRefreshXrv = UIUtil.findViewById(view, R.id.refresh_xrv);
-
         // 设置是否可以下拉刷新
         mRefreshXrv.setPullRefreshEnable(true);
         // 设置是否可以上拉加载

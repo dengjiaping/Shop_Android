@@ -1,6 +1,8 @@
 package com.shop.Android.fragment;
 
+import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -70,8 +72,6 @@ public class CarFragment extends BaseFragment {
             }
         });
     }
-
-
 
     @Override
     protected void onClickSet(int i) {

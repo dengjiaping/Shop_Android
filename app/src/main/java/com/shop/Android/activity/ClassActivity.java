@@ -52,7 +52,7 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
 
 
     private String TAG = "class";
-    private boolean isScroll = true;
+    private boolean isScroll = false;
     private ListView mListLv;
     private PinnedHeaderListView mHeaderPhlv;
     private TestSectionedAdapter sectionedAdapter;
@@ -246,6 +246,8 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
         mHeaderPhlv.setAdapter(sectionedAdapter);
         sectionedAdapter.setCallBackListener(this);
 
+
+
         if (adapter == null) {
             adapter = new LeftAdapter(strings.size(), R.layout.categorize_item);
             mListLv.setAdapter(adapter);
@@ -261,7 +263,7 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
                 isScroll = true;
-               count = position;
+                count = position;
                 adapter.notifyDataSetChanged();
                 int rightSection = 0;
                 for (int i = 0; i < position; i++) {
@@ -272,7 +274,6 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
             }
 
         });
-
         mHeaderPhlv.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override

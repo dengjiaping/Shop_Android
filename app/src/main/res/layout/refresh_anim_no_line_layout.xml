@@ -9,6 +9,7 @@
 
     <com.king.View.refreshview.XRefreshView
         android:id="@+id/refresh_xrv"
+        android:descendantFocusability="afterDescendants"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

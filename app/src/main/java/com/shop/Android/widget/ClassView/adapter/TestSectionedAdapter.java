@@ -1,6 +1,7 @@
 package com.shop.Android.widget.ClassView.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alipay.security.mobile.module.commonutils.CommonUtils;
 import com.king.Utils.PictureUtil;
+import com.king.Utils.UIUtil;
+import com.shop.Android.activity.GoodsDetailActivity;
 import com.shop.Android.widget.ClassView.assistant.onCallBackListener;
 import com.shop.Android.widget.ClassView.mode.ProductType;
 import com.shop.Android.widget.ClassView.mode.ShopProduct;
+import com.shop.Net.Param.GoodsDetail;
 import com.shop.R;
 
 import java.util.List;
@@ -73,33 +78,54 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
             viewHolder.reduce = (ImageView) convertView.findViewById(R.id.reduce);
             viewHolder.shoppingNum = (TextView) convertView.findViewById(R.id.shoppingNum);
             viewHolder.type = (TextView) convertView.findViewById(R.id.type);
+            viewHolder.mBg = (LinearLayout)convertView.findViewById(R.id.bg);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final ShopProduct product = pruductCagests.get(section).getProduct().get(position);
-        viewHolder.name.setText(product.getGoods());
-        viewHolder.prise.setText(String.valueOf(product.getPrice()));
-        viewHolder.shoppingNum.setText(String.valueOf(product.getNumber()));
-        PictureUtil.Glide(product.getPicture(),viewHolder.head);
-        viewHolder.type.setText(product.getType());
-        if (product.getNumber() == 0) {
+        viewHolder.name.setText(pruductCagests.get(section).getProduct().get(position).getGoods());
+        viewHolder.prise.setText(String.valueOf(pruductCagests.get(section).getProduct().get(position).getPrice()));
+        viewHolder.shoppingNum.setText(String.valueOf(pruductCagests.get(section).getProduct().get(position).getNumber()));
+        PictureUtil.Glide(pruductCagests.get(section).getProduct().get(position).getPicture(),viewHolder.head);
+        viewHolder.type.setText(pruductCagests.get(section).getProduct().get(position).getType());
+        if (pruductCagests.get(section).getProduct().get(position).getNumber() == 0) {
             viewHolder.reduce.setVisibility(View.INVISIBLE);
             viewHolder.shoppingNum.setVisibility(View.INVISIBLE);
+        }else {
+            viewHolder.reduce.setVisibility(View.VISIBLE);
+            viewHolder.shoppingNum.setVisibility(View.VISIBLE);
         }
+        viewHolder.mBg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoodsDetail.type = "1";
+                GoodsDetail.goods_id = pruductCagests.get(section).getProduct().get(position).getId();
+                Intent intent = new Intent(context, GoodsDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
+        viewHolder.head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoodsDetail.type = "1";
+                GoodsDetail.goods_id = pruductCagests.get(section).getProduct().get(position).getId();
+                Intent intent = new Intent(context, GoodsDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
         viewHolder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num = product.getNumber();
+                int num = pruductCagests.get(section).getProduct().get(position).getNumber();
                 num++;
-                if (num == 1) {
+                if (num >= 1) {
                     ((LinearLayout) (v.getParent())).getChildAt(0).setVisibility(View.VISIBLE);
                     ((LinearLayout) (v.getParent())).getChildAt(1).setVisibility(View.VISIBLE);
                 }
-                product.setNumber(num);
-                viewHolder.shoppingNum.setText(product.getNumber() + "");
+                pruductCagests.get(section).getProduct().get(position).setNumber(num);
+                viewHolder.shoppingNum.setText(pruductCagests.get(section).getProduct().get(position).getNumber() + "");
                 if (callBackListener != null) {
-                    callBackListener.updateProduct(product, "1");
+                    callBackListener.updateProduct(pruductCagests.get(section).getProduct().get(position), "1");
                 } else {
                 }
                 if (mHolderClickListener != null) {
@@ -115,17 +141,17 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
         viewHolder.reduce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num = product.getNumber();
+                int num = pruductCagests.get(section).getProduct().get(position).getNumber();
                 if (num > 0) {
                     num--;
                     if (num == 0) {
                         ((LinearLayout) (v.getParent())).getChildAt(0).setVisibility(View.INVISIBLE);
                         ((LinearLayout) (v.getParent())).getChildAt(1).setVisibility(View.INVISIBLE);
                     }
-                    product.setNumber(num);
-                    viewHolder.shoppingNum.setText(product.getNumber() + "");
+                    pruductCagests.get(section).getProduct().get(position).setNumber(num);
+                    viewHolder.shoppingNum.setText(pruductCagests.get(section).getProduct().get(position).getNumber() + "");
                     if (callBackListener != null) {
-                        callBackListener.updateProduct(product, "2");
+                        callBackListener.updateProduct(pruductCagests.get(section).getProduct().get(position), "2");
                     } else {
                     }
                 }
@@ -176,6 +202,8 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
          * 减少
          */
         public ImageView reduce;
+
+        public LinearLayout mBg;
     }
 
     public void SetOnSetHolderClickListener(HolderClickListener holderClickListener) {

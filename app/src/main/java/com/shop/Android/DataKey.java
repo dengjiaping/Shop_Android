@@ -5,4 +5,7 @@ package com.shop.Android;
  */
 public class DataKey {
     public static final String USER = "USER";
+    public static final String TITLE = "TITLE";
+    public static final String CATE_ID = "CATE_ID";
+    public static final String IMAGE = "IMAGE";
 }

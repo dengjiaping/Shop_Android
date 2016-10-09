@@ -4,13 +4,17 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.media.Image;
+import android.os.Build;
+import android.os.Handler;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -18,6 +22,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -34,11 +40,18 @@ import com.king.Dialog.CustomDialog;
 import com.king.KingConfig;
 import com.king.Utils.DialogUtil;
 import com.king.Utils.PixelUtil;
+import com.king.Utils.SPrefUtil;
+import com.shop.Android.SPKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.base.TestAdapter;
 import com.shop.Android.widget.BgTextView;
 import com.shop.Android.widget.NoScrollGridView;
 import com.shop.Android.widget.NoScrollListView;
+import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Bean.SearchBean;
+import com.shop.Net.Param.GoodsDetail;
+import com.shop.Net.Param.Search;
 import com.shop.R;
 
 import org.w3c.dom.Text;
@@ -80,9 +93,9 @@ public class SearchActivity extends BaseActvity {
     protected void init() {
         F();
 
-//        mGridGv.setVisibility(View.GONE);
-//        mCarFl.setVisibility(View.GONE);
-        mSearchLl.setVisibility(View.GONE);
+        mGridGv.setVisibility(View.GONE);
+        mCarFl.setVisibility(View.GONE);
+        mSearchLl.setVisibility(View.VISIBLE);
         //热门搜索添加数据
         for (int i = 0; i < data.length; i++) {
             if (i % 3 == 0) {
@@ -98,6 +111,7 @@ public class SearchActivity extends BaseActvity {
                 @Override
                 public void onClick(View view) {
                     mSearchEt.setText(((TextView) (view)).getText().toString().trim());
+                    Post(ActionKey.SEARCH, new Search(getText(mSearchEt)), SearchBean.class);
                 }
             });
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -107,23 +121,116 @@ public class SearchActivity extends BaseActvity {
             hotll.addView(textView);
         }
 
-        //历史记录添加数据
-        mHistoryLl.setAdapter(new TestAdapter(5, R.layout.item_search_history_list));
-        mHistoryLl.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        upHistory();
+
+        mSearchEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mSearchEt.setText(((TextView) ((RelativeLayout) (view)).getChildAt(1)).getText().toString().trim());
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    for (int i = 0; i < SPrefUtil.Function.getData(SPKey.HISTCOUNT, 0); i++) {
+                        if (SPrefUtil.Function.getData(SPKey.HIST + i, "").equals(getText(mSearchEt))) {
+                            isEqual = true;
+                            break;
+                        } else {
+                            isEqual = false;
+                        }
+                    }
+                    if (!isEqual) {
+                        SPrefUtil.Function.putData(SPKey.HIST + SPrefUtil.Function.getData(SPKey.HISTCOUNT, 0), getText(mSearchEt));
+                        SPrefUtil.Function.putData(SPKey.HISTCOUNT, SPrefUtil.Function.getData(SPKey.HISTCOUNT, 0) + 1);
+                    }
+                    upHistory();
+                    //隐藏软键盘
+                    InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                    Post(ActionKey.SEARCH, new Search(getText(mSearchEt)), SearchBean.class);
+                }
+                return true;
             }
         });
+        setOnClicks(mDeleteLl, mCancelTv, mCarFl, mSearchEt);
+    }
 
-        if (adapter == null) {
-            adapter = new HistoryAdapter(10, R.layout.item_search_goods_grid, new HistoryViewHolder());
+    private void upHistory() {
+        //历史记录添加数据
+        if (SPrefUtil.Function.getData(SPKey.HISTCOUNT, -1) >= 0) {
+            mHistoryTv.setVisibility(View.VISIBLE);
+            mHistoryLl.setVisibility(View.VISIBLE);
+            mDeleteLl.setVisibility(View.VISIBLE);
+            if (histAdapter == null) {
+                histAdapter = new HistAdapter(SPrefUtil.Function.getData(SPKey.HISTCOUNT, 0), R.layout.item_search_history_list, new HistViewHolder());
+                mHistoryLl.setAdapter(histAdapter);
+            } else {
+                histAdapter.setSize(SPrefUtil.Function.getData(SPKey.HISTCOUNT, 0));
+                mHistoryLl.setAdapter(histAdapter);
+            }
+            mHistoryLl.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    mSearchEt.setText(((TextView) ((RelativeLayout) (view)).getChildAt(1)).getText().toString().trim());
+                    Post(ActionKey.SEARCH, new Search(getText(mSearchEt)), SearchBean.class);
+                }
+            });
         } else {
-            adapter.setSize(10);
+            mHistoryTv.setVisibility(View.GONE);
+            mHistoryLl.setVisibility(View.GONE);
+            mDeleteLl.setVisibility(View.GONE);
         }
-        mGridGv.setAdapter(adapter);
 
-        setOnClicks(mDeleteLl, mCancelTv, mCarFl);
+    }
+
+    class HistViewHolder {
+        String TAG = "hist";
+        TextView mContentTv;
+
+    }
+
+    private HistAdapter histAdapter;
+
+    class HistAdapter extends KingAdapter {
+
+        public HistAdapter(int size, int layoutId, Object viewHolder) {
+            super(size, layoutId, viewHolder);
+        }
+
+        @Override
+        public void padData(int i, Object o) {
+            HistViewHolder viewHolder = (HistViewHolder) o;
+            viewHolder.mContentTv.setText(SPrefUtil.Function.getData(SPKey.HIST + i, ""));
+        }
+    }
+
+
+    private boolean isEqual = false;
+    private SearchBean searchBean;
+
+    @Override
+    public void onSuccess(String what, Object result) {
+        switch (what) {
+            case ActionKey.SEARCH:
+                searchBean = (SearchBean) result;
+                if (searchBean.getCode() == 200) {
+                    if (searchBean.getData().size() != 0) {
+                        mGridGv.setVisibility(View.VISIBLE);
+                        mCarFl.setVisibility(View.VISIBLE);
+                        mSearchLl.setVisibility(View.GONE);
+                        if (adapter == null) {
+                            adapter = new HistoryAdapter(searchBean.getData().size(), R.layout.item_search_goods_grid, new HistoryViewHolder());
+                        } else {
+                            adapter.setSize(searchBean.getData().size());
+                        }
+                        mGridGv.setAdapter(adapter);
+                        mSearchEt.requestFocus();
+                        mSearchEt.setSelection(getText(mSearchEt).length());
+                    } else {
+                        ToastInfo("没有找到任何商品");
+                    }
+                } else {
+                    ToastInfo(searchBean.getMsg());
+                }
+                break;
+        }
     }
 
     @Override
@@ -138,6 +245,11 @@ public class SearchActivity extends BaseActvity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                         //删除历史记录的数据
+                        for (int j = 0; j <= SPrefUtil.Function.getData(SPKey.HISTCOUNT, 0); j++) {
+                            SPrefUtil.Function.removeData(SPKey.HIST + j);
+                        }
+                        SPrefUtil.Function.removeData(SPKey.HISTCOUNT);
+
                         mHistoryTv.setVisibility(View.GONE);
                         mHistoryLl.setVisibility(View.GONE);
                         mDeleteLl.setVisibility(View.GONE);
@@ -154,6 +266,11 @@ public class SearchActivity extends BaseActvity {
             case R.id.ay_search_car_fl:
                 openDataAct(MainActivity.class, "1");
                 break;
+            case R.id.ay_search_search_et:
+                mGridGv.setVisibility(View.GONE);
+                mCarFl.setVisibility(View.GONE);
+                mSearchLl.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
@@ -168,15 +285,33 @@ public class SearchActivity extends BaseActvity {
         @Override
         public void padData(int i, Object o) {
             final HistoryViewHolder viewHolder = (HistoryViewHolder) o;
+            final SearchBean.DataBean dataBean = searchBean.getData().get(i);
             viewHolder.mCarIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     addCart((ImageView) ((LinearLayout) ((view.getParent()).getParent())).getChildAt(0));
                 }
             });
+
+            viewHolder.mPriceTv.setText("￥" + dataBean.getPrice());
             SpannableString msp = new SpannableString(viewHolder.mPriceTv.getText().toString());
             msp.setSpan(new RelativeSizeSpan(0.7f), viewHolder.mPriceTv.getText().toString().indexOf(".") + 1, viewHolder.mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
             viewHolder.mPriceTv.setText(msp);
+
+            Glide(dataBean.getImage(), viewHolder.mIconIv);
+            viewHolder.mWeightTv.setText(dataBean.getSubtitled());
+            viewHolder.mNameTv.setText(dataBean.getTitle());
+
+            viewHolder.mBgLl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    GoodsDetail.type = "1";
+                    GoodsDetail.goods_id = "" + dataBean.getId();
+                    openActivity(GoodsDetailActivity.class);
+                }
+            });
+
+
         }
     }
 
@@ -187,6 +322,7 @@ public class SearchActivity extends BaseActvity {
         TextView mWeightTv;
         TextView mPriceTv;
         ImageView mCarIv;
+        LinearLayout mBgLl;
     }
 
 
@@ -271,7 +407,7 @@ public class SearchActivity extends BaseActvity {
             ObjectAnimator animtion3 = ObjectAnimator.ofFloat(goods, "rotation", 0, 360);
             animtion3.setDuration(200);
             animtion3.setRepeatCount(5);
-    //      五、 开始执行动画
+            //      五、 开始执行动画
             AnimatorSet set = new AnimatorSet();    //创建动画集对象
             set.playTogether(valueAnimator, animtion3);       //添加位置变化动画
             set.setDuration(1300).start();

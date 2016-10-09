@@ -12,6 +12,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/ay_search_search_et"
             android:layout_width="0dp"
@@ -24,6 +25,8 @@
             android:drawablePadding="10dp"
             android:gravity="left|center_vertical"
             android:hint="请您搜索商品"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
             android:paddingLeft="5dp"
             android:textColor="@color/black"
             android:textColorHint="#898989"

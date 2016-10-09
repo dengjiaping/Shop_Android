@@ -18,5 +18,12 @@ public class ActionKey {
     public static final String LOGIN = "login/index";
     //小方分类的接口
     public static final String CLASS = "goods/index";
+    //商品详情
+    public static final String GOODSDETAIL = "goods/detail";
+
+    //搜索
+    public static final String SEARCH = "goods/search";
+    //商品分类列表
+    public static final String GOODSCATE = "goods/categoods";
 }
 
