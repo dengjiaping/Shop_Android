@@ -371,7 +371,8 @@ public class GoodsDetailActivity extends BaseActvity {
     protected void onClickSet(int i) {
         switch (i) {
             case R.id.ay_detail_car_ll:
-                openDataAct(MainActivity.class, "1");
+                MainActivity.index = 1;
+                openActivity(MainActivity.class);
                 break;
             case R.id.ay_detail_add_tv:
                 addCart(mAddTv);

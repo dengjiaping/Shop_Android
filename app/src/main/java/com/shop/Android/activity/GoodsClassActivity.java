@@ -42,7 +42,7 @@ public class GoodsClassActivity extends BaseActvity {
 
     @Override
     protected int loadLayout() {
-        Post(ActionKey.GOODSCATE,new GoodsCate(kingData.getData(DataKey.CATE_ID),page), GoodsCateBean.class);
+        Post(ActionKey.GOODSCATE, new GoodsCate(kingData.getData(DataKey.CATE_ID), page), GoodsCateBean.class);
         return R.layout.activity_goodsclass;
     }
 
@@ -55,12 +55,13 @@ public class GoodsClassActivity extends BaseActvity {
 
 
     private GoodsCateBean goodsCateBean;
+
     @Override
     public void onSuccess(String what, Object result) {
-        switch (what){
+        switch (what) {
             case ActionKey.GOODSCATE:
                 goodsCateBean = (GoodsCateBean) result;
-                if(goodsCateBean.getCode() == 200){
+                if (goodsCateBean.getCode() == 200) {
                     if (adapter == null) {
                         adapter = new GridAdapter(goodsCateBean.getData().size(), R.layout.item_goodsclass_grid, new GridViewHolder());
                     } else {
@@ -75,11 +76,18 @@ public class GoodsClassActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-        PictureUtil.GlideSpecial(kingData.getData(DataKey.IMAGE),mIconIv);
+        PictureUtil.GlideSpecial(kingData.getData(DataKey.IMAGE), mIconIv);
+        setOnClicks(mCarFl);
     }
 
     @Override
     protected void onClickSet(int i) {
+        switch (i) {
+            case R.id.ay_class_car_fl:
+                MainActivity.index = 1;
+                openActivity(MainActivity.class);
+                break;
+        }
 
     }
 
@@ -112,7 +120,7 @@ public class GoodsClassActivity extends BaseActvity {
                 }
             });
             final GoodsCateBean.DataBean dataBean = goodsCateBean.getData().get(i);
-            Glide(dataBean.getImage(),viewHolder.mIconIv);
+            Glide(dataBean.getImage(), viewHolder.mIconIv);
             viewHolder.mNameTv.setText(dataBean.getTitle());
             viewHolder.mSubtitleTv.setText(dataBean.getSubtitled());
 

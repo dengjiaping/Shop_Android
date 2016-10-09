@@ -264,7 +264,8 @@ public class SearchActivity extends BaseActvity {
                 animFinsh();
                 break;
             case R.id.ay_search_car_fl:
-                openDataAct(MainActivity.class, "1");
+                MainActivity.index = 1;
+                openActivity(MainActivity.class);
                 break;
             case R.id.ay_search_search_et:
                 mGridGv.setVisibility(View.GONE);
