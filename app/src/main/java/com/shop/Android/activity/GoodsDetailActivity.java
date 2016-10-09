@@ -18,6 +18,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StrikethroughSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,17 +46,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.king.KingApplication;
+import com.king.Utils.LogCat;
 import com.king.Utils.PixelUtil;
+import com.king.Utils.UIUtil;
 import com.king.View.gradationscroll.GradationScrollView;
 import com.king.View.refreshview.XRefreshView;
 import com.king.View.refreshview.XScrollView;
 import com.shop.Android.adapter.ImagePaperAdapter;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.RefreshView;
+import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Bean.GoodsDetailBean;
+import com.shop.Net.Param.GoodsDetail;
 import com.shop.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.ToIntBiFunction;
 
 /**
  * Created by admin on 2016/9/23.
@@ -68,6 +80,12 @@ public class GoodsDetailActivity extends BaseActvity {
     private TextView mMoreTv;
     private ImageView mUpIv;
 
+    private TextView mNameTv;
+    private TextView mSubtitleTv;
+    private TextView mPriceTv;
+    private TextView mCommentTv;
+    private TextView mIntroTv;
+
 
     @Override
     protected int loadLayout() {
@@ -76,12 +94,57 @@ public class GoodsDetailActivity extends BaseActvity {
 
     @Override
     protected void initTitleBar() {
+        Post(ActionKey.GOODSDETAIL, new GoodsDetail(), GoodsDetailBean.class);
         initTitle("商品详情");
         mTitleLeftIv.setImageResource(R.mipmap.back);
     }
 
     private boolean isFirst = true;
     private WebView mWebWv;
+
+
+    private GoodsDetailBean goodsDetailBean;
+
+    @Override
+    public void onSuccess(String what, Object result) {
+        switch (what) {
+            case ActionKey.GOODSDETAIL:
+                goodsDetailBean = (GoodsDetailBean) result;
+                if (goodsDetailBean.getCode() == 200) {
+                    mNameTv.setText(goodsDetailBean.getData().getTitle());
+                    mSubtitleTv.setText(goodsDetailBean.getData().getSubtitled());
+
+
+                    if(goodsDetailBean.getData().getActivity_price() != null){
+                        SpannableString msp = new SpannableString(goodsDetailBean.getData().getActivity_price());
+                        msp.setSpan(new RelativeSizeSpan(0.8f), goodsDetailBean.getData().getActivity_price().indexOf(".") + 1, goodsDetailBean.getData().getActivity_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                        SpannableString msp1 = new SpannableString("￥" + goodsDetailBean.getData().getPrice() + " ");
+                        msp1.setSpan(new RelativeSizeSpan(0.8f), 0, goodsDetailBean.getData().getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                        msp1.setSpan(new StrikethroughSpan(), 0, goodsDetailBean.getData().getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, goodsDetailBean.getData().getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        mPriceTv.setText("");
+                        mPriceTv.append("￥");
+                        mPriceTv.append(msp);
+                        mPriceTv.append("  ");
+                        mPriceTv.append(msp1);
+                        mPriceTv.append(" ");
+                    }else {
+                        mPriceTv.setText("￥" + goodsDetailBean.getData().getPrice());
+                        SpannableString msp = new SpannableString(mPriceTv.getText().toString());
+                        msp.setSpan(new RelativeSizeSpan(0.7f), mPriceTv.getText().toString().indexOf(".") + 1, mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                        mPriceTv.setText(msp);
+                    }
+
+                    mIntroTv.setText(goodsDetailBean.getData().getIntro());
+                    mCommentTv.setText("" + goodsDetailBean.getData().getComment_num() + "人评价");
+                    addViewPager();
+                    addRecycleView();
+                } else {
+                    ToastInfo("网络未知错误");
+                }
+                break;
+        }
+    }
 
     @Override
     protected void init() {
@@ -141,8 +204,6 @@ public class GoodsDetailActivity extends BaseActvity {
                 }
             }
         });
-        addViewPager();
-        addRecycleView();
         setOnClicks(mCarLl, mAddTv, mUpIv);
 
     }
@@ -183,32 +244,54 @@ public class GoodsDetailActivity extends BaseActvity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, final int position) {
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            final GoodsDetailBean.DataBean.RecommendBean recommendBean = goodsDetailBean.getData().getRecommend().get(position);
+            Glide(recommendBean.getImage(), holder.mIconIv);
+            holder.mNameTv.setText(recommendBean.getTitle());
+
+            holder.mPriceTv.setText("￥" + recommendBean.getPrice());
+            SpannableString msp = new SpannableString(holder.mPriceTv.getText().toString());
+            msp.setSpan(new RelativeSizeSpan(0.7f), holder.mPriceTv.getText().toString().indexOf(".") + 1, holder.mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+            holder.mPriceTv.setText(msp);
+
+            holder.mBgLl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    GoodsDetail.type = "1";
+                    GoodsDetail.goods_id = recommendBean.getId() + "";
+                    openActivity(GoodsDetailActivity.class);
+                }
+            });
+
         }
 
         @Override
         public int getItemCount() {
-            return 10;
+            return goodsDetailBean.getData().getRecommend().size();
         }
     }
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mContentTv;
+        ImageView mIconIv;
+        TextView mNameTv;
+        TextView mPriceTv;
+        ImageView mCarIv;
+        LinearLayout mBgLl;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mIconIv = UIUtil.findViewById(itemView, R.id.item_hist_icon_iv);
+            mNameTv = UIUtil.findViewById(itemView, R.id.item_hist_name_tv);
+            mPriceTv = UIUtil.findViewById(itemView, R.id.item_hist_price_tv);
+            mCarIv = UIUtil.findViewById(itemView, R.id.item_hist_car_iv);
+            mBgLl = UIUtil.findViewById(itemView,R.id.item_hist_bg_ll);
         }
     }
 
 
     private List<ImageView> list;
-    private String[] urls = new String[]{
-            "http://img12.360buyimg.com/cms/jfs/t3094/223/2369067449/150948/d6251ab7/57e091f4N8ebf5a20.jpg",
-            "http://img11.360buyimg.com/cms/jfs/t3085/88/2377100707/165269/ad578270/57e09f82Nbc26248a.jpg",
-            "http://img14.360buyimg.com/cms/jfs/t3256/282/2324505968/175172/2448654d/57e09e13Nceacbce1.jpg"
-    };
     private LinearLayout mPointLl;
 
     private void addViewPager() {
@@ -217,23 +300,25 @@ public class GoodsDetailActivity extends BaseActvity {
         mPicVp.setLayoutParams(layoutParams);
 
         //填充点下的点，固定代码
-        for (int i = 0; i < urls.length; i++) {
-            ImageView point = new ImageView(mContext);
-            point.setBackgroundResource(R.drawable.point_new_selector);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, -2);
-            params.leftMargin = 15;
-            point.setLayoutParams(params);
-            mPointLl.addView(point);
-            if (i == 0) {
-                point.setEnabled(true);
-            } else {
-                point.setEnabled(false);
+        if (goodsDetailBean.getData().getDetail_image().size() > 1) {
+            for (int i = 0; i < goodsDetailBean.getData().getDetail_image().size(); i++) {
+                ImageView point = new ImageView(mContext);
+                point.setBackgroundResource(R.drawable.point_new_selector);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, -2);
+                params.leftMargin = 15;
+                point.setLayoutParams(params);
+                mPointLl.addView(point);
+                if (i == 0) {
+                    point.setEnabled(true);
+                } else {
+                    point.setEnabled(false);
+                }
             }
         }
-        for (int i = 0; i < urls.length; i++) {
+        for (int i = 0; i < goodsDetailBean.getData().getDetail_image().size(); i++) {
             View view = LayoutInflater.from(this).inflate(R.layout.item_image_vp, null);
             ImageView image = (ImageView) view.findViewById(R.id.img);
-            Glide(urls[i], image);
+            Glide(goodsDetailBean.getData().getDetail_image().get(i), image);
             list.add(image);
         }
         ImagePaperAdapter adapter = new ImagePaperAdapter((ArrayList) list);
@@ -267,7 +352,7 @@ public class GoodsDetailActivity extends BaseActvity {
 
         @Override
         public void onPageSelected(int position) {
-            int index = position % urls.length;
+            int index = position % goodsDetailBean.getData().getDetail_image().size();
 //                String msg = text_vp[IndexBean];
 //                mText.setText(msg);
             for (int i = 0; i < mPointLl.getChildCount(); i++) {
@@ -321,7 +406,7 @@ public class GoodsDetailActivity extends BaseActvity {
         if (count < 3) {
             final ImageView goods = new ImageView(mContext);
             count++;
-            GlideCircle(urls[mPicVp.getCurrentItem()], goods);
+            GlideCircle(goodsDetailBean.getData().getDetail_image().get(mPicVp.getCurrentItem()), goods);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
             mBgRl.addView(goods, params);
 

@@ -59,10 +59,11 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/ay_detail_name_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="1dp"
-                            android:lines="2"
+                            android:maxLines="2"
                             android:paddingBottom="5dp"
                             android:paddingLeft="8dp"
                             android:paddingRight="15dp"
@@ -72,6 +73,7 @@
                             android:textSize="16dp" />
 
                         <TextView
+                            android:id="@+id/ay_detail_subtitle_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="8dp"
@@ -88,6 +90,7 @@
                             android:paddingLeft="8dp">
 
                             <TextView
+                                android:id="@+id/ay_detail_price_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="8dp"
@@ -101,12 +104,13 @@
                                 android:layout_weight="1" />
 
                             <TextView
+                                android:id="@+id/ay_detail_comment_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="15dp"
                                 android:drawableLeft="@drawable/red_star"
                                 android:drawablePadding="10dp"
-                                android:text="200人评加"
+                                android:text="200人评价"
                                 android:textColor="#A2A2A2"
                                 android:textSize="14dp" />
                         </LinearLayout>
@@ -143,6 +147,7 @@
                             android:textSize="16dp" />
 
                         <TextView
+                            android:id="@+id/ay_detail_intro_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignLeft="@+id/flag1"
@@ -219,6 +224,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:visibility="invisible"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="20dp"

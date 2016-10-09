@@ -6,6 +6,9 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
@@ -16,9 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.king.Base.KingAdapter;
+import com.king.Utils.PictureUtil;
+import com.shop.Android.DataKey;
 import com.shop.Android.base.BaseActvity;
-import com.shop.Android.base.TestAdapter;
 import com.shop.Android.widget.NoScrollGridView;
+import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.GoodsCateBean;
+import com.shop.Net.Param.GoodsCate;
+import com.shop.Net.Param.GoodsDetail;
 import com.shop.R;
 
 /**
@@ -29,29 +37,45 @@ public class GoodsClassActivity extends BaseActvity {
 
     private String TAG = "class";
     private NoScrollGridView mGridGv;
+    private String page = 1 + "";
+    private ImageView mIconIv;
 
     @Override
     protected int loadLayout() {
+        Post(ActionKey.GOODSCATE,new GoodsCate(kingData.getData(DataKey.CATE_ID),page), GoodsCateBean.class);
         return R.layout.activity_goodsclass;
     }
 
     @Override
     protected void initTitleBar() {
-        initTitle("奶乳制品");
+        initTitle(kingData.getData(DataKey.TITLE));
         mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
         mTitleLeftIv.setImageResource(R.mipmap.back);
+    }
+
+
+    private GoodsCateBean goodsCateBean;
+    @Override
+    public void onSuccess(String what, Object result) {
+        switch (what){
+            case ActionKey.GOODSCATE:
+                goodsCateBean = (GoodsCateBean) result;
+                if(goodsCateBean.getCode() == 200){
+                    if (adapter == null) {
+                        adapter = new GridAdapter(goodsCateBean.getData().size(), R.layout.item_goodsclass_grid, new GridViewHolder());
+                    } else {
+                        adapter.setSize(goodsCateBean.getData().size());
+                    }
+                    mGridGv.setAdapter(adapter);
+                }
+                break;
+        }
     }
 
     @Override
     protected void init() {
         F();
-        if (adapter == null) {
-            adapter = new GridAdapter(10, R.layout.item_goodsclass_grid, new GridViewHolder());
-            mGridGv.setAdapter(adapter);
-        } else {
-            adapter.setSize(10);
-        }
-
+        PictureUtil.GlideSpecial(kingData.getData(DataKey.IMAGE),mIconIv);
     }
 
     @Override
@@ -62,10 +86,14 @@ public class GoodsClassActivity extends BaseActvity {
     private GridAdapter adapter;
 
     class GridViewHolder {
-
         String TAG = "goodsclass";
         ImageView mCarIv;
         TextView mPriceTv;
+        ImageView mIconIv;
+        TextView mNameTv;
+        TextView mSubtitleTv;
+        LinearLayout mBgLl;
+
     }
 
     class GridAdapter extends KingAdapter {
@@ -81,6 +109,24 @@ public class GoodsClassActivity extends BaseActvity {
                 @Override
                 public void onClick(View view) {
                     addCart((ImageView) ((LinearLayout) ((view.getParent()).getParent())).getChildAt(0));
+                }
+            });
+            final GoodsCateBean.DataBean dataBean = goodsCateBean.getData().get(i);
+            Glide(dataBean.getImage(),viewHolder.mIconIv);
+            viewHolder.mNameTv.setText(dataBean.getTitle());
+            viewHolder.mSubtitleTv.setText(dataBean.getSubtitled());
+
+            viewHolder.mPriceTv.setText("￥" + dataBean.getPrice());
+            SpannableString msp = new SpannableString(viewHolder.mPriceTv.getText().toString());
+            msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mPriceTv.getText().toString().indexOf(".") + 1, viewHolder.mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+            viewHolder.mPriceTv.setText(msp);
+
+            viewHolder.mBgLl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    GoodsDetail.type = "1";
+                    GoodsDetail.goods_id = dataBean.getId();
+                    openActivity(GoodsDetailActivity.class);
                 }
             });
         }

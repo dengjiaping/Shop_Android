@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="150dp"
+    android:id="@+id/item_hist_bg_ll"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="8dp"
@@ -20,11 +21,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
-        android:lines="2"
+        android:maxLines="2"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:text="江山如此多娇江山如此多娇江山如此多娇江山如此多娇"
+        android:text="江山如"
         android:textColor="#333"
         android:textSize="16dp" />
 

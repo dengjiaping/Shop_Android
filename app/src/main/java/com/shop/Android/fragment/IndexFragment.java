@@ -41,6 +41,7 @@ import com.king.View.refreshview.XRefreshView;
 import com.king.View.refreshview.listener.OnBottomLoadMoreTime;
 import com.king.View.refreshview.listener.OnTopRefreshTime;
 import com.king.View.refreshview.ui.smileyloadingview.SmileyHeaderView;
+import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
 import com.shop.Android.activity.ClassActivity;
 import com.shop.Android.activity.EachOtherActivity;
@@ -60,6 +61,7 @@ import com.shop.Android.widget.RefreshView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.IndexBean;
+import com.shop.Net.Param.GoodsDetail;
 import com.shop.R;
 
 import java.util.ArrayList;
@@ -99,7 +101,7 @@ public class IndexFragment extends BaseFragment {
     private TextView mTitleoneTv;
 
 
-    public void addData(Object result){
+    public void addData(Object result) {
         SPrefUtil.Function.putData(SPKey.INDEX, GsonUtil.Bean2Str(result));
         indexBean = (IndexBean) result;
 
@@ -135,12 +137,6 @@ public class IndexFragment extends BaseFragment {
                 adapter.setSize(indexBean.getData().getCgoods().size());
                 mListNlv.setAdapter(adapter);
             }
-            mListNlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    openActivity(GoodsClassActivity.class);
-                }
-            });
         }
         //今日特卖
         if (indexBean.getData().getActivity().getGoods() != null && indexBean.getData().getActivity().getGoods().size() != 0) {
@@ -167,7 +163,7 @@ public class IndexFragment extends BaseFragment {
             public void run() {
                 has();
             }
-        },1000);
+        }, 1000);
     }
 
 
@@ -178,9 +174,9 @@ public class IndexFragment extends BaseFragment {
                 //模拟数据加载失败的情况
                 mRefreshXrv.stopRefresh();
                 mTitleLl.setVisibility(View.VISIBLE);
-                if(!SPrefUtil.Function.getData(SPKey.INDEX,"").equals(GsonUtil.Bean2Str(result))){
+                if (!SPrefUtil.Function.getData(SPKey.INDEX, "").equals(GsonUtil.Bean2Str(result))) {
                     addData(result);
-                }else {
+                } else {
                     LogCat.e("没有数据被更新");
                 }
                 break;
@@ -192,10 +188,10 @@ public class IndexFragment extends BaseFragment {
     protected void init() {
         F();
         loading();
-        if(SPrefUtil.Function.getData(SPKey.INDEX,"").isEmpty()){
+        if (SPrefUtil.Function.getData(SPKey.INDEX, "").isEmpty()) {
             Get(ActionKey.INDEX, IndexBean.class);
-        }else {
-            addData(GsonUtil.Str2Bean(SPrefUtil.Function.getData(SPKey.INDEX,""),IndexBean.class));
+        } else {
+            addData(GsonUtil.Str2Bean(SPrefUtil.Function.getData(SPKey.INDEX, ""), IndexBean.class));
             Get(ActionKey.INDEX, IndexBean.class);
         }
         addTitleSlideChange();
@@ -210,7 +206,7 @@ public class IndexFragment extends BaseFragment {
         mRefreshXrv.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
             @Override
             public void onRefresh() {
-                if(network.getNetworkState() == Network.NETWORN_NONE){
+                if (network.getNetworkState() == Network.NETWORN_NONE) {
                     ToastInfo("请检查网络");
                     noWifi();
                     //模拟数据加载失败的情况
@@ -323,9 +319,10 @@ public class IndexFragment extends BaseFragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             try {
-                IndexBean.DataBean.ActivityBean.GoodsBean bean = indexBean.getData().getActivity().getGoods().get(position);
+                final IndexBean.DataBean.ActivityBean.GoodsBean bean = indexBean.getData().getActivity().getGoods().get(position);
                 Glide(bean.getImage(), holder.mIconIv);
                 holder.mNameTv.setText(bean.getTitle());
+
                 SpannableString msp = new SpannableString(bean.getActivity_price());
                 msp.setSpan(new RelativeSizeSpan(0.8f), bean.getActivity_price().indexOf(".") + 1, bean.getActivity_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
                 SpannableString msp1 = new SpannableString("￥" + bean.getPrice() + " ");
@@ -338,6 +335,14 @@ public class IndexFragment extends BaseFragment {
                 holder.mPriceTv.append("  ");
                 holder.mPriceTv.append(msp1);
                 holder.mPriceTv.append(" ");
+                holder.mBgLl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        GoodsDetail.goods_id = bean.getId();
+                        GoodsDetail.type = "2";
+                        openActivity(GoodsDetailActivity.class);
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -355,12 +360,14 @@ public class IndexFragment extends BaseFragment {
         TextView mNameTv;
         ImageView mIconIv;
         TextView mPriceTv;
+        LinearLayout mBgLl;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mIconIv = UIUtil.findViewById(itemView, R.id.item_index_icon_iv);
             mNameTv = UIUtil.findViewById(itemView, R.id.item_index_name_tv);
             mPriceTv = UIUtil.findViewById(itemView, R.id.item_index_price_tv);
+            mBgLl = UIUtil.findViewById(itemView, R.id.item_index_bg_ll);
         }
     }
 
@@ -374,10 +381,19 @@ public class IndexFragment extends BaseFragment {
 
         @Override
         public void padData(int i, Object o) {
-            IndexBean.DataBean.CgoodsBean bean = indexBean.getData().getCgoods().get(i);
+            final IndexBean.DataBean.CgoodsBean bean = indexBean.getData().getCgoods().get(i);
             IndexViewHolder viewHolder = (IndexViewHolder) o;
             try {
                 Glide(bean.getImage(), viewHolder.mIconIv);
+                viewHolder.mIconIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kingData.putData(DataKey.TITLE, bean.getName());
+                        kingData.putData(DataKey.CATE_ID, bean.getId());
+                        kingData.putData(DataKey.IMAGE, bean.getImage());
+                        openActivity(GoodsClassActivity.class);
+                    }
+                });
 
                 Glide(bean.getList().get(0).getImage(), viewHolder.mOneIv);
                 viewHolder.mOnenameTv.setText(bean.getList().get(0).getTitle());
@@ -385,6 +401,14 @@ public class IndexFragment extends BaseFragment {
                 SpannableString msp = new SpannableString(viewHolder.mOnepriceTv.getText().toString());
                 msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mOnepriceTv.getText().toString().indexOf(".") + 1, viewHolder.mOnepriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
                 viewHolder.mOnepriceTv.setText(msp);
+                viewHolder.mOnebgLl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        GoodsDetail.type = "1";
+                        GoodsDetail.goods_id = bean.getList().get(0).getId();
+                        openActivity(GoodsDetailActivity.class);
+                    }
+                });
 
                 Glide(bean.getList().get(1).getImage(), viewHolder.mTwoIv);
                 viewHolder.mTwonameTv.setText(bean.getList().get(1).getTitle());
@@ -392,6 +416,14 @@ public class IndexFragment extends BaseFragment {
                 msp = new SpannableString(viewHolder.mTwopriceTv.getText().toString());
                 msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mTwopriceTv.getText().toString().indexOf(".") + 1, viewHolder.mTwopriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
                 viewHolder.mTwopriceTv.setText(msp);
+                viewHolder.mTwobgLl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        GoodsDetail.type = "1";
+                        GoodsDetail.goods_id = bean.getList().get(1).getId();
+                        openActivity(GoodsDetailActivity.class);
+                    }
+                });
 
                 Glide(bean.getList().get(2).getImage(), viewHolder.mThreeIv);
                 viewHolder.mThreenameTv.setText(bean.getList().get(2).getTitle());
@@ -399,6 +431,14 @@ public class IndexFragment extends BaseFragment {
                 msp = new SpannableString(viewHolder.mThreepriceTv.getText().toString());
                 msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mThreepriceTv.getText().toString().indexOf(".") + 1, viewHolder.mThreepriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
                 viewHolder.mThreepriceTv.setText(msp);
+                viewHolder.mThreebgLl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        GoodsDetail.type = "1";
+                        GoodsDetail.goods_id = bean.getList().get(2).getId();
+                        openActivity(GoodsDetailActivity.class);
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -418,6 +458,9 @@ public class IndexFragment extends BaseFragment {
         ImageView mThreeIv;
         TextView mThreenameTv;
         TextView mThreepriceTv;
+        LinearLayout mOnebgLl;
+        LinearLayout mTwobgLl;
+        LinearLayout mThreebgLl;
     }
 
 }
