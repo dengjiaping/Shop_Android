@@ -52,7 +52,7 @@ public class AddressManagerActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-        Post(ActionKey.ADDRESS_INDEX, new AddressParam("c521bb2d5b5f5e309046e04f67ef5bc3"), AddressBean.class);
+        Post(ActionKey.ADDRESS_INDEX, new AddressParam("02dd2b6cf803dfa77f2dd5cc95e69651"), AddressBean.class);
         setOnClicks(mAddRl);
         mTitleRightTv.setOnClickListener(new View.OnClickListener() {
 
@@ -76,7 +76,7 @@ public class AddressManagerActivity extends BaseActvity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Post(ActionKey.ADDRESS_INDEX, new AddressParam("c521bb2d5b5f5e309046e04f67ef5bc3"), AddressBean.class);
+                        Post(ActionKey.ADDRESS_INDEX, new AddressParam("02dd2b6cf803dfa77f2dd5cc95e69651"), AddressBean.class);
                     }
                 },1000);
 
@@ -87,7 +87,7 @@ public class AddressManagerActivity extends BaseActvity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Post(ActionKey.ADDRESS_INDEX, new AddressParam("c521bb2d5b5f5e309046e04f67ef5bc3"), AddressBean.class);
+                        Post(ActionKey.ADDRESS_INDEX, new AddressParam("02dd2b6cf803dfa77f2dd5cc95e69651"), AddressBean.class);
                     }
                 },1000);
             }

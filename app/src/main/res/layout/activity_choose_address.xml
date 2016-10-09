@@ -7,13 +7,12 @@
 
     <include layout="@layout/com_title_system"/>
 
-    <com.shop.Android.widget.AnimNoLineRefreshListView
-        android:id="@+id/ay_collect_list_rv"
+    <com.shop.Android.widget.NoScrollListView
+        android:id="@+id/ay_choose_address_lv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:divider="@null"
         android:scrollbars="none">
-
-    </com.shop.Android.widget.AnimNoLineRefreshListView>
+    </com.shop.Android.widget.NoScrollListView>
 
 </LinearLayout>
