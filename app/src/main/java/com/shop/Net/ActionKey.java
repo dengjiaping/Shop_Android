@@ -11,6 +11,16 @@ public class ActionKey {
     /**地址列表*/
     public static final String ADDRESS_INDEX  = "address/index";
 
+    //添加地址
+
+    public static final String ADDRESS_ADD = "address/add";
+
+    //编辑用户信息
+    public static final String EDIT_USER = "user/edit";
+
+    //选择地区
+    public static final String CHOOSE_ADDRESS = "address/choose";
+
 
     //发送验证码
     public static final String CODE = "login/verify";

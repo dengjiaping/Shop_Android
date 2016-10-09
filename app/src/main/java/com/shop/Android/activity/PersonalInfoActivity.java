@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.king.Base.CutActivity;
 import com.shop.Android.Config;
 import com.shop.Android.base.BaseActvity;
+import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Param.HearderParam;
 import com.shop.R;
 
 import java.io.File;
@@ -39,6 +42,7 @@ public class PersonalInfoActivity extends BaseActvity {
     private RelativeLayout mBoysRl;
     private RelativeLayout mGirlsRl;
     private String gender;
+    private File poster;
 
     @Override
     protected int loadLayout() {
@@ -49,6 +53,8 @@ public class PersonalInfoActivity extends BaseActvity {
     protected void initTitleBar() {
         initTitle("个人资料");
         mTitleLeftIv.setImageResource(R.mipmap.back);
+        mTitleRightTv.setText("保存");
+        mTitleRightTv.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -58,11 +64,33 @@ public class PersonalInfoActivity extends BaseActvity {
             @Override
             public void onPost(File file, Activity activity) {
                 activity.finish();
+                poster = file;
                 GlideCircle(file, mHeaderIv);
-                kingData.sendBroadCast(Config.ICON);
             }
         });
         setOnClicks(mNickRl, mNicknameRl, mCauseRl, mHeaderRl, mSexRl, mBoysRl, mGirlsRl, mOkRl, mGenderRl);
+        mTitleRightTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = mNicknameEt.getText().toString().trim();
+                Post(ActionKey.EDIT_USER, new HearderParam("02dd2b6cf803dfa77f2dd5cc95e69651", String.valueOf(gender),name, poster), BaseBean.class);
+            }
+        });
+    }
+
+    @Override
+    public void onSuccess(String what, Object result) {
+        switch (what){
+            case ActionKey.EDIT_USER:
+                BaseBean bean = (BaseBean) result;
+                if (bean.getCode()==200){
+                    ToastInfo("修改成功");
+                    kingData.sendBroadCast(Config.ICON);
+                }else {
+                    ToastInfo(bean.getMsg());
+                }
+                break;
+        }
     }
 
     @Override
@@ -71,15 +99,16 @@ public class PersonalInfoActivity extends BaseActvity {
             case R.id.ay_personal_boys_rl:
                 mBoysIv.setVisibility(View.VISIBLE);
                 mGirlsIv.setVisibility(View.GONE);
-                gender = "0";
+                gender = "1";
                 break;
             case R.id.ay_personal_cause_rl:
+                mNicknameTv.setText(mNicknameEt.getText().toString().trim());
                 mNicknameRl.setVisibility(View.GONE);
                 break;
             case R.id.ay_personal_girls_rl:
                 mBoysIv.setVisibility(View.GONE);
                 mGirlsIv.setVisibility(View.VISIBLE);
-                gender = "1";
+                gender = "0";
                 break;
             case R.id.ay_personal_gender_rl:
                 mGenderRl.setVisibility(View.GONE);
@@ -88,6 +117,11 @@ public class PersonalInfoActivity extends BaseActvity {
                 mNicknameRl.setVisibility(View.VISIBLE);
                 break;
             case R.id.ay_personal_ok_rl:
+                if (gender.equals("0")){
+                    mSexTv.setText("女");
+                }else {
+                    mSexTv.setText("男");
+                }
                 mGenderRl.setVisibility(View.GONE);
                 break;
             case R.id.ay_personal_sex_rl:

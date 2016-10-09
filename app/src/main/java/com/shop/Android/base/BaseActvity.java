@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.king.Base.KingActivity;
+import com.shop.Android.Config;
 import com.shop.R;
 
 /**
@@ -22,6 +23,11 @@ public abstract class BaseActvity extends KingActivity {
             mTitleLeftIv.setImageResource(R.mipmap.back);
         } catch (Exception e) {
         }
+    }
+
+    protected void clearData() {
+        Config.DATA = "";
+        Config.TYPE = 0;
     }
 
     protected Intent openDataAct(Class cla, String data) {
