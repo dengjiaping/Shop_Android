@@ -5,6 +5,9 @@ package com.shop.Net;
  */
 public class ActionKey {
 
+    //购物车
+    public static final String CARSAVE = "shopcart/save";
+
     //首页
     public static final String INDEX = "index/index";
 

@@ -30,6 +30,9 @@ import com.shop.Android.base.BaseFragment;
 import com.shop.Android.base.TestAdapter;
 import com.shop.Android.base.TestTwoAdapter;
 import com.shop.Android.widget.AnimRefreshListView;
+import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Param.CarSave;
 import com.shop.R;
 import com.shop.ShopCar.Goods;
 import com.shop.ShopCar.ShopCar;
@@ -122,9 +125,19 @@ public class CarFragment extends BaseFragment {
     protected void onClickSet(int i) {
         switch (i) {
             case R.id.ft_car_order_tv:
+                Post(ActionKey.CARSAVE, new CarSave(ShopCar.commit()), BaseBean.class);
                 break;
         }
+    }
 
+    @Override
+    public void onSuccess(String what, Object result) {
+        switch (what) {
+            case ActionKey.CARSAVE:
+                BaseBean baseBean = (BaseBean) result;
+                
+                break;
+        }
     }
 
     private CarAdapter adapter;
