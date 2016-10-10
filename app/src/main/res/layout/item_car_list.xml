@@ -15,14 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="100dp">
 
-        <ImageView
+        <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/item_car_tick_iv"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:padding="10dp"
-            android:src="@drawable/car_icon_tick" />
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/car_icon_selector"
+            android:button="@null"
+            android:checked="true"/>
 
         <ImageView
             android:id="@+id/item_car_icon_iv"
@@ -82,10 +83,12 @@
             android:orientation="horizontal">
 
             <View
+                android:id="@+id/item_car_minus_tv"
                 android:layout_width="20dp"
                 android:layout_height="23dp" />
 
             <TextView
+                android:id="@+id/item_car_num_tv"
                 android:layout_width="40dp"
                 android:layout_height="23dp"
                 android:gravity="center"
@@ -94,6 +97,7 @@
                 android:textSize="14dp" />
 
             <View
+                android:id="@+id/item_car_add_tv"
                 android:layout_width="20dp"
                 android:layout_height="23dp" />
         </LinearLayout>

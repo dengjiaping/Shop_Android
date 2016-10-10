@@ -17,13 +17,15 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
+        <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/item_car_tick_iv"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:padding="10dp"
-            android:src="@drawable/car_icon_tick" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:drawableLeft="@drawable/car_icon_selector"
+            android:button="@null"
+            android:checked="true"/>
 
         <TextView
             android:textSize="14dp"

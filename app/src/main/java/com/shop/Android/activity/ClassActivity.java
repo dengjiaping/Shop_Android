@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
+import com.king.Utils.GsonUtil;
 import com.king.Utils.UIUtil;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.ClassView.adapter.ShopAdapter;
@@ -39,6 +40,8 @@ import com.shop.Android.widget.ClassView.view.PinnedHeaderListView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.ClassBean;
 import com.shop.R;
+import com.shop.ShopCar.Goods;
+import com.shop.ShopCar.ShopCar;
 import com.shop.Utils.DoubleUtil;
 
 import java.text.DecimalFormat;
@@ -59,6 +62,9 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
     private FrameLayout animation_viewGroup;
     private TextView mNumTv;
     private TextView mBackTv;
+
+    private FrameLayout mCarFl;
+    private TextView mRedTv;
 
 
     @Override
@@ -82,10 +88,15 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
 
     @Override
     protected void init() {
-
         animation_viewGroup = createAnimLayout();
         F();
-        setOnClicks(mBgV, mOverTv, mCarIv, mBackTv);
+
+        if (ShopCar.getNum() > 0) {
+            mRedTv.setVisibility(View.VISIBLE);
+        }
+        mRedTv.setText(ShopCar.getNum() + "");
+
+        setOnClicks(mBgV, mOverTv, mCarIv, mBackTv, mCarFl);
     }
 
     private TextView mDefaultTv;
@@ -126,6 +137,11 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
             case R.id.ay_class_back_tv:
                 animFinsh();
                 break;
+            case R.id.ay_class_car_fl:
+                MainActivity.index = 1;
+                openActivity(MainActivity.class);
+                break;
+
         }
 
     }
@@ -155,6 +171,9 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
                 product.setPrice(bean.getData().get(i).getList().get(j).getPrice());
                 product.setPicture(bean.getData().get(i).getList().get(j).getImage());
                 product.setType(bean.getData().get(i).getList().get(j).getSubtitled());
+                if (ShopCar.getMap().containsKey(bean.getData().get(i).getList().get(j).getId())) {
+                    product.setNumber(Integer.parseInt(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(bean.getData().get(i).getList().get(j).getId()), Goods.class)).getCount()));
+                }
                 shopProductsAll.add(product);
             }
             productCategorize.setProduct(shopProductsAll);
@@ -228,6 +247,16 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
 
     public void initData() {
         productList = new ArrayList<>();
+//        for (String key : ShopCar.getKeys()) {
+//            ShopProduct shopProduct = new ShopProduct();
+//            shopProduct.setId(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(key), Goods.class)).getId());
+//            shopProduct.setGoods(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(key), Goods.class)).getTitle());
+//            shopProduct.setPrice(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(key), Goods.class)).getPrice());
+//            shopProduct.setPicture(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(key), Goods.class)).getImage());
+//            shopProduct.setType(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(key), Goods.class)).getSubTitle());
+//            shopProduct.setNumber(Integer.parseInt(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(key), Goods.class)).getCount()));
+//            productList.add(shopProduct);
+//        }
         strings = new ArrayList<>();
         sectionedAdapter = new TestSectionedAdapter(mActivity, productCategorizes);
 
@@ -245,7 +274,6 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
         }
         mHeaderPhlv.setAdapter(sectionedAdapter);
         sectionedAdapter.setCallBackListener(this);
-
 
 
         if (adapter == null) {
@@ -394,7 +422,7 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
         view.setAlpha(0.6f);
 
         int[] end_location = new int[2];
-        mCarIv.getLocationInWindow(end_location);
+        mCarFl.getLocationInWindow(end_location);
 
         // 计算位移
         int endX = 0 - start_location[0] + 40;// 动画位移的X坐标
@@ -441,8 +469,8 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
                     myHandler.sendEmptyMessage(0);
                 }
 
-                ObjectAnimator.ofFloat(mCarIv, "translationY", 0, 4, -2, 0).setDuration(400).start();
-                ObjectAnimator.ofFloat(mNumTv, "translationY", 0, 4, -2, 0).setDuration(400).start();
+                ObjectAnimator.ofFloat(mCarFl, "translationY", 0, 4, -2, 0).setDuration(400).start();
+                ObjectAnimator.ofFloat(mRedTv, "translationY", 0, 4, -2, 0).setDuration(400).start();
 
             }
 
@@ -558,6 +586,29 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
      */
     private TextView mPriceTv;
 
+//    public void setPrise() {
+//        double sum = 0;
+//        int shopNum = 0;
+//        for (ShopProduct pro : productList) {
+////            sum = sum + (pro.getNumber() * Double.parseDouble(pro.getPrice()));
+//            sum = DoubleUtil.sum(sum, DoubleUtil.mul((double) pro.getNumber(), Double.parseDouble(pro.getPrice())));
+//            shopNum = shopNum + pro.getNumber();
+//        }
+//        if (shopNum > 0) {
+//            mNumTv.setVisibility(View.VISIBLE);
+//        } else {
+//            mNumTv.setVisibility(View.GONE);
+//        }
+//        if (sum > 0) {
+//            mPriceTv.setVisibility(View.VISIBLE);
+//        } else {
+//            mDefaultTv.setVisibility(View.VISIBLE);
+//        }
+//        mPriceTv.setText("合计:¥" + " " + (new DecimalFormat("0.00")).format(sum));
+//        mNumTv.setText(String.valueOf(shopNum));
+//    }
+
+
     public void setPrise() {
         double sum = 0;
         int shopNum = 0;
@@ -567,9 +618,9 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
             shopNum = shopNum + pro.getNumber();
         }
         if (shopNum > 0) {
-            mNumTv.setVisibility(View.VISIBLE);
+            mRedTv.setVisibility(View.VISIBLE);
         } else {
-            mNumTv.setVisibility(View.GONE);
+            mRedTv.setVisibility(View.GONE);
         }
         if (sum > 0) {
             mPriceTv.setVisibility(View.VISIBLE);
@@ -577,7 +628,7 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
             mDefaultTv.setVisibility(View.VISIBLE);
         }
         mPriceTv.setText("合计:¥" + " " + (new DecimalFormat("0.00")).format(sum));
-        mNumTv.setText(String.valueOf(shopNum));
+        mRedTv.setText(String.valueOf(shopNum));
     }
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.king.Base.KingActivity;
+import com.king.Base.KingData;
 import com.shop.Android.Config;
 import com.shop.R;
 
@@ -14,6 +15,8 @@ import com.shop.R;
 public abstract class BaseActvity extends KingActivity {
 
 
+
+    public static KingData listener;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,7 @@ public abstract class BaseActvity extends KingActivity {
             mTitleLeftIv.setImageResource(R.mipmap.back);
         } catch (Exception e) {
         }
+        listener = kingData;
     }
 
     protected void clearData() {

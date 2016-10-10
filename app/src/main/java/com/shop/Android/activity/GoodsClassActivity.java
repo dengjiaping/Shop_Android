@@ -28,6 +28,8 @@ import com.shop.Net.Bean.GoodsCateBean;
 import com.shop.Net.Param.GoodsCate;
 import com.shop.Net.Param.GoodsDetail;
 import com.shop.R;
+import com.shop.ShopCar.Goods;
+import com.shop.ShopCar.ShopCar;
 
 /**
  * Created by admin on 2016/9/26.
@@ -42,7 +44,7 @@ public class GoodsClassActivity extends BaseActvity {
 
     @Override
     protected int loadLayout() {
-        Post(ActionKey.GOODSCATE,new GoodsCate(kingData.getData(DataKey.CATE_ID),page), GoodsCateBean.class);
+        Post(ActionKey.GOODSCATE, new GoodsCate(kingData.getData(DataKey.CATE_ID), page), GoodsCateBean.class);
         return R.layout.activity_goodsclass;
     }
 
@@ -55,12 +57,13 @@ public class GoodsClassActivity extends BaseActvity {
 
 
     private GoodsCateBean goodsCateBean;
+
     @Override
     public void onSuccess(String what, Object result) {
-        switch (what){
+        switch (what) {
             case ActionKey.GOODSCATE:
                 goodsCateBean = (GoodsCateBean) result;
-                if(goodsCateBean.getCode() == 200){
+                if (goodsCateBean.getCode() == 200) {
                     if (adapter == null) {
                         adapter = new GridAdapter(goodsCateBean.getData().size(), R.layout.item_goodsclass_grid, new GridViewHolder());
                     } else {
@@ -72,14 +75,26 @@ public class GoodsClassActivity extends BaseActvity {
         }
     }
 
+    private Goods thing = new Goods();
     @Override
     protected void init() {
         F();
-        PictureUtil.GlideSpecial(kingData.getData(DataKey.IMAGE),mIconIv);
+        if(ShopCar.getNum() > 0){
+            mRedTv.setVisibility(View.VISIBLE);
+        }
+        mRedTv.setText(ShopCar.getNum() + "");
+        PictureUtil.GlideSpecial(kingData.getData(DataKey.IMAGE), mIconIv);
+        setOnClicks(mCarFl);
     }
 
     @Override
     protected void onClickSet(int i) {
+        switch (i) {
+            case R.id.ay_class_car_fl:
+                MainActivity.index = 1;
+                openActivity(MainActivity.class);
+                break;
+        }
 
     }
 
@@ -105,14 +120,8 @@ public class GoodsClassActivity extends BaseActvity {
         @Override
         public void padData(int i, Object o) {
             GridViewHolder viewHolder = (GridViewHolder) o;
-            viewHolder.mCarIv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    addCart((ImageView) ((LinearLayout) ((view.getParent()).getParent())).getChildAt(0));
-                }
-            });
             final GoodsCateBean.DataBean dataBean = goodsCateBean.getData().get(i);
-            Glide(dataBean.getImage(),viewHolder.mIconIv);
+            Glide(dataBean.getImage(), viewHolder.mIconIv);
             viewHolder.mNameTv.setText(dataBean.getTitle());
             viewHolder.mSubtitleTv.setText(dataBean.getSubtitled());
 
@@ -127,6 +136,20 @@ public class GoodsClassActivity extends BaseActvity {
                     GoodsDetail.type = "1";
                     GoodsDetail.goods_id = dataBean.getId();
                     openActivity(GoodsDetailActivity.class);
+                }
+            });
+
+            viewHolder.mCarIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    thing.setId(dataBean.getId());
+                    thing.setCount("1");
+                    thing.setImage(dataBean.getImage());
+                    thing.setTitle(dataBean.getTitle());
+                    thing.setSubTitle(dataBean.getSubtitled());
+                    thing.setPrice(dataBean.getPrice());
+                    thing.setMaxNum(dataBean.getStock());
+                    addCart((ImageView) ((LinearLayout) ((view.getParent()).getParent())).getChildAt(0));
                 }
             });
         }
@@ -153,6 +176,8 @@ public class GoodsClassActivity extends BaseActvity {
         //代码new一个imageview，图片资源是上面的imageview的图片
         // (这个图片就是执行动画的图片，从开始位置出发，经过一个抛物线（贝塞尔曲线），移动到购物车里)
         if (count < 3) {
+            ShopCar.add(thing);
+            ShopCar.print();
             final ImageView goods = new ImageView(mContext);
             count++;
             goods.setImageDrawable(iv.getDrawable());
@@ -234,6 +259,11 @@ public class GoodsClassActivity extends BaseActvity {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mRedTv.setText(Integer.valueOf(mRedTv.getText().toString().trim()) + 1 + "");
+                    if(Integer.valueOf(mRedTv.getText().toString().trim()) + 1  > 0){
+                        mRedTv.setVisibility(View.VISIBLE);
+                    }else {
+                        mRedTv.setVisibility(View.GONE);
+                    }
                     // 把移动的图片imageview从父布局里移除
                     count--;
                     mBgRl.removeView(goods);

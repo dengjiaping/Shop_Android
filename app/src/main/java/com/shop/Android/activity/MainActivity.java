@@ -24,7 +24,7 @@ public class MainActivity extends BaseActvity {
     //组件信息
     private String TAG = "main";
     private CommonTabLayout mTabCtl;
-    private int index = 0;
+    public static int index = 0;
 
     //Tab信息
     private ArrayList<Fragment> fragments = new ArrayList<>();
@@ -39,6 +39,7 @@ public class MainActivity extends BaseActvity {
 
     @Override
     protected int loadLayout() {
+        index = 0;
         NoSlide();
         return R.layout.activity_main;
     }
@@ -49,12 +50,17 @@ public class MainActivity extends BaseActvity {
         addTab();
     }
 
-    private void addTab() {
-        if(getIntent().getStringExtra("data") == null){
-            index = 0;
-        }else {
-            index = Integer.valueOf(getIntent().getStringExtra("data"));
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try{
+            mTabCtl.setCurrentTab(index);
+        }catch (Exception e){
+            e.printStackTrace();
         }
+    }
+
+    private void addTab() {
         //底部栏三个按钮对应的Fragment
         fragments = new ArrayList<>();
         fragments.add(new IndexFragment());
@@ -81,7 +87,18 @@ public class MainActivity extends BaseActvity {
             });
         }
         mTabCtl.setTabData(tabs, this, R.id.ay_main_content_fl, fragments);
-        mTabCtl.setCurrentTab(index);
+        mTabCtl.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int i) {
+                index = i;
+            }
+
+            @Override
+            public void onTabReselect(int i) {
+
+            }
+        });
+
     }
 
     @Override
