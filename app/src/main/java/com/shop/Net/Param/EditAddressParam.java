@@ -1,9 +1,11 @@
 package com.shop.Net.Param;
 
 /**
- * Created by admin on 2016/10/8.
+ * Created by admin on 2016/10/10.
  */
-public class AddAddressParam {
+public class EditAddressParam  {
+    private String token;
+    private String address_id;
     private String contact;
     private String phone;
     private String is_default;
@@ -11,13 +13,14 @@ public class AddAddressParam {
     private String city;
     private String area;
     private String village;
+    private String build;
     private String unit;
     private String floor;
     private String room;
-    private String token;
-    private String build;
 
-    public AddAddressParam(String contact, String phone, String is_default, String sex, String city, String area, String village, String unit, String floor, String room, String token,String build) {
+    public EditAddressParam(String token, String address_id, String contact, String phone, String is_default, String sex, String city, String area, String village, String build, String unit, String floor, String room) {
+        this.token = token;
+        this.address_id = address_id;
         this.contact = contact;
         this.phone = phone;
         this.is_default = is_default;
@@ -25,10 +28,9 @@ public class AddAddressParam {
         this.city = city;
         this.area = area;
         this.village = village;
+        this.build = build;
         this.unit = unit;
         this.floor = floor;
         this.room = room;
-        this.token = token;
-        this.build = build;
     }
 }

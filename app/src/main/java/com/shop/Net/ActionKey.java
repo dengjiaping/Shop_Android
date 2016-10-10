@@ -21,6 +21,20 @@ public class ActionKey {
     //选择地区
     public static final String CHOOSE_ADDRESS = "address/choose";
 
+    //编辑地址
+    public static final String EDIT_ADDRESS = "address/edit";
+
+    //删除地址
+
+    public static final String DEL_ADDRESS = "address/del";
+
+    //消息列表
+
+    public static final String MESSAGE_INDEX = "message/index";
+
+    //消息详情
+    public static final String MESSAGE_CONTENT = "message/detail";
+
 
     //发送验证码
     public static final String CODE = "login/verify";

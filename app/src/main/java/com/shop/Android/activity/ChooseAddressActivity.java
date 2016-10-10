@@ -21,13 +21,13 @@ public class ChooseAddressActivity extends BaseActvity {
     private String TAG = "choose";
     private NoScrollListView mAddressLv;
     private ChooseAddressAdapter chooseAddressAdapter;
-    private int id;
+    private String id;
     private int type;
     private ChooseAddressBean chooseAddressBean;
 
     @Override
     protected int loadLayout() {
-        id = getIntent().getIntExtra("id", 0);
+        id = getIntent().getStringExtra("id");
         type = getIntent().getIntExtra("type", 1);
         return R.layout.activity_choose_address;
     }
@@ -40,7 +40,31 @@ public class ChooseAddressActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-        Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(String.valueOf(id),"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+        switch (type){
+            case 1:
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                break;
+            case 2:
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                break;
+            case 3:
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                break;
+            case 4:
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                break;
+            case 5:
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                break;
+            case 6:
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                break;
+            case 7:
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                break;
+
+        }
+
         mAddressLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -48,6 +72,36 @@ public class ChooseAddressActivity extends BaseActvity {
                     case 1:
                         Config.DATA = GsonUtil.Bean2Str(chooseAddressBean.getData().get(i));
                         Config.TYPE= 1;
+                        animFinsh();
+                        break;
+                    case 2:
+                        Config.DATA = GsonUtil.Bean2Str(chooseAddressBean.getData().get(i));
+                        Config.TYPE= 2;
+                        animFinsh();
+                        break;
+                    case 3:
+                        Config.DATA = GsonUtil.Bean2Str(chooseAddressBean.getData().get(i));
+                        Config.TYPE= 3;
+                        animFinsh();
+                        break;
+                    case 4:
+                        Config.DATA = GsonUtil.Bean2Str(chooseAddressBean.getData().get(i));
+                        Config.TYPE= 4;
+                        animFinsh();
+                        break;
+                    case 5:
+                        Config.DATA = GsonUtil.Bean2Str(chooseAddressBean.getData().get(i));
+                        Config.TYPE= 5;
+                        animFinsh();
+                        break;
+                    case 6:
+                        Config.DATA = GsonUtil.Bean2Str(chooseAddressBean.getData().get(i));
+                        Config.TYPE= 6;
+                        animFinsh();
+                        break;
+                    case 7:
+                        Config.DATA = GsonUtil.Bean2Str(chooseAddressBean.getData().get(i));
+                        Config.TYPE= 7;
                         animFinsh();
                         break;
                 }
@@ -84,13 +138,13 @@ public class ChooseAddressActivity extends BaseActvity {
         @Override
         public void padData(int i, Object o) {
             ViewHolder viewHolder = (ViewHolder) o;
-            viewHolder.name .setText(chooseAddressBean.getData().get(i).getName());
+            viewHolder.mAreaTv .setText(chooseAddressBean.getData().get(i).getName());
         }
     }
 
     class ViewHolder {
         String TAG = "choose";
-        TextView name;
+        TextView mAreaTv;
 
     }
 }

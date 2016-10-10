@@ -5,9 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import com.king.Utils.CheckUtil;
 import com.king.Utils.GsonUtil;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.shop.Android.Config;
@@ -16,8 +15,8 @@ import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.AddressBean;
 import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.ChooseAddressBean;
+import com.shop.Net.Param.EditAddressParam;
 import com.shop.Net.Param.AddAddressParam;
-import com.shop.Net.Param.AddressParam;
 import com.shop.R;
 
 /**
@@ -45,10 +44,17 @@ public class EditorAddressActivity extends BaseActvity {
     private LinearLayout mRoomLl;
     private SwitchButton mDefaultSb;
     private int type;
-    private int sex;
+    private int sex=0;
     private int is_default;
     private AddressBean.DataBean addressBean;
     private ChooseAddressBean.DataBean chooseAdddress;
+    private String city_id;
+    private String community_id;
+    private String area_id;
+    private String building_id;
+    private String layer_id;
+    private String unit_id;
+    private String room_id;
 
 
 
@@ -68,22 +74,7 @@ public class EditorAddressActivity extends BaseActvity {
             mTitleLeftIv.setImageResource(R.mipmap.back);
             mTitleRightTv.setText("保存");
             mTitleRightTv.setVisibility(View.VISIBLE);
-            mNameEt.setText(addressBean.getContact());
-            mPhoneEt.setText(addressBean.getPhone());
-            if (addressBean.getSex().equals("0")) {
-                mBoysRb.setChecked(true);
-                sex = 0;
-            } else {
-                mGirlsRb.setChecked(true);
-                sex = 1;
-            }
-            mCityEt.setText(addressBean.getCity());
-            mAreaEt.setText(addressBean.getArea());
-            mCommunityEt.setText(addressBean.getVillage());
-            mLayerEt.setText(addressBean.getFloor());
-            mUnitEt.setText(addressBean.getUnit());
-            mBuildingEt.setText(addressBean.getBuild());
-            mRoomEt.setText(addressBean.getRoom());
+
         } else {
             initTitle("新增收货地址");
             mTitleLeftIv.setImageResource(R.mipmap.back);
@@ -96,47 +87,149 @@ public class EditorAddressActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-        setOnClicks(mCityLl, mAreaLl, mBuildingLl, mCommunityLl, mLayerLl, mRoomLl, mUnitLl);
+        if (type==1){
+            mNameEt.setText(addressBean.getContact());
+            mPhoneEt.setText(addressBean.getPhone());
+            if (addressBean.getSex().equals("0")) {
+                mBoysRb.setChecked(true);
+                sex = 0;
+            } else {
+                mGirlsRb.setChecked(true);
+                sex = 1;
+            }
+            mCityEt.setText(addressBean.getCity().getId());
+            mAreaEt.setText(addressBean.getArea().getId());
+            mCommunityEt.setText(addressBean.getVillage().getId());
+            mLayerEt.setText(addressBean.getFloor().getId());
+            mUnitEt.setText(addressBean.getUnit().getId());
+            mBuildingEt.setText(addressBean.getBuild().getId());
+            mRoomEt.setText(addressBean.getRoom().getId());
+        }
+        setOnClicks(mCityEt, mAreaEt, mBuildingEt, mCommunityEt, mLayerEt, mRoomEt, mUnitEt);
         mTitleRightTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = mNameEt.getText().toString().trim();
-                String phone = mPhoneEt.getText().toString().trim();
-                if (mBoysRb.isChecked()) {
-                    sex = 1;
-                } else {
-                    sex = 0;
-                }
-                String city = mCityEt.getText().toString().trim();
-                String area = mAreaEt.getText().toString().trim();
-                String community = mCommunityEt.getText().toString().trim();
-                String building = mBuildingEt.getText().toString().trim();
-                String unit = mUnitEt.getText().toString().trim();
-                String layer = mLayerEt.getText().toString().trim();
-                String room = mRoomEt.getText().toString().trim();
-                if (mDefaultSb.isChecked()) {
-                    is_default = 1;
-                } else {
-                    is_default = 0;
-                }
-                Post(ActionKey.ADDRESS_ADD, new AddAddressParam(name, phone, String.valueOf(is_default),String.valueOf(sex),city,area,community,unit,layer,room,""), BaseBean.class);
+                switch (type){
+                    case 1://修改地址
+                        String name = mNameEt.getText().toString().trim();
+                        String phone = mPhoneEt.getText().toString().trim();
+                        if (mBoysRb.isChecked()) {
+                            sex = 1;
+                        } else {
+                            sex = 0;
+                        }
+                        String city = mCityEt.getText().toString().trim();
+                        String area = mAreaEt.getText().toString().trim();
+                        String community = mCommunityEt.getText().toString().trim();
+                        String building = mBuildingEt.getText().toString().trim();
+                        String unit = mUnitEt.getText().toString().trim();
+                        String layer = mLayerEt.getText().toString().trim();
+                        String room = mRoomEt.getText().toString().trim();
+                        if (mDefaultSb.isChecked()) {
+                            is_default = 1;
+                        } else {
+                            is_default = 0;
+                        }
+                        Post(ActionKey.EDIT_ADDRESS, new EditAddressParam("02dd2b6cf803dfa77f2dd5cc95e69651",addressBean.getId(), name, phone,String.valueOf(is_default),String.valueOf(sex),city,area,community,building,unit,layer,room), BaseBean.class);
+                        break;
+                    case 2://添加地址
 
+                        String add_name = mNameEt.getText().toString().trim();
+                        String add_phone = mPhoneEt.getText().toString().trim();
+                        if (mBoysRb.isChecked()) {
+                            sex = 1;
+                        } else {
+                            sex = 0;
+                        }
+                        String add_city = mCityEt.getText().toString().trim();
+                        String add_area = mAreaEt.getText().toString().trim();
+                        String add_community = mCommunityEt.getText().toString().trim();
+                        String add_building = mBuildingEt.getText().toString().trim();
+                        String add_unit = mUnitEt.getText().toString().trim();
+                        String add_layer = mLayerEt.getText().toString().trim();
+                        String add_room = mRoomEt.getText().toString().trim();
+                        if (mDefaultSb.isChecked()) {
+                            is_default = 1;
+                        } else {
+                            is_default = 0;
+                        }
+                        if (add_name.isEmpty()){
+                            ToastInfo("联系人不能为空");
+                            return;
+                        }
+                        if (CheckUtil.isPhone(mPhoneEt)){
+                            ToastInfo("联系人电话不能为空");
+                            return;
+                        }
+                        Post(ActionKey.ADDRESS_ADD, new AddAddressParam(add_name, add_phone, String.valueOf(is_default),String.valueOf(sex),add_city,add_area,add_community,add_unit,add_layer,add_room,"02dd2b6cf803dfa77f2dd5cc95e69651",add_building), BaseBean.class);
+
+                        break;
+                }
 
             }
         });
     }
-
     @Override
     protected void onResume() {
         super.onResume();
+
         switch (Config.TYPE){
             case 1:
                 if (!Config.DATA.isEmpty()){
                     chooseAdddress = GsonUtil.Str2Bean(Config.DATA,ChooseAddressBean.DataBean.class);
-                    mNameEt.setText(chooseAdddress.getName());
-                    clearData();
+                    mCityEt.setText(chooseAdddress.getName());
+                    city_id = "1";
                 }
                 break;
+            case 2:
+                if (!Config.DATA.isEmpty()){
+                    chooseAdddress = GsonUtil.Str2Bean(Config.DATA,ChooseAddressBean.DataBean.class);
+                    mAreaEt.setText(chooseAdddress.getName());
+                    area_id = chooseAdddress.getId();
+                    mCommunityEt.setText("");
+                    mRoomEt.setText("");
+                    mLayerEt.setText("");
+                    mUnitEt.setText("");
+                    mBuildingEt.setText("");
+                }
+                break;
+            case 3:
+                if (!Config.DATA.isEmpty()){
+                    chooseAdddress = GsonUtil.Str2Bean(Config.DATA,ChooseAddressBean.DataBean.class);
+                    mCommunityEt.setText(chooseAdddress.getName());
+                    community_id = chooseAdddress.getId();
+                }
+                break;
+            case 4:
+                if (!Config.DATA.isEmpty()){
+                    chooseAdddress = GsonUtil.Str2Bean(Config.DATA,ChooseAddressBean.DataBean.class);
+                    mBuildingEt.setText(chooseAdddress.getName());
+                    building_id = chooseAdddress.getId();
+                }
+                break;
+            case 5:
+                if (!Config.DATA.isEmpty()){
+                    chooseAdddress = GsonUtil.Str2Bean(Config.DATA,ChooseAddressBean.DataBean.class);
+                    mUnitEt.setText(chooseAdddress.getName());
+                    unit_id = chooseAdddress.getId();
+                }
+                break;
+            case 6:
+                if (!Config.DATA.isEmpty()){
+                    chooseAdddress = GsonUtil.Str2Bean(Config.DATA,ChooseAddressBean.DataBean.class);
+                    mLayerEt.setText(chooseAdddress.getName());
+                    layer_id = chooseAdddress.getId();
+                }
+                break;
+            case 7:
+                if (!Config.DATA.isEmpty()){
+                    chooseAdddress = GsonUtil.Str2Bean(Config.DATA,ChooseAddressBean.DataBean.class);
+                    mRoomEt.setText(chooseAdddress.getName());
+                    room_id = chooseAdddress.getId();
+                }
+                break;
+
+
         }
     }
 
@@ -147,8 +240,20 @@ public class EditorAddressActivity extends BaseActvity {
                 BaseBean baseBean = (BaseBean) result;
                 if (baseBean.getCode()==200){
                     ToastInfo("添加成功");
+                    animFinsh();
+                    kingData.sendBroadCast(Config.ADD_ADDRESS);
                 }else {
                     ToastInfo(baseBean.getMsg());
+                }
+                break;
+            case ActionKey.EDIT_ADDRESS:
+                BaseBean bean = (BaseBean) result;
+                if (bean.getCode()==200){
+                    ToastInfo("修改成功");
+                    animFinsh();
+                    kingData.sendBroadCast(Config.ADD_ADDRESS);
+                }else {
+                    ToastInfo(bean.getMsg());
                 }
                 break;
         }
@@ -158,25 +263,84 @@ public class EditorAddressActivity extends BaseActvity {
     protected void onClickSet(int i) {
         Intent intent;
         switch (i) {
-            case R.id.ay_add_area_ll:
+            case R.id.ay_add_area_et:
+                if (!mCityEt.getText().toString().isEmpty()){
+                    intent = new Intent(EditorAddressActivity.this,ChooseAddressActivity.class);
+                    intent.putExtra("id",city_id);
+                    intent.putExtra("type",2);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                }else {
+                    ToastInfo("城市没有选择");
+                }
 
                 break;
-            case R.id.ay_add_building_ll:
+            case R.id.ay_add_building_et:
+                if ( !mCommunityEt.getText().toString().isEmpty()){
+                    intent = new Intent(EditorAddressActivity.this,ChooseAddressActivity.class);
+                    intent.putExtra("id",community_id);
+                    intent.putExtra("type",4);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                }else {
+                    ToastInfo("小区没有选择");
+                }
+
                 break;
-            case R.id.ay_add_city_ll:
+            case R.id.ay_add_city_et:
                 intent = new Intent(EditorAddressActivity.this,ChooseAddressActivity.class);
-                intent.putExtra("id",0);
+                intent.putExtra("id","0");
                 intent.putExtra("type",1);
                 startActivity(intent);
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                 break;
-            case R.id.ay_add_community_ll:
+            case R.id.ay_add_community_et:
+                if ( !mAreaEt.getText().toString().isEmpty() ){
+                    intent = new Intent(EditorAddressActivity.this,ChooseAddressActivity.class);
+                    intent.putExtra("id",area_id);
+                    intent.putExtra("type",3);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                }else {
+                    ToastInfo("区没有选择");
+                }
+
                 break;
-            case R.id.ay_add_layer_ll:
+            case R.id.ay_add_layer_et:
+                if (!mUnitEt.getText().toString().isEmpty() ){
+                    intent = new Intent(EditorAddressActivity.this,ChooseAddressActivity.class);
+                    intent.putExtra("id",unit_id);
+                    intent.putExtra("type",6);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                }else {
+                    ToastInfo("单元没有选择");
+                }
+
                 break;
-            case R.id.ay_add_room_ll:
+            case R.id.ay_add_room_et:
+                if (!mLayerEt.getText().toString().isEmpty()){
+                    intent = new Intent(EditorAddressActivity.this,ChooseAddressActivity.class);
+                    intent.putExtra("id",layer_id);
+                    intent.putExtra("type",7);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                }else {
+                    ToastInfo("楼层没有选择");
+                }
+
                 break;
-            case R.id.ay_add_unit_ll:
+            case R.id.ay_add_unit_et:
+                if (!mBuildingEt.getText().toString().isEmpty()){
+                    intent = new Intent(EditorAddressActivity.this,ChooseAddressActivity.class);
+                    intent.putExtra("id",building_id);
+                    intent.putExtra("type",5);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                }else {
+                    ToastInfo("幢没有选择");
+                }
+
                 break;
         }
 

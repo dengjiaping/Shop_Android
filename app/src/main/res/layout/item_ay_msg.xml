@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:background="#F9F9F9"
     android:orientation="vertical"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:descendantFocusability="blocksDescendants">
 
     <View
         android:layout_width="match_parent"
@@ -36,6 +37,7 @@
 
 
         <TextView
+            android:id="@+id/item_msg_time_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/item_msg_des_tv"

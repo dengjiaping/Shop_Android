@@ -10,13 +10,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
+import com.king.Base.KingData;
 import com.king.Utils.GsonUtil;
+import com.shop.Android.Config;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.RefreshListView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.AddressBean;
+import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Param.AddressParam;
+import com.shop.Net.Param.DelAddressParam;
 import com.shop.R;
 
 /**
@@ -52,6 +56,13 @@ public class AddressManagerActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
+        mListRv.setPullLoadEnable(false);
+        kingData.registerWatcher(Config.ADD_ADDRESS, new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                Post(ActionKey.ADDRESS_INDEX, new AddressParam("02dd2b6cf803dfa77f2dd5cc95e69651"), AddressBean.class);
+            }
+        });
         Post(ActionKey.ADDRESS_INDEX, new AddressParam("02dd2b6cf803dfa77f2dd5cc95e69651"), AddressBean.class);
         setOnClicks(mAddRl);
         mTitleRightTv.setOnClickListener(new View.OnClickListener() {
@@ -84,29 +95,14 @@ public class AddressManagerActivity extends BaseActvity {
 
             @Override
             public void onLoadMore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Post(ActionKey.ADDRESS_INDEX, new AddressParam("02dd2b6cf803dfa77f2dd5cc95e69651"), AddressBean.class);
-                    }
-                },1000);
+
             }
+
+//
         });
         mListRv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mListRv.setPullLoadEnable(false);
-                Intent intent = new Intent(mContext,EditorAddressActivity.class);
-                intent.putExtra("type",1);
-                intent.putExtra("address", GsonUtil.Bean2Str(addressBean.getData().get(i)));
-                startActivity(intent);
-                overridePendingTransition(com.king.R.anim.in_from_right, com.king.R.anim.out_to_left);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                       mListRv.setPullLoadEnable(true);
-                    }
-                },200);
             }
         });
     }
@@ -128,6 +124,15 @@ public class AddressManagerActivity extends BaseActvity {
                     }
                 } else {
                   ToastInfo(addressBean.getMsg());
+                }
+                break;
+            case ActionKey.DEL_ADDRESS:
+                BaseBean bean = (BaseBean) result;
+                if (bean.getCode()==200){
+                    ToastInfo("删除成功");
+                    kingData.sendBroadCast(Config.ADD_ADDRESS);
+                }else {
+                    ToastInfo(bean.getMsg());
                 }
                 break;
         }
@@ -152,8 +157,8 @@ public class AddressManagerActivity extends BaseActvity {
         }
 
         @Override
-        public void padData(int i, Object o) {
-            AddressViewHolder addressViewHolder = (AddressViewHolder) o;
+        public void padData(final int i, Object o) {
+            final AddressViewHolder addressViewHolder = (AddressViewHolder) o;
             if (isComplete) {
                 //显示
                 addressViewHolder.mEditRl.setVisibility(View.VISIBLE);
@@ -172,13 +177,25 @@ public class AddressManagerActivity extends BaseActvity {
             }
             addressViewHolder.mNameTv.setText(addressBean.getData().get(i).getContact());
             addressViewHolder.mPhoneTv.setText(addressBean.getData().get(i).getPhone());
-            addressViewHolder.mAreaTv.setText(addressBean.getData().get(i).getCity()+addressBean.getData().get(i).getArea()+addressBean.getData().get(i).getVillage());
-            addressViewHolder.mDetailsTv.setText(addressBean.getData().get(i).getUnit()+addressBean.getData().get(i).getFloor()+addressBean.getData().get(i).getRoom()+"室");
+            addressViewHolder.mAreaTv.setText(addressBean.getData().get(i).getCity().getId()+addressBean.getData().get(i).getArea().getId()+addressBean.getData().get(i).getVillage().getId());
+            addressViewHolder.mDetailsTv.setText(addressBean.getData().get(i).getUnit().getId()+addressBean.getData().get(i).getFloor().getId()+addressBean.getData().get(i).getRoom().getId()+"室");
 
             addressViewHolder.mDelIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ToastInfo("123");
+                  Post(ActionKey.DEL_ADDRESS,new DelAddressParam("02dd2b6cf803dfa77f2dd5cc95e69651",addressBean.getData().get(i).getId()), BaseBean.class);
+                }
+            });
+
+            addressViewHolder.mEditRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext,EditorAddressActivity.class);
+                    intent.putExtra("type",1);
+                    intent.putExtra("address", GsonUtil.Bean2Str(addressBean.getData().get(i)));
+                    startActivity(intent);
+                    overridePendingTransition(com.king.R.anim.in_from_right, com.king.R.anim.out_to_left);
+
                 }
             });
 

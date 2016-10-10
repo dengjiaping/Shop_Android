@@ -1,6 +1,8 @@
 package com.shop.Android.activity;
 
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,15 +15,7 @@ import com.shop.R;
  */
 public class UserHelperActivity extends BaseActvity {
     private String TAG = "helper";
-    private RelativeLayout mOrderRl;
-    private ImageView mBottomIv;
     private WebView mOrderWv;
-    private RelativeLayout mIntegralRl;
-    private WebView mIntegralWv;
-    private ImageView mFenIv;
-    private RelativeLayout mOtherRl;
-    private WebView mOtherWv;
-    private ImageView mTopIv;
 
     @Override
     protected int loadLayout() {
@@ -32,44 +26,40 @@ public class UserHelperActivity extends BaseActvity {
     protected void initTitleBar() {
         initTitle("疑问帮助");
         mTitleLeftIv.setImageResource(R.mipmap.back);
+
     }
 
     @Override
     protected void init() {
         F();
-        setOnClicks(mOrderRl, mIntegralRl, mOtherRl);
+        showData();
+    }
+
+    private void showData() {
+        WebSettings webSettings = mOrderWv.getSettings();
+        // 设置WebView属性，能够执行Javascript脚本
+        webSettings.setJavaScriptEnabled(true);
+        // 设置可以访问文件
+        webSettings.setAllowFileAccess(true);
+        // 设置支持缩放
+        // webSettings.setBuiltInZoomControls(true);
+        // 加载需要显示的网页
+        mOrderWv.loadUrl("http://eshop.ittapp.com/api.php/question/index");
+        // 设置Web视图
+        mOrderWv.setWebChromeClient(new webChromeClient());
+    }
+
+    private class webChromeClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            if (newProgress == 100) {
+            }
+        }
     }
 
     @Override
-    protected void onClickSet(int i) {
-        switch (i) {
-            case R.id.ay_helper_integral_rl:
-                if (mIntegralWv.getVisibility() == View.VISIBLE) {
-                    mIntegralWv.setVisibility(View.GONE);
-                    mFenIv.setImageResource(R.mipmap.bottom3x);
-                } else {
-                    mIntegralWv.setVisibility(View.VISIBLE);
-                    mFenIv.setImageResource(R.mipmap.top3x);
-                }
-                break;
-            case R.id.ay_helper_order_rl:
-                if (mOrderWv.getVisibility() == View.VISIBLE) {
-                    mOrderWv.setVisibility(View.GONE);
-                    mBottomIv.setImageResource(R.mipmap.bottom3x);
-                } else {
-                    mOrderWv.setVisibility(View.VISIBLE);
-                    mBottomIv.setImageResource(R.mipmap.top3x);
-                }
-                break;
-            case R.id.ay_helper_other_rl:
-                if (mOtherWv.getVisibility()==View.VISIBLE){
-                    mOtherWv.setVisibility(View.GONE);
-                    mTopIv.setImageResource(R.mipmap.bottom3x);
-                }else {
-                    mOtherWv.setVisibility(View.VISIBLE);
-                    mTopIv.setImageResource(R.mipmap.top3x);
-                }
-                break;
-        }
+    protected void onClickSet(int viewId) {
+
     }
 }
