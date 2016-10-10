@@ -85,7 +85,40 @@
         </LinearLayout>
 
 
+        <FrameLayout
+            android:id="@+id/ay_class_car_fl"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|right"
+                android:background="@drawable/search_car_bg_white"
+                android:padding="15dp"
+                android:src="@drawable/serach_car" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/ay_class_red_tv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/point_red"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white" />
+        </FrameLayout>
+
+
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/toolBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

@@ -20,6 +20,8 @@ import com.shop.Android.widget.ClassView.mode.ProductType;
 import com.shop.Android.widget.ClassView.mode.ShopProduct;
 import com.shop.Net.Param.GoodsDetail;
 import com.shop.R;
+import com.shop.ShopCar.Goods;
+import com.shop.ShopCar.ShopCar;
 
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
     private HolderClickListener mHolderClickListener;
     private Context context;
     private LayoutInflater mInflater;
+
+    private Goods thing = new Goods();
 
 
     private onCallBackListener callBackListener;
@@ -94,6 +98,9 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
         }else {
             viewHolder.reduce.setVisibility(View.VISIBLE);
             viewHolder.shoppingNum.setVisibility(View.VISIBLE);
+            if (callBackListener != null) {
+                callBackListener.updateProduct(pruductCagests.get(section).getProduct().get(position), "1");
+            }
         }
         viewHolder.mBg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +133,6 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                 viewHolder.shoppingNum.setText(pruductCagests.get(section).getProduct().get(position).getNumber() + "");
                 if (callBackListener != null) {
                     callBackListener.updateProduct(pruductCagests.get(section).getProduct().get(position), "1");
-                } else {
                 }
                 if (mHolderClickListener != null) {
                     int[] start_location = new int[2];
@@ -135,6 +141,16 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                     //TODO:解决方案，先监听到左边ListView的Item中，然后在开始动画添加
                     mHolderClickListener.onHolderClick(drawable, start_location);
                 }
+
+                thing.setId(pruductCagests.get(section).getProduct().get(position).getId());
+                thing.setCount("1");
+                thing.setImage(pruductCagests.get(section).getProduct().get(position).getPicture());
+                thing.setTitle(pruductCagests.get(section).getProduct().get(position).getGoods());
+                thing.setSubTitle(pruductCagests.get(section).getProduct().get(position).getType());
+                thing.setPrice(pruductCagests.get(section).getProduct().get(position).getPrice());
+
+                ShopCar.add(thing);
+                ShopCar.print();
             }
         });
 
@@ -152,9 +168,18 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                     viewHolder.shoppingNum.setText(pruductCagests.get(section).getProduct().get(position).getNumber() + "");
                     if (callBackListener != null) {
                         callBackListener.updateProduct(pruductCagests.get(section).getProduct().get(position), "2");
-                    } else {
                     }
                 }
+
+                thing.setId(pruductCagests.get(section).getProduct().get(position).getId());
+                thing.setCount("-1");
+                thing.setImage(pruductCagests.get(section).getProduct().get(position).getPicture());
+                thing.setTitle(pruductCagests.get(section).getProduct().get(position).getGoods());
+                thing.setSubTitle(pruductCagests.get(section).getProduct().get(position).getType());
+                thing.setPrice(pruductCagests.get(section).getProduct().get(position).getPrice());
+
+                ShopCar.add(thing);
+                ShopCar.print();
             }
         });
 

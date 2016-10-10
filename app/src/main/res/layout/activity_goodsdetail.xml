@@ -365,6 +365,7 @@
                     android:src="@drawable/goods_detail_car" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/ay_detail_red_tv"
                     android:layout_width="15dp"
                     android:layout_height="15dp"

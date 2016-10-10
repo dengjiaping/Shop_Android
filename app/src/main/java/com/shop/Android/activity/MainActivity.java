@@ -39,6 +39,7 @@ public class MainActivity extends BaseActvity {
 
     @Override
     protected int loadLayout() {
+        index = 0;
         NoSlide();
         return R.layout.activity_main;
     }
@@ -86,6 +87,18 @@ public class MainActivity extends BaseActvity {
             });
         }
         mTabCtl.setTabData(tabs, this, R.id.ay_main_content_fl, fragments);
+        mTabCtl.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int i) {
+                index = i;
+            }
+
+            @Override
+            public void onTabReselect(int i) {
+
+            }
+        });
+
     }
 
     @Override
