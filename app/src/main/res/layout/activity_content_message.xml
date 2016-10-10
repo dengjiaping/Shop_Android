@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/com_title_system"/>
+
+    <TextView
+        android:id="@+id/ay_message_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/text_color"
+        android:textSize="18dp"
+        android:text="消息头部"/>
+
+    <TextView
+        android:id="@+id/ay_message_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/color_888"
+        android:textSize="12dp"
+        android:text="消息头部"/>
+
+    <TextView
+        android:id="@+id/ay_message_content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:textColor="@color/text_color"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="消息内容"/>
+
+
+
+</LinearLayout>

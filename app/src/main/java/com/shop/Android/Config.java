@@ -6,5 +6,6 @@ package com.shop.Android;
 public class Config {
     public static final String ICON = "icon";
     public static String DATA = "";
-    public static int TYPE ;
+    public static int TYPE = 0 ;
+    public static final String ADD_ADDRESS = "add";
 }

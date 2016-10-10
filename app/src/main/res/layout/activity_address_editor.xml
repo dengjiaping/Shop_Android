@@ -190,7 +190,7 @@
             android:layout_gravity="center_vertical"
             android:src="@mipmap/right"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"/>
+            />
 
     </LinearLayout>
 
@@ -235,7 +235,7 @@
             android:layout_gravity="center_vertical"
             android:src="@mipmap/right"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"/>
+            />
 
     </LinearLayout>
 

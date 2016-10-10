@@ -48,28 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_weight="1"
             >
-
-            <TextView
-                android:id="@+id/item_address_area_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/text_color"
-                android:textSize="12dp"
-                android:text="合肥市政务区蔚蓝商务港"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:id="@+id/item_address_details_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_color"
-                android:textSize="12dp"
-                android:layout_marginLeft="10dp"
-                android:text="A幢2单元13层02室"
-                android:layout_marginTop="5dp"/>
-
 
             <LinearLayout
                 android:id="@+id/item_address_comprehensive_ll"
@@ -100,7 +80,25 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/item_address_area_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/text_color"
+                android:textSize="12dp"
+                android:text="合肥市政务区蔚蓝商务港"
+                android:layout_marginTop="10dp"/>
 
+            <TextView
+                android:id="@+id/item_address_details_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color"
+                android:textSize="12dp"
+                android:layout_marginLeft="10dp"
+                android:text="A幢2单元13层02室"
+                android:layout_marginTop="5dp"/>
 
         </LinearLayout>
 
@@ -108,7 +106,7 @@
         <RelativeLayout
             android:id="@+id/item_address_edit_rl"
             android:layout_width="50dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:focusable="true"
             android:layout_height="match_parent">
             <ImageView

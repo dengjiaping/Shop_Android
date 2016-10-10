@@ -7,6 +7,24 @@ import java.util.List;
  */
 public class AddressBean extends BaseBean {
 
+    /**
+     * id : 15
+     * user_id : 11
+     * contact : 蜗蜗
+     * phone : 15055889778
+     * is_default : 1
+     * sex : 1
+     * city : {"id":"合肥市","name":null}
+     * area : {"id":"蜀山区","name":null}
+     * village : {"id":"华府骏苑","name":null}
+     * build : {"id":"3栋","name":null}
+     * unit : {"id":"5单元","name":null}
+     * floor : {"id":"3层","name":null}
+     * room : {"id":"301室","name":null}
+     * is_del : 0
+     * created_time : 1476080439
+     */
+
     private List<DataBean> data;
 
     public List<DataBean> getData() {
@@ -24,13 +42,48 @@ public class AddressBean extends BaseBean {
         private String phone;
         private String is_default;
         private String sex;
-        private String city;
-        private String area;
-        private String village;
-        private String build;
-        private String unit;
-        private String floor;
-        private String room;
+        /**
+         * id : 合肥市
+         * name : null
+         */
+
+        private CityBean city;
+        /**
+         * id : 蜀山区
+         * name : null
+         */
+
+        private AreaBean area;
+        /**
+         * id : 华府骏苑
+         * name : null
+         */
+
+        private VillageBean village;
+        /**
+         * id : 3栋
+         * name : null
+         */
+
+        private BuildBean build;
+        /**
+         * id : 5单元
+         * name : null
+         */
+
+        private UnitBean unit;
+        /**
+         * id : 3层
+         * name : null
+         */
+
+        private FloorBean floor;
+        /**
+         * id : 301室
+         * name : null
+         */
+
+        private RoomBean room;
         private String is_del;
         private String created_time;
 
@@ -82,59 +135,59 @@ public class AddressBean extends BaseBean {
             this.sex = sex;
         }
 
-        public String getCity() {
+        public CityBean getCity() {
             return city;
         }
 
-        public void setCity(String city) {
+        public void setCity(CityBean city) {
             this.city = city;
         }
 
-        public String getArea() {
+        public AreaBean getArea() {
             return area;
         }
 
-        public void setArea(String area) {
+        public void setArea(AreaBean area) {
             this.area = area;
         }
 
-        public String getVillage() {
+        public VillageBean getVillage() {
             return village;
         }
 
-        public void setVillage(String village) {
+        public void setVillage(VillageBean village) {
             this.village = village;
         }
 
-        public String getBuild() {
+        public BuildBean getBuild() {
             return build;
         }
 
-        public void setBuild(String build) {
+        public void setBuild(BuildBean build) {
             this.build = build;
         }
 
-        public String getUnit() {
+        public UnitBean getUnit() {
             return unit;
         }
 
-        public void setUnit(String unit) {
+        public void setUnit(UnitBean unit) {
             this.unit = unit;
         }
 
-        public String getFloor() {
+        public FloorBean getFloor() {
             return floor;
         }
 
-        public void setFloor(String floor) {
+        public void setFloor(FloorBean floor) {
             this.floor = floor;
         }
 
-        public String getRoom() {
+        public RoomBean getRoom() {
             return room;
         }
 
-        public void setRoom(String room) {
+        public void setRoom(RoomBean room) {
             this.room = room;
         }
 
@@ -152,6 +205,153 @@ public class AddressBean extends BaseBean {
 
         public void setCreated_time(String created_time) {
             this.created_time = created_time;
+        }
+
+        public static class CityBean {
+            private String id;
+            private Object name;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public Object getName() {
+                return name;
+            }
+
+            public void setName(Object name) {
+                this.name = name;
+            }
+        }
+
+        public static class AreaBean {
+            private String id;
+            private Object name;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public Object getName() {
+                return name;
+            }
+
+            public void setName(Object name) {
+                this.name = name;
+            }
+        }
+
+        public static class VillageBean {
+            private String id;
+            private Object name;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public Object getName() {
+                return name;
+            }
+
+            public void setName(Object name) {
+                this.name = name;
+            }
+        }
+
+        public static class BuildBean {
+            private String id;
+            private Object name;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public Object getName() {
+                return name;
+            }
+
+            public void setName(Object name) {
+                this.name = name;
+            }
+        }
+
+        public static class UnitBean {
+            private String id;
+            private Object name;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public Object getName() {
+                return name;
+            }
+
+            public void setName(Object name) {
+                this.name = name;
+            }
+        }
+
+        public static class FloorBean {
+            private String id;
+            private Object name;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public Object getName() {
+                return name;
+            }
+
+            public void setName(Object name) {
+                this.name = name;
+            }
+        }
+
+        public static class RoomBean {
+            private String id;
+            private Object name;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public Object getName() {
+                return name;
+            }
+
+            public void setName(Object name) {
+                this.name = name;
+            }
         }
     }
 }
