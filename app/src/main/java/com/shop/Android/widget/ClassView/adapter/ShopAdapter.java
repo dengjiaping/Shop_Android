@@ -1,6 +1,7 @@
 package com.shop.Android.widget.ClassView.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.king.Utils.GsonUtil;
+import com.king.Utils.ToastUtil;
+import com.shop.Android.DataKey;
+import com.shop.Android.SPKey;
+import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.ClassView.assistant.ShopToDetailListener;
 import com.shop.Android.widget.ClassView.mode.ShopProduct;
 import com.shop.R;
+import com.shop.ShopCar.Goods;
+import com.shop.ShopCar.ShopCar;
+import com.shop.ShopCar.TMShopCar;
 
 import java.util.List;
 
@@ -18,9 +27,11 @@ import java.util.List;
  * Created by caobo on 2016/7/20.
  * 购物车适配器
  */
+
 public class ShopAdapter extends BaseAdapter {
 
     private ShopToDetailListener shopToDetailListener;
+    private double systemtime = 0;
 
     public void setShopToDetailListener(ShopToDetailListener callBackListener) {
         this.shopToDetailListener = callBackListener;
@@ -73,41 +84,61 @@ public class ShopAdapter extends BaseAdapter {
         viewHolder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num = shopProducts.get(position).getNumber();
-                num++;
-                shopProducts.get(position).setNumber(num);
-                viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber() + "");
-                if (shopToDetailListener != null) {
-                    shopToDetailListener.onUpdateDetailList(shopProducts.get(position), "1");
-                } else {
+                if(System.currentTimeMillis() - SystemTime > 500) {
+                    int num = shopProducts.get(position).getNumber();
+                    num++;
+                    BaseActvity.listener.putData(DataKey.NUM, 1 + "");
+                    shopProducts.get(position).setNumber(num);
+                    viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber() + "");
+
+                    Goods goods = GsonUtil.Str2Bean(TMShopCar.getMap().get(shopProducts.get(position).getId()), Goods.class);
+                    TMShopCar.isNotice = false;
+                    goods.setCount("1");
+                    TMShopCar.add(goods);
+                    TMShopCar.isNotice = true;
+                    BaseActvity.listener.sendBroadCast("NUM");
+                }else {
+                    SystemTime = System.currentTimeMillis();
                 }
+
+
+
             }
         });
 
         viewHolder.reduce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num = shopProducts.get(position).getNumber();
-                if (num > 0) {
-                    num--;
-                    if (num == 0) {
-                        shopProducts.get(position).setNumber(num);
-                        shopToDetailListener.onRemovePriduct(shopProducts.get(position));
-                    } else {
-                        shopProducts.get(position).setNumber(num);
-                        viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber() + "");
-                        if (shopToDetailListener != null) {
-                            shopToDetailListener.onUpdateDetailList(shopProducts.get(position), "2");
+                if(System.currentTimeMillis() - SystemTime > 500){
+                    int num = shopProducts.get(position).getNumber();
+                    if (num > 0) {
+                        num--;
+                        BaseActvity.listener.putData(DataKey.NUM, -1 + "");
+                        if (num == 0) {
+                            shopProducts.get(position).setNumber(num);
+                            BaseActvity.listener.sendBroadCast("REDUCE");
                         } else {
+                            shopProducts.get(position).setNumber(num);
+                            viewHolder.shoppingNum.setText(shopProducts.get(position).getNumber() + "");
                         }
-                    }
+                        Goods goods = GsonUtil.Str2Bean(TMShopCar.getMap().get(shopProducts.get(position).getId()), Goods.class);
+                        TMShopCar.isNotice = false;
+                        goods.setCount("-1");
+                        TMShopCar.add(goods);
+                        TMShopCar.isNotice = true;
 
+                        BaseActvity.listener.sendBroadCast("NUM");
+                    }
+                }else {
+                    SystemTime = System.currentTimeMillis();
                 }
+
             }
         });
 
         return convertView;
     }
+    private double SystemTime = 0;
 
     class ViewHolder {
         /**

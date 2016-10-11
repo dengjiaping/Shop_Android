@@ -27,7 +27,7 @@
         android:paddingTop="10dp"
         android:text="江山如"
         android:textColor="#333"
-        android:textSize="16dp" />
+        android:textSize="14dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -45,10 +45,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:paddingTop="25dp"
+                android:paddingTop="15dp"
                 android:text="￥27.90"
                 android:textColor="@color/my_color"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
         </LinearLayout>
 
         <View
@@ -59,8 +59,8 @@
 
         <ImageView
             android:id="@+id/item_hist_car_iv"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="bottom"
             android:layout_marginRight="10dp"
             android:background="@drawable/search_car_bg_gray"

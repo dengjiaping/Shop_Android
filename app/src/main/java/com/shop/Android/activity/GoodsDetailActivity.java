@@ -30,6 +30,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
@@ -39,21 +41,29 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.king.Base.KingData;
 import com.king.KingApplication;
+import com.king.Utils.GsonUtil;
 import com.king.Utils.LogCat;
 import com.king.Utils.PixelUtil;
 import com.king.Utils.UIUtil;
 import com.king.View.gradationscroll.GradationScrollView;
 import com.king.View.refreshview.XRefreshView;
 import com.king.View.refreshview.XScrollView;
+import com.shop.Android.DataKey;
 import com.shop.Android.adapter.ImagePaperAdapter;
 import com.shop.Android.base.BaseActvity;
+import com.shop.Android.widget.ClassView.adapter.ShopAdapter;
+import com.shop.Android.widget.ClassView.assistant.ShopToDetailListener;
+import com.shop.Android.widget.ClassView.mode.ShopProduct;
 import com.shop.Android.widget.RefreshView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
@@ -62,6 +72,7 @@ import com.shop.Net.Param.GoodsDetail;
 import com.shop.R;
 import com.shop.ShopCar.Goods;
 import com.shop.ShopCar.ShopCar;
+import com.shop.ShopCar.TMShopCar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +98,17 @@ public class GoodsDetailActivity extends BaseActvity {
     private TextView mPriceTv;
     private TextView mCommentTv;
     private TextView mIntroTv;
+    private TextView mOrderTv;
+
+
+    private TextView mDefaultTv;
+    private FrameLayout mCardFl;
+    private LinearLayout mCardshopLl;
+    /**
+     * 背景View
+     */
+    private View mBgV;
+    private ListView mShoplistLv;
 
 
     @Override
@@ -104,10 +126,64 @@ public class GoodsDetailActivity extends BaseActvity {
     private boolean isFirst = true;
     private WebView mWebWv;
 
+    private String TYPE = "1";
 
     private GoodsDetailBean goodsDetailBean;
 
     private Goods thing = new Goods();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (TYPE.equals("1")) {
+            if (ShopCar.getNum() > 0) {
+                mRedTv.setVisibility(View.VISIBLE);
+            }
+            mRedTv.setText(ShopCar.getNum() + "");
+        } else {
+            if (TMShopCar.getNum() > 0) {
+                mRedTv.setVisibility(View.VISIBLE);
+            }
+            mRedTv.setText(TMShopCar.getNum() + "");
+        }
+
+        kingData.registerWatcher("NUM", new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                if (TMShopCar.getNum() != 0) {
+                    mRedTv.setText(TMShopCar.getNum() + "");
+                } else {
+                    mRedTv.setVisibility(View.GONE);
+                    mDefaultTv.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        kingData.registerWatcher("REDUCE", new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                productList = new ArrayList<>();
+                for (String key : TMShopCar.getKeys()) {
+                    ShopProduct shopProduct = new ShopProduct();
+                    shopProduct.setId(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getId());
+                    shopProduct.setGoods(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getTitle());
+                    shopProduct.setPrice(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getPrice());
+                    shopProduct.setPicture(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getImage());
+                    shopProduct.setType(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getSubTitle());
+                    shopProduct.setNumber(Integer.parseInt(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getCount()));
+                    productList.add(shopProduct);
+                }
+                shopAdapter = new ShopAdapter(mContext, productList);
+                mShoplistLv.setAdapter(shopAdapter);
+
+                if (TMShopCar.getMap().size() == 0) {
+                    mRedTv.setVisibility(View.GONE);
+                    mDefaultTv.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+    }
 
     @Override
     public void onSuccess(String what, Object result) {
@@ -117,9 +193,9 @@ public class GoodsDetailActivity extends BaseActvity {
                 if (goodsDetailBean.getCode() == 200) {
                     mNameTv.setText(goodsDetailBean.getData().getTitle());
                     mSubtitleTv.setText(goodsDetailBean.getData().getSubtitled());
-
-
-                    if(goodsDetailBean.getData().getActivity_price() != null){
+                    if (goodsDetailBean.getData().getActivity_price() != null) {
+                        TYPE = "2";
+                        mOrderTv.setVisibility(View.VISIBLE);
                         SpannableString msp = new SpannableString(goodsDetailBean.getData().getActivity_price());
                         msp.setSpan(new RelativeSizeSpan(0.8f), goodsDetailBean.getData().getActivity_price().indexOf(".") + 1, goodsDetailBean.getData().getActivity_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
                         SpannableString msp1 = new SpannableString("￥" + goodsDetailBean.getData().getPrice() + " ");
@@ -132,12 +208,26 @@ public class GoodsDetailActivity extends BaseActvity {
                         mPriceTv.append("  ");
                         mPriceTv.append(msp1);
                         mPriceTv.append(" ");
-                    }else {
+                    } else {
+                        TYPE = "1";
                         mPriceTv.setText("￥" + goodsDetailBean.getData().getPrice());
                         SpannableString msp = new SpannableString(mPriceTv.getText().toString());
                         msp.setSpan(new RelativeSizeSpan(0.7f), mPriceTv.getText().toString().indexOf(".") + 1, mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
                         mPriceTv.setText(msp);
                     }
+
+                    if (TYPE.equals("1")) {
+                        if (ShopCar.getNum() > 0) {
+                            mRedTv.setVisibility(View.VISIBLE);
+                        }
+                        mRedTv.setText(ShopCar.getNum() + "");
+                    } else {
+                        if (TMShopCar.getNum() > 0) {
+                            mRedTv.setVisibility(View.VISIBLE);
+                        }
+                        mRedTv.setText(TMShopCar.getNum() + "");
+                    }
+
 
                     mIntroTv.setText(goodsDetailBean.getData().getIntro());
                     mCommentTv.setText("" + goodsDetailBean.getData().getComment_num() + "人评价");
@@ -150,14 +240,17 @@ public class GoodsDetailActivity extends BaseActvity {
         }
     }
 
+    private ShopAdapter shopAdapter;
+    /**
+     * 保存购物车对象到List
+     * TODO:考虑保存购物车缓存
+     */
+    private List<ShopProduct> productList;
+
     @Override
     protected void init() {
         F();
 
-        if(ShopCar.getNum() > 0){
-            mRedTv.setVisibility(View.VISIBLE);
-        }
-        mRedTv.setText(ShopCar.getNum() + "");
 
         // 设置是否可以下拉刷新
         mRefreshXrv.setPullRefreshEnable(false);
@@ -213,7 +306,7 @@ public class GoodsDetailActivity extends BaseActvity {
                 }
             }
         });
-        setOnClicks(mCarLl, mAddTv, mUpIv);
+        setOnClicks(mCarLl, mAddTv, mUpIv, mBgV);
 
     }
 
@@ -259,15 +352,31 @@ public class GoodsDetailActivity extends BaseActvity {
             Glide(recommendBean.getImage(), holder.mIconIv);
             holder.mNameTv.setText(recommendBean.getTitle());
 
-            holder.mPriceTv.setText("￥" + recommendBean.getPrice());
-            SpannableString msp = new SpannableString(holder.mPriceTv.getText().toString());
-            msp.setSpan(new RelativeSizeSpan(0.7f), holder.mPriceTv.getText().toString().indexOf(".") + 1, holder.mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
-            holder.mPriceTv.setText(msp);
+            if (recommendBean.getActivity_price() != null) {
+                SpannableString msp = new SpannableString(recommendBean.getActivity_price());
+                msp.setSpan(new RelativeSizeSpan(0.8f), recommendBean.getActivity_price().indexOf(".") + 1, recommendBean.getActivity_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                SpannableString msp1 = new SpannableString("￥" + recommendBean.getPrice() + " ");
+                msp1.setSpan(new RelativeSizeSpan(0.8f), 0, recommendBean.getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                msp1.setSpan(new StrikethroughSpan(), 0, recommendBean.getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, recommendBean.getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                holder.mPriceTv.setText("");
+                holder.mPriceTv.append("￥");
+                holder.mPriceTv.append(msp);
+                holder.mPriceTv.append("  ");
+                holder.mPriceTv.append(msp1);
+                holder.mPriceTv.append(" ");
+            } else {
+                holder.mPriceTv.setText("￥" + recommendBean.getPrice());
+                SpannableString msp = new SpannableString(holder.mPriceTv.getText().toString());
+                msp.setSpan(new RelativeSizeSpan(0.7f), holder.mPriceTv.getText().toString().indexOf(".") + 1, holder.mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                holder.mPriceTv.setText(msp);
+            }
+
 
             holder.mBgLl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    GoodsDetail.type = "1";
+                    GoodsDetail.type = TYPE;
                     GoodsDetail.goods_id = recommendBean.getId() + "";
                     openActivity(GoodsDetailActivity.class);
                 }
@@ -276,13 +385,22 @@ public class GoodsDetailActivity extends BaseActvity {
             holder.mCarIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    thing1.setId(recommendBean.getId() + "");
-                    thing1.setCount("1");
-                    thing1.setImage(recommendBean.getImage());
-                    thing1.setTitle(recommendBean.getTitle());
-                    thing1.setSubTitle(recommendBean.getSubtitled());
-                    thing1.setPrice(recommendBean.getPrice());
-                    addCart1((ImageView) ((LinearLayout)(view.getParent().getParent())).getChildAt(0));
+                    if (TYPE.equals("1")) {
+                        thing1.setId(recommendBean.getId() + "");
+                        thing1.setCount("1");
+                        thing1.setImage(recommendBean.getImage());
+                        thing1.setTitle(recommendBean.getTitle());
+                        thing1.setSubTitle(recommendBean.getSubtitled());
+                        thing1.setPrice(recommendBean.getPrice());
+                    } else {
+                        thing1.setId(recommendBean.getId() + "");
+                        thing1.setCount("1");
+                        thing1.setImage(recommendBean.getImage());
+                        thing1.setTitle(recommendBean.getTitle());
+                        thing1.setSubTitle(recommendBean.getSubtitled());
+                        thing1.setPrice(recommendBean.getActivity_price());
+                    }
+                    addCart1((ImageView) ((LinearLayout) (view.getParent().getParent())).getChildAt(0));
                 }
             });
 
@@ -300,8 +418,14 @@ public class GoodsDetailActivity extends BaseActvity {
         //代码new一个imageview，图片资源是上面的imageview的图片
         // (这个图片就是执行动画的图片，从开始位置出发，经过一个抛物线（贝塞尔曲线），移动到购物车里)
         if (count < 3) {
-            ShopCar.add(thing1);
-            ShopCar.print();
+            if (TYPE.equals("1")) {
+                ShopCar.add(thing1);
+                ShopCar.print();
+            } else {
+                TMShopCar.add(thing1);
+                TMShopCar.print();
+            }
+
             final ImageView goods = new ImageView(mContext);
             count++;
             goods.setImageDrawable(iv.getDrawable());
@@ -382,10 +506,10 @@ public class GoodsDetailActivity extends BaseActvity {
                 //当动画结束后：
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mRedTv.setText(Integer.valueOf(mRedTv.getText().toString().trim()) + 1 + "");
-                    if(Integer.valueOf(mRedTv.getText().toString().trim()) + 1  > 0){
+                    mRedTv.setText(TMShopCar.getNum() + "");
+                    if (Integer.valueOf(mRedTv.getText().toString().trim()) + 1 > 0) {
                         mRedTv.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         mRedTv.setVisibility(View.GONE);
                     }
                     // 把移动的图片imageview从父布局里移除
@@ -424,7 +548,7 @@ public class GoodsDetailActivity extends BaseActvity {
             mNameTv = UIUtil.findViewById(itemView, R.id.item_hist_name_tv);
             mPriceTv = UIUtil.findViewById(itemView, R.id.item_hist_price_tv);
             mCarIv = UIUtil.findViewById(itemView, R.id.item_hist_car_iv);
-            mBgLl = UIUtil.findViewById(itemView,R.id.item_hist_bg_ll);
+            mBgLl = UIUtil.findViewById(itemView, R.id.item_hist_bg_ll);
         }
     }
 
@@ -509,25 +633,95 @@ public class GoodsDetailActivity extends BaseActvity {
     protected void onClickSet(int i) {
         switch (i) {
             case R.id.ay_detail_car_ll:
-                MainActivity.index = 1;
-                openActivity(MainActivity.class);
+                if (TYPE.equals("1")) {
+                    MainActivity.index = 1;
+                    openActivity(MainActivity.class);
+                } else {
+                    if (TMShopCar.getMap().size() == 0) {
+                        mDefaultTv.setVisibility(View.VISIBLE);
+                    } else {
+                        mDefaultTv.setVisibility(View.GONE);
+                        productList = new ArrayList<>();
+                        for (String key : TMShopCar.getKeys()) {
+                            ShopProduct shopProduct = new ShopProduct();
+                            shopProduct.setId(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getId());
+                            shopProduct.setGoods(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getTitle());
+                            shopProduct.setPrice(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getPrice());
+                            shopProduct.setPicture(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getImage());
+                            shopProduct.setType(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getSubTitle());
+                            shopProduct.setNumber(Integer.parseInt(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getCount()));
+                            productList.add(shopProduct);
+                        }
+                        shopAdapter = new ShopAdapter(mContext, productList);
+                        mShoplistLv.setAdapter(shopAdapter);
+                    }
+                    if (mCardFl.getVisibility() == View.GONE) {
+                        mCardFl.setVisibility(View.VISIBLE);
+
+                        // 加载动画
+                        Animation animation = AnimationUtils.loadAnimation(mActivity, R.anim.push_bottom_in);
+                        // 动画开始
+                        mCardshopLl.setVisibility(View.VISIBLE);
+                        mCardshopLl.startAnimation(animation);
+                        mBgV.setVisibility(View.VISIBLE);
+
+                    } else {
+                        mCardFl.setVisibility(View.GONE);
+                        mBgV.setVisibility(View.GONE);
+                        mCardshopLl.setVisibility(View.GONE);
+                    }
+                }
                 break;
             case R.id.ay_detail_add_tv:
-                try{
-                    thing.setId(goodsDetailBean.getData().getId());
-                    thing.setCount("1");
-                    thing.setImage(goodsDetailBean.getData().getImage());
-                    thing.setTitle(goodsDetailBean.getData().getTitle());
-                    thing.setSubTitle(goodsDetailBean.getData().getSubtitled());
-                    thing.setPrice(goodsDetailBean.getData().getPrice());
-                }catch (Exception e){
+                try {
+                    if (TYPE.equals("1")) {
+                        thing.setId(goodsDetailBean.getData().getId());
+                        thing.setCount("1");
+                        thing.setImage(goodsDetailBean.getData().getImage());
+                        thing.setTitle(goodsDetailBean.getData().getTitle());
+                        thing.setSubTitle(goodsDetailBean.getData().getSubtitled());
+                        thing.setPrice(goodsDetailBean.getData().getPrice());
+                    } else {
+                        thing.setId(goodsDetailBean.getData().getId());
+                        thing.setCount("1");
+                        thing.setImage(goodsDetailBean.getData().getImage());
+                        thing.setTitle(goodsDetailBean.getData().getTitle());
+                        thing.setSubTitle(goodsDetailBean.getData().getSubtitled());
+                        thing.setPrice(goodsDetailBean.getData().getActivity_price());
+                    }
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 addCart(mAddTv);
+
+                productList = new ArrayList<>();
+                for (String key : TMShopCar.getKeys()) {
+                    ShopProduct shopProduct = new ShopProduct();
+                    shopProduct.setId(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getId());
+                    shopProduct.setGoods(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getTitle());
+                    shopProduct.setPrice(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getPrice());
+                    shopProduct.setPicture(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getImage());
+                    shopProduct.setType(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getSubTitle());
+                    shopProduct.setNumber(Integer.parseInt(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getCount()));
+                    productList.add(shopProduct);
+                }
+                shopAdapter = new ShopAdapter(mContext, productList);
+                mShoplistLv.setAdapter(shopAdapter);
+
+                if (TMShopCar.getMap().size() != 0) {
+                    mDefaultTv.setVisibility(View.GONE);
+                }
+
                 break;
             case R.id.ay_detail_up_iv:
                 mScrollXsc.smoothScrollTo(0, 0);
+                break;
+            case R.id.ay_detail_bg_v:
+                mCardFl.setVisibility(View.GONE);
+                mBgV.setVisibility(View.GONE);
+                mCardshopLl.setVisibility(View.GONE);
                 break;
         }
 
@@ -554,8 +748,13 @@ public class GoodsDetailActivity extends BaseActvity {
         //代码new一个imageview，图片资源是上面的imageview的图片
         // (这个图片就是执行动画的图片，从开始位置出发，经过一个抛物线（贝塞尔曲线），移动到购物车里)
         if (count < 3) {
-            ShopCar.add(thing);
-            ShopCar.print();
+            if (TYPE.equals("1")) {
+                ShopCar.add(thing);
+                ShopCar.print();
+            } else {
+                TMShopCar.add(thing);
+                TMShopCar.print();
+            }
             final ImageView goods = new ImageView(mContext);
             count++;
             GlideCircle(goodsDetailBean.getData().getDetail_image().get(mPicVp.getCurrentItem()), goods);
@@ -609,10 +808,14 @@ public class GoodsDetailActivity extends BaseActvity {
                 //当动画结束后：
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mRedTv.setText(Integer.valueOf(mRedTv.getText().toString().trim()) + 1 + "");
-                    if(Integer.valueOf(mRedTv.getText().toString().trim()) + 1  > 0){
-                        mRedTv.setVisibility(View.VISIBLE);
+                    if(TYPE.equals("1")){
+                        mRedTv.setText(ShopCar.getNum() + "");
                     }else {
+                        mRedTv.setText(TMShopCar.getNum() + "");
+                    }
+                    if (Integer.valueOf(mRedTv.getText().toString().trim()) + 1 > 0) {
+                        mRedTv.setVisibility(View.VISIBLE);
+                    } else {
                         mRedTv.setVisibility(View.GONE);
                     }
                     // 把移动的图片imageview从父布局里移除

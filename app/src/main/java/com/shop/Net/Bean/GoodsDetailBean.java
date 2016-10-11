@@ -113,10 +113,16 @@ public class GoodsDetailBean extends BaseBean{
 
         public static class RecommendBean {
             private int id;
+
             private String title;
             private String subtitled;
             private String image;
             private String price;
+            /**
+             * activity_price : 8.00
+             */
+
+            private String activity_price;
 
             public int getId() {
                 return id;
@@ -156,6 +162,14 @@ public class GoodsDetailBean extends BaseBean{
 
             public void setPrice(String price) {
                 this.price = price;
+            }
+
+            public String getActivity_price() {
+                return activity_price;
+            }
+
+            public void setActivity_price(String activity_price) {
+                this.activity_price = activity_price;
             }
         }
     }

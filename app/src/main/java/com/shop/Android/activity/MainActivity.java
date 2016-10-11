@@ -9,6 +9,8 @@ import com.king.FlycoTableLayout.CommonTabLayout;
 import com.king.FlycoTableLayout.listener.CustomTabEntity;
 import com.king.FlycoTableLayout.listener.OnTabSelectListener;
 import com.king.Utils.LogCat;
+import com.king.Utils.SPrefUtil;
+import com.shop.Android.SPKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.fragment.CarFragment;
 import com.shop.Android.fragment.IndexFragment;

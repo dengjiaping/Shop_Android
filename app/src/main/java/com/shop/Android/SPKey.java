@@ -8,4 +8,5 @@ public class SPKey {
     public static final String INDEX = "INDEX";
     public static final String HIST = "hist";
     public static final String HISTCOUNT = "count";
+
 }
