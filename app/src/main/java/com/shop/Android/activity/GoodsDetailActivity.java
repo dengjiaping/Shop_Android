@@ -307,11 +307,9 @@ public class GoodsDetailActivity extends BaseActvity {
                 }
             }
         });
-<<<<<<< HEAD
+
         setOnClicks(mCarLl, mAddTv, mUpIv,mCollectLl);
-=======
-        setOnClicks(mCarLl, mAddTv, mUpIv, mBgV);
->>>>>>> adb76e72c32d59baa96087adfc93243f60221823
+
 
     }
 
@@ -723,15 +721,15 @@ public class GoodsDetailActivity extends BaseActvity {
             case R.id.ay_detail_up_iv:
                 mScrollXsc.smoothScrollTo(0, 0);
                 break;
-<<<<<<< HEAD
-            case R.id.ay_detail_collect_ll:
 
-=======
+            case R.id.ay_detail_collect_ll:
+             break;
+
             case R.id.ay_detail_bg_v:
                 mCardFl.setVisibility(View.GONE);
                 mBgV.setVisibility(View.GONE);
                 mCardshopLl.setVisibility(View.GONE);
->>>>>>> adb76e72c32d59baa96087adfc93243f60221823
+
                 break;
         }
 
