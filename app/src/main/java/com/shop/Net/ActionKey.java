@@ -38,6 +38,17 @@ public class ActionKey {
     //消息详情
     public static final String MESSAGE_CONTENT = "message/detail";
 
+    //意见反馈
+    public static final String ADD_SUGGESTION = "advice/add";
+
+    //收藏首页
+    public static final String COLLECT_INDEX = "collect/index";
+
+    //取消收藏
+    public static final String CANCEL_COLLECT = "collect/del";
+
+    //添加收藏
+    public static final String ADD_COLLECT = "collect/add";
 
     //发送验证码
     public static final String CODE = "login/verify";

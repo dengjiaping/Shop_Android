@@ -13,6 +13,7 @@ import com.shop.Android.widget.RefreshListView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.MessageBean;
 import com.shop.Net.Param.MessageParam;
+import com.shop.Net.Param.Token;
 import com.shop.R;
 
 /**
@@ -41,11 +42,11 @@ public class MsgActivity extends BaseActvity {
     protected void init() {
         F();
         mContentRlv.setPullLoadEnable(false);
-        Post(ActionKey.MESSAGE_INDEX, new MessageParam("02dd2b6cf803dfa77f2dd5cc95e69651"), MessageBean.class);
+        Post(ActionKey.MESSAGE_INDEX, new Token(), MessageBean.class);
         mContentRlv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {
-                Post(ActionKey.MESSAGE_INDEX, new MessageParam("02dd2b6cf803dfa77f2dd5cc95e69651"), MessageBean.class);
+                Post(ActionKey.MESSAGE_INDEX, new Token(), MessageBean.class);
             }
 
             @Override
@@ -67,13 +68,17 @@ public class MsgActivity extends BaseActvity {
 
     @Override
     public void onSuccess(String what, Object result) {
+        mContentRlv.onRefreshComplete();
         switch (what) {
             case ActionKey.MESSAGE_INDEX:
                 messageBean = (MessageBean) result;
                 if (messageBean.getCode() == 200) {
                     messageAdapter = new MessageAdapter(messageBean.getData().size(), R.layout.item_ay_msg, new MessageViewHolder());
                     mContentRlv.setAdapter(messageAdapter);
-                } else {
+                } else if (messageBean.getCode()==2001){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                }else {
                     ToastInfo(messageBean.getMsg());
                 }
                 break;

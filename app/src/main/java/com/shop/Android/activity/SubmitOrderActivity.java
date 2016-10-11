@@ -50,7 +50,7 @@ public class SubmitOrderActivity extends BaseActvity {
 
     @Override
     protected void init() {
-      F();
+        F();
         goodsListAdapter = new GoodsListAdapter(2,R.layout.activity_submit_order_item,new GoodsListViewHolder());
         mScrollLv.setAdapter(goodsListAdapter);
 

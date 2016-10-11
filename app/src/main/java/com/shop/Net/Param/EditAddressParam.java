@@ -3,8 +3,7 @@ package com.shop.Net.Param;
 /**
  * Created by admin on 2016/10/10.
  */
-public class EditAddressParam  {
-    private String token;
+public class EditAddressParam extends Token {
     private String address_id;
     private String contact;
     private String phone;
@@ -18,8 +17,7 @@ public class EditAddressParam  {
     private String floor;
     private String room;
 
-    public EditAddressParam(String token, String address_id, String contact, String phone, String is_default, String sex, String city, String area, String village, String build, String unit, String floor, String room) {
-        this.token = token;
+    public EditAddressParam( String address_id, String contact, String phone, String is_default, String sex, String city, String area, String village, String build, String unit, String floor, String room) {
         this.address_id = address_id;
         this.contact = contact;
         this.phone = phone;
