@@ -6,7 +6,9 @@ import android.widget.TextView;
 
 import com.king.Utils.CheckUtil;
 import com.king.Utils.GsonUtil;
+import com.king.Utils.SPrefUtil;
 import com.shop.Android.DataKey;
+import com.shop.Android.SPKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
@@ -25,7 +27,8 @@ public class LoginActivity extends BaseActvity {
     private EditText mPassEt;
     private TextView mCodeTv;
     private TextView mLoginTv;
-
+    private TextView mCarTv;
+    private TextView mMainTv;
 
     @Override
     protected int loadLayout() {
@@ -36,8 +39,7 @@ public class LoginActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-
-        setOnClicks(mCodeTv, mLoginTv);
+        setOnClicks(mCodeTv, mLoginTv,mCarTv,mMainTv);
     }
 
     private String tempPhone = "";
@@ -62,10 +64,17 @@ public class LoginActivity extends BaseActvity {
                 }
                 break;
             case R.id.ay_login_login_tv:
-                openActivity(MainActivity.class);
                 if (!isInputError()) {
-                    Post(ActionKey.LOGIN, new LoginParam(getText(mPassEt), getText(mUserEt)), BaseBean.class);
+                    Post(ActionKey.LOGIN, new LoginParam(getText(mPassEt), getText(mUserEt)), UserBean.class);
                 }
+                break;
+            case R.id.ay_login_car_tv:
+                MainActivity.index = 1;
+                openActivity(MainActivity.class);
+                break;
+            case R.id.ay_login_main_tv:
+                MainActivity.index = 0;
+                openActivity(MainActivity.class);
                 break;
         }
     }
@@ -116,7 +125,8 @@ public class LoginActivity extends BaseActvity {
             case ActionKey.LOGIN:
                 UserBean userBean = (UserBean) result;
                 if (userBean.getCode() == 200) {
-                    kingData.putData(DataKey.USER, GsonUtil.Bean2Str(userBean));
+                    SPrefUtil.Function.putData(DataKey.USER, GsonUtil.Bean2Str(userBean));
+                    animFinsh();
                 } else {
                     ToastInfo(userBean.getMsg());
                 }

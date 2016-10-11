@@ -5,10 +5,11 @@ package com.shop.Net.Bean;
  */
 public class UserBean extends BaseBean{
 
+
     /**
-     * token : 6a56e75f35b00fc0e97b9ae3422a1743
-     * is_new : true
-     * user_info : {"id":"10","phone":"13856641355","nick_name":"13856641355","poster":"","gender":0,"integral":0}
+     * token : 4036f54847ee0a0767520fe9fa78ab6e
+     * is_new : false
+     * user_info : {"id":"11","nick_name":"忍晚秋","phone":"17858868606","poster":"/uploads/20161009/97972b81608b4cbcc7cb0899833f1ceceb80.jpg","gender":"0","integral":"0"}
      */
 
     private DataBean data;
@@ -25,10 +26,10 @@ public class UserBean extends BaseBean{
         private String token;
         private String is_new;
         /**
-         * id : 10
-         * phone : 13856641355
-         * nick_name : 13856641355
-         * poster :
+         * id : 11
+         * nick_name : 忍晚秋
+         * phone : 17858868606
+         * poster : /uploads/20161009/97972b81608b4cbcc7cb0899833f1ceceb80.jpg
          * gender : 0
          * integral : 0
          */
@@ -61,11 +62,11 @@ public class UserBean extends BaseBean{
 
         public static class UserInfoBean {
             private String id;
-            private String phone;
             private String nick_name;
+            private String phone;
             private String poster;
-            private int gender;
-            private int integral;
+            private String gender;
+            private String integral;
 
             public String getId() {
                 return id;
@@ -73,14 +74,6 @@ public class UserBean extends BaseBean{
 
             public void setId(String id) {
                 this.id = id;
-            }
-
-            public String getPhone() {
-                return phone;
-            }
-
-            public void setPhone(String phone) {
-                this.phone = phone;
             }
 
             public String getNick_name() {
@@ -91,6 +84,14 @@ public class UserBean extends BaseBean{
                 this.nick_name = nick_name;
             }
 
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+
             public String getPoster() {
                 return poster;
             }
@@ -99,19 +100,19 @@ public class UserBean extends BaseBean{
                 this.poster = poster;
             }
 
-            public int getGender() {
+            public String getGender() {
                 return gender;
             }
 
-            public void setGender(int gender) {
+            public void setGender(String gender) {
                 this.gender = gender;
             }
 
-            public int getIntegral() {
+            public String getIntegral() {
                 return integral;
             }
 
-            public void setIntegral(int integral) {
+            public void setIntegral(String integral) {
                 this.integral = integral;
             }
         }

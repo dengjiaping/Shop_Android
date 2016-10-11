@@ -390,6 +390,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/ay_detail_order_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
@@ -418,4 +419,77 @@
             android:text="加入购物车"
             android:textColor="@color/white" />
     </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_marginBottom="60dp"
+        android:id="@+id/ay_detail_card_fl"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/toolBar"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+            android:id="@+id/ay_detail_bg_v"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:background="#a0000000"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ay_detail_cardshop_ll"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shopping_cart_bg"
+                android:paddingBottom="6dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="6dp"
+                android:text="购物车"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:background="@color/consumer_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ay_detail_default_tv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="当前购物车为空快去选购吧！"
+                    android:textSize="12dp"
+                    android:visibility="gone" />
+
+                <ListView
+                    android:id="@+id/ay_detail_shoplist_lv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:cacheColorHint="#00000000"
+                    android:divider="@color/user_center_divide_line"
+                    android:dividerHeight="1px"
+                    android:listSelector="#00000000"
+                    android:orientation="vertical">
+
+                </ListView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
 </RelativeLayout>

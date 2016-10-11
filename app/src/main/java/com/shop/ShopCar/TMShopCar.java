@@ -1,6 +1,5 @@
 package com.shop.ShopCar;
 
-import com.king.Base.KingData;
 import com.king.Utils.GsonUtil;
 import com.king.Utils.LogCat;
 import com.shop.Android.base.BaseActvity;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 /**
  * Created by admin on 2016/10/9.
  */
-public class ShopCar {
+public class TMShopCar {
 
     public static boolean isNotice = true;
 

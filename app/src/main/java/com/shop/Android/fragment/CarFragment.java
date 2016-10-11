@@ -21,11 +21,14 @@ import com.king.KingApplication;
 import com.king.Utils.FUtil;
 import com.king.Utils.GsonUtil;
 import com.king.Utils.LogCat;
+import com.king.Utils.SPrefUtil;
 import com.king.View.slidelistview.KingSlideAdapter;
 import com.king.View.slidelistview.SlideBaseAdapter;
 import com.king.View.slidelistview.SlideListView;
 import com.king.View.slidelistview.wrap.SlideItemWrapLayout;
 import com.shop.Android.BaseApplication;
+import com.shop.Android.SPKey;
+import com.shop.Android.activity.LoginActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.base.TestAdapter;
 import com.shop.Android.base.TestTwoAdapter;
@@ -135,7 +138,10 @@ public class CarFragment extends BaseFragment {
         switch (what) {
             case ActionKey.CARSAVE:
                 BaseBean baseBean = (BaseBean) result;
-                
+                if(baseBean.getCode() != 200 && baseBean.getCode() == 2001){
+                    ToastInfo(baseBean.getMsg());
+                    openActivity(LoginActivity.class);
+                }
                 break;
         }
     }
