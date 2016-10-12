@@ -224,11 +224,11 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="invisible"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="20dp"
-                            android:src="@drawable/right_arrow" />
+                            android:src="@drawable/right_arrow"
+                            android:visibility="invisible" />
                     </RelativeLayout>
 
                     <View
@@ -320,23 +320,27 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ay_detail_collect_ll"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/ay_detail_star_iv"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
-                android:src="@drawable/yellow_star" />
+                android:src="@drawable/gray_star" />
 
+            <!---->
             <TextView
+                android:id="@+id/ay_detail_collect_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="收藏"
-                android:textColor="#FF9C47"
+                android:textColor="#888"
                 android:textSize="14dp" />
         </LinearLayout>
 
@@ -365,7 +369,6 @@
                     android:src="@drawable/goods_detail_car" />
 
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/ay_detail_red_tv"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
@@ -375,7 +378,8 @@
                     android:gravity="center"
                     android:text="1"
                     android:textColor="@color/white"
-                    android:textSize="10dp" />
+                    android:textSize="10dp"
+                    android:visibility="gone" />
             </FrameLayout>
 
 
@@ -421,11 +425,11 @@
 
 
     <FrameLayout
-        android:layout_marginBottom="60dp"
         android:id="@+id/ay_detail_card_fl"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/toolBar"
+        android:layout_marginBottom="60dp"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -456,6 +460,7 @@
                 android:paddingTop="6dp"
                 android:text="购物车"
                 android:textColor="@color/black" />
+
 
             <LinearLayout
                 android:layout_width="fill_parent"

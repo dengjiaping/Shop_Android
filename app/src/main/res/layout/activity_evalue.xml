@@ -6,6 +6,8 @@
 
     <include layout="@layout/com_title_system" />
 
+    <include layout="@layout/layout_no" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -14,6 +16,8 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="15dp"
@@ -55,6 +59,7 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/ay_evalue_content_et"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginBottom="20dp"
@@ -67,6 +72,7 @@
             android:textSize="14dp" />
 
         <TextView
+            android:id="@+id/ay_evalue_send_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp"

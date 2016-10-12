@@ -30,6 +30,8 @@ public class GoodsDetailBean extends BaseBean{
         private List<String> detail_image;
         private List<RecommendBean> recommend;
         private String activity_price;
+        private String is_collect;
+
 
         public String getId() {
             return id;
@@ -109,6 +111,14 @@ public class GoodsDetailBean extends BaseBean{
 
         public void setActivity_price(String activity_price) {
             this.activity_price = activity_price;
+        }
+
+        public String getIs_collect() {
+            return is_collect;
+        }
+
+        public void setIs_collect(String is_collect) {
+            this.is_collect = is_collect;
         }
 
         public static class RecommendBean {

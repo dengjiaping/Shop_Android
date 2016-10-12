@@ -15,6 +15,16 @@ public class ShopCar {
 
     public static boolean isNotice = true;
 
+    public static boolean isValidCar() {
+        return isValidCar;
+    }
+
+    public static void setIsValidCar(boolean isValidCar) {
+        ShopCar.isValidCar = isValidCar;
+    }
+
+    private static boolean isValidCar = true;
+
     private static HashMap<String, String> map = new HashMap<>();
 
     public static ArrayList<String> getKeys() {
@@ -31,6 +41,41 @@ public class ShopCar {
 
     public static HashMap<String, String> getMap() {
         return map;
+    }
+
+    public static void ClearSelf() {
+        isNotice = true;
+        map.clear();
+        keys.clear();
+        num = 0;
+    }
+
+    public static void mergeButNotAdd(Goods g,boolean isAdd) {
+        if (map.containsKey(g.getId())) {
+            if(isAdd){
+                map.remove(g.getId());
+                map.put(g.getId(),GsonUtil.Bean2Str(g));
+            }
+        }
+        if (isNotice) {
+            notice();
+        }
+    }
+
+    public static void merge(Goods g,boolean isAdd) {
+        if (map.containsKey(g.getId())) {
+            if(isAdd){
+                map.remove(g.getId());
+                map.put(g.getId(),GsonUtil.Bean2Str(g));
+            }
+        } else {
+            num = num + Integer.valueOf(g.getCount());
+            keys.add(g.getId());
+            map.put(g.getId(), GsonUtil.Bean2Str(g));
+        }
+        if (isNotice) {
+            notice();
+        }
     }
 
 
@@ -65,6 +110,38 @@ public class ShopCar {
     public static void print() {
         for (String key : keys) {
             LogCat.i(key, map.get(key));
+        }
+    }
+
+    public static int isInValid(){
+        int num1 = 0;
+        for (String key : keys) {
+            if(((Goods)GsonUtil.Str2Bean(map.get(key),Goods.class)).isValid()){
+                num1 ++ ;
+            }
+        }
+        return num1;
+
+    }
+
+    public static void Invalid() {
+        isValidCar = false;
+        for (String key : keys) {
+            Goods thing = ((Goods)GsonUtil.Str2Bean(map.get(key),Goods.class));
+            thing.setValid(false);
+            isNotice = false;
+            merge(thing,true);
+            isNotice = true;
+        }
+    }
+    public static void Valid() {
+        isValidCar = true;
+        for (String key : keys) {
+            Goods thing = ((Goods)GsonUtil.Str2Bean(map.get(key),Goods.class));
+            thing.setValid(true);
+            isNotice = false;
+            merge(thing,true);
+            isNotice = true;
         }
     }
 

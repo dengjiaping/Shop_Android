@@ -18,6 +18,10 @@ public class Goods {
         return isValid;
     }
 
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
+
     private boolean isValid = true;
 
     public void Copy(Goods goods){

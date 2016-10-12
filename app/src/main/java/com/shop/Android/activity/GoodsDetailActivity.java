@@ -68,6 +68,7 @@ import com.shop.Android.widget.RefreshView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.GoodsDetailBean;
+import com.shop.Net.Param.Collect;
 import com.shop.Net.Param.GoodsDetail;
 import com.shop.R;
 import com.shop.ShopCar.Goods;
@@ -143,9 +144,12 @@ public class GoodsDetailActivity extends BaseActvity {
         } else {
             if (TMShopCar.getNum() > 0) {
                 mRedTv.setVisibility(View.VISIBLE);
+            }else {
+                mRedTv.setVisibility(View.GONE);
             }
             mRedTv.setText(TMShopCar.getNum() + "");
         }
+
 
         kingData.registerWatcher("NUM", new KingData.KingCallBack() {
             @Override
@@ -185,9 +189,22 @@ public class GoodsDetailActivity extends BaseActvity {
 
     }
 
+    private ImageView mStarIv;
+    private TextView mCollectTv;
+    private LinearLayout mCollectLl;
+
     @Override
     public void onSuccess(String what, Object result) {
         switch (what) {
+            case ActionKey.ADDCOLLECT:
+                BaseBean baseBean = (BaseBean) result;
+                if (baseBean.getCode() == 200) {
+                    //已收藏
+                    mStarIv.setImageResource(R.drawable.yellow_star);
+                    mCollectTv.setTextColor(Color.rgb(0xFF, 0x9C, 0x47));
+                }
+                ToastInfo(baseBean.getMsg());
+                break;
             case ActionKey.GOODSDETAIL:
                 goodsDetailBean = (GoodsDetailBean) result;
                 if (goodsDetailBean.getCode() == 200) {
@@ -195,7 +212,6 @@ public class GoodsDetailActivity extends BaseActvity {
                     mSubtitleTv.setText(goodsDetailBean.getData().getSubtitled());
                     if (goodsDetailBean.getData().getActivity_price() != null) {
                         TYPE = "2";
-                        mOrderTv.setVisibility(View.VISIBLE);
                         SpannableString msp = new SpannableString(goodsDetailBean.getData().getActivity_price());
                         msp.setSpan(new RelativeSizeSpan(0.8f), goodsDetailBean.getData().getActivity_price().indexOf(".") + 1, goodsDetailBean.getData().getActivity_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
                         SpannableString msp1 = new SpannableString("￥" + goodsDetailBean.getData().getPrice() + " ");
@@ -224,10 +240,22 @@ public class GoodsDetailActivity extends BaseActvity {
                     } else {
                         if (TMShopCar.getNum() > 0) {
                             mRedTv.setVisibility(View.VISIBLE);
+                        }else {
+                            mRedTv.setVisibility(View.GONE);
                         }
                         mRedTv.setText(TMShopCar.getNum() + "");
                     }
+//    #FF9C47 #888
 
+                    if (goodsDetailBean.getData().getIs_collect().equals("0")) {
+                        //没有收藏
+                        mStarIv.setImageResource(R.drawable.gray_star);
+                        mCollectTv.setTextColor(Color.rgb(0x88, 0x88, 0x88));
+                    } else {
+                        //已收藏
+                        mStarIv.setImageResource(R.drawable.yellow_star);
+                        mCollectTv.setTextColor(Color.rgb(0xFF, 0x9C, 0x47));
+                    }
 
                     mIntroTv.setText(goodsDetailBean.getData().getIntro());
                     mCommentTv.setText("" + goodsDetailBean.getData().getComment_num() + "人评价");
@@ -306,7 +334,7 @@ public class GoodsDetailActivity extends BaseActvity {
                 }
             }
         });
-        setOnClicks(mCarLl, mAddTv, mUpIv, mBgV);
+        setOnClicks(mCarLl, mAddTv, mUpIv, mBgV, mOrderTv, mCollectLl);
 
     }
 
@@ -632,6 +660,9 @@ public class GoodsDetailActivity extends BaseActvity {
     @Override
     protected void onClickSet(int i) {
         switch (i) {
+            case R.id.ay_detail_collect_ll:
+                Post(ActionKey.ADDCOLLECT, new Collect(goodsDetailBean.getData().getId()), BaseBean.class);
+                break;
             case R.id.ay_detail_car_ll:
                 if (TYPE.equals("1")) {
                     MainActivity.index = 1;
@@ -670,6 +701,7 @@ public class GoodsDetailActivity extends BaseActvity {
                         mBgV.setVisibility(View.GONE);
                         mCardshopLl.setVisibility(View.GONE);
                     }
+                    mOrderTv.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.ay_detail_add_tv:
@@ -722,6 +754,15 @@ public class GoodsDetailActivity extends BaseActvity {
                 mCardFl.setVisibility(View.GONE);
                 mBgV.setVisibility(View.GONE);
                 mCardshopLl.setVisibility(View.GONE);
+                mOrderTv.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.ay_detail_order_tv:
+                if (TMShopCar.getNum() == 0) {
+                    ToastInfo("您还未选择任何商品");
+                    return;
+                }
+                SubmitOrderActivity.TYPE = 0;
+                openActivity(SubmitOrderActivity.class);
                 break;
         }
 
@@ -808,9 +849,9 @@ public class GoodsDetailActivity extends BaseActvity {
                 //当动画结束后：
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if(TYPE.equals("1")){
+                    if (TYPE.equals("1")) {
                         mRedTv.setText(ShopCar.getNum() + "");
-                    }else {
+                    } else {
                         mRedTv.setText(TMShopCar.getNum() + "");
                     }
                     if (Integer.valueOf(mRedTv.getText().toString().trim()) + 1 > 0) {

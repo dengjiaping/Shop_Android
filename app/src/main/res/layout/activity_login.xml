@@ -67,7 +67,7 @@
                     android:src="@drawable/pass" />
 
                 <EditText
-                    android:inputType="textPassword"
+                    android:inputType="numberPassword"
                     android:id="@+id/ay_login_pass_et"
                     android:textColorHint="#D9D9D9"
                     android:layout_width="0dp"

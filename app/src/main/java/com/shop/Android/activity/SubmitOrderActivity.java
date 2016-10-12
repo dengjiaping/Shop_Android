@@ -7,14 +7,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
+import com.king.Utils.GsonUtil;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.R;
+import com.shop.ShopCar.Goods;
+import com.shop.ShopCar.ShopCar;
+import com.shop.ShopCar.TMShopCar;
 
 /**
  * Created by admin on 2016/9/27.
  */
 public class SubmitOrderActivity extends BaseActvity {
+
+    //0特卖购物车
+    //1普通购物车
+    //2订单
+    public static int TYPE = 0;
+
     private String TAG = "submit";
     private LinearLayout mAddLl;
     private RelativeLayout mAddRl;
@@ -50,17 +60,32 @@ public class SubmitOrderActivity extends BaseActvity {
 
     @Override
     protected void init() {
-      F();
-        goodsListAdapter = new GoodsListAdapter(2,R.layout.activity_submit_order_item,new GoodsListViewHolder());
-        mScrollLv.setAdapter(goodsListAdapter);
+        F();
+        fillData();
+    }
 
+    private void fillData() {
+        switch (TYPE) {
+            case 0:
+                mTotalTv.setText("￥" + TMShopCar.allPrice());
+                mActualTv.setText("￥" + TMShopCar.allPrice());
+                mPriceTv.setText(mActualTv.getText().toString());
+                goodsListAdapter = new GoodsListAdapter(TMShopCar.getMap().size(), R.layout.activity_submit_order_item, new GoodsListViewHolder());
+                mScrollLv.setAdapter(goodsListAdapter);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
     }
 
     @Override
     protected void onClickSet(int i) {
 
     }
-    class GoodsListAdapter extends KingAdapter{
+
+    class GoodsListAdapter extends KingAdapter {
 
         public GoodsListAdapter(int size, int layoutId, Object viewHolder) {
             super(size, layoutId, viewHolder);
@@ -68,9 +93,21 @@ public class SubmitOrderActivity extends BaseActvity {
 
         @Override
         public void padData(int i, Object o) {
+            switch (TYPE) {
+                case 0:
+                    ((GoodsListViewHolder) o).mNameTv.setText(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(TMShopCar.getKeys().get(i)), Goods.class)).getTitle());
+                    ((GoodsListViewHolder) o).mPriceTv.setText("￥" + ((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(TMShopCar.getKeys().get(i)), Goods.class)).getPrice());
+                    ((GoodsListViewHolder) o).mNumTv.setText("x" + ((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(TMShopCar.getKeys().get(i)), Goods.class)).getCount());
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
 
         }
     }
+
     class GoodsListViewHolder {
         String TAG = "submits";
         TextView mNameTv;

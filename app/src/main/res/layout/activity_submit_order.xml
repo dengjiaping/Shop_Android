@@ -405,7 +405,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="满20元买配送费"
+                    android:text="满20元免配送费"
                     android:textColor="@color/my_color"
                     android:textSize="14dp" />
             </RelativeLayout>
@@ -503,7 +503,7 @@
                 android:layout_centerHorizontal="true"
                 android:textSize="14dp"
                 android:textColor="@color/white"
-                android:text="提价订单"/>
+                android:text="提交订单"/>
 
         </RelativeLayout>
 

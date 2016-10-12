@@ -52,5 +52,19 @@ public class ActionKey {
     public static final String SEARCH = "goods/search";
     //商品分类列表
     public static final String GOODSCATE = "goods/categoods";
+
+    //添加收藏
+    public static final String ADDCOLLECT = "collect/add";
+    //互动首页
+    public static final String INTERACTINDEX = "interact/index";
+    //互动详情
+    public static final String INTERACTDETAIL = "interact/detail";
+    //评论
+    public static final String INTERACTADD = "interact/add";
+
+    //购物车同步
+    public static final String CAREQUA = "shopcart/cart";
+    //清空购物车
+    public static final String CLEARCAR = "shopcart/delete";
 }
 

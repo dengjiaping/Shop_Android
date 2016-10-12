@@ -9,4 +9,5 @@ public class DataKey {
     public static final String CATE_ID = "CATE_ID";
     public static final String IMAGE = "IMAGE";
     public static final String NUM = "NUM";
+    public static final String LOGIN="LOGIN";
 }
