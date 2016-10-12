@@ -7,6 +7,13 @@
 
     <include layout="@layout/com_title_system"/>
 
+    <WebView
+        android:id="@+id/ay_agreement_service_wv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </WebView>
+
 
 
 </LinearLayout>

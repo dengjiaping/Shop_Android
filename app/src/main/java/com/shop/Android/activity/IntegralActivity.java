@@ -1,11 +1,16 @@
 package com.shop.Android.activity;
 
+import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
 import com.shop.Android.base.BaseActvity;
+import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.RefreshListView;
+import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.AddressBean;
+import com.shop.Net.Param.Token;
 import com.shop.R;
 
 /**
@@ -13,7 +18,7 @@ import com.shop.R;
  */
 public class IntegralActivity extends BaseActvity {
     private String TAG = "integral";
-    private RefreshListView mListRv;
+    private AnimNoLineRefreshListView mListRv;
     private ImageView mImgIv;
     private TextView mNumTv;
     private TextView mGradeTv;
@@ -34,8 +39,25 @@ public class IntegralActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
+        mListRv.setPullLoadEnable(false);
         integralAdapter = new IntegralAdapter(3, R.layout.activity_integral_item, new IntegralViewHolder());
         mListRv.setAdapter(integralAdapter);
+        mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListRv.onRefreshComplete();
+                    }
+                },1000);
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
 
     }
 

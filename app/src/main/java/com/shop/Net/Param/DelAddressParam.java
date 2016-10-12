@@ -3,12 +3,10 @@ package com.shop.Net.Param;
 /**
  * Created by admin on 2016/10/10.
  */
-public class DelAddressParam {
-    private String token;
+public class DelAddressParam extends Token {
     private String address_id;
 
-    public DelAddressParam(String token, String address_id) {
-        this.token = token;
+    public DelAddressParam(String address_id) {
         this.address_id = address_id;
     }
 }

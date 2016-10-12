@@ -5,7 +5,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.king.Base.KingData;
+import com.king.Utils.GsonUtil;
+import com.king.Utils.SPrefUtil;
 import com.shop.Android.Config;
+import com.shop.Android.DataKey;
 import com.shop.Android.activity.AddressManagerActivity;
 import com.shop.Android.activity.IntegralActivity;
 import com.shop.Android.activity.MineCollectActivity;
@@ -20,6 +23,7 @@ import com.shop.Android.activity.UserHelperActivity;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.widget.MineView;
+import com.shop.Net.Bean.UserBean;
 import com.shop.R;
 
 /**
@@ -39,6 +43,8 @@ public class MineFragment extends BaseFragment {
     private MineView mSetMv;
     private LinearLayout mContactLl;
     private TextView mPhoneTv;
+    private TextView mNameTv;
+    private UserBean userBean;
     @Override
     protected int loadLayout() {
         return R.layout.fragment_mine;
@@ -46,15 +52,34 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void init() {
         F();
-        kingData.registerWatcher(Config.ICON, new KingData.KingCallBack() {
-            @Override
-            public void onChange() {
-                GlideCircle("http://img.firefoxchina.cn/2016/09/5/201609230915030.jpg",mIconIv);
-            }
-        });
+         userBean= ((UserBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(DataKey.USER,""), UserBean.class));
+
+
+        if (userBean==null){
+            GlideCircle("http://img.firefoxchina.cn/2016/09/5/201609230915030.jpg",mIconIv);
+        }else {
+            GlideCircle(userBean.getData().getUser_info().getPoster(),mIconIv);
+            mNameTv.setText(userBean.getData().getUser_info().getNick_name());
+        }
+
+
+
+
         setOnClicks(mLeftIv, mIconIv,mAddressMv,mCollectMv,mContactLl,mIntegralMv,mEvaluateMv,mHelpMv,mOpinionMv,mSetMv,mShareMv);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        kingData.registerWatcher(Config.ICON, new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                userBean= ((UserBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(DataKey.USER,""), UserBean.class));
+                GlideCircle(userBean.getData().getUser_info().getPoster(),mIconIv);
+                mNameTv.setText(userBean.getData().getUser_info().getNick_name());
+            }
+        });
+    }
 
     @Override
     protected void onClickSet(int i) {
@@ -72,7 +97,7 @@ public class MineFragment extends BaseFragment {
                 openActivity(MineCollectActivity.class);
                 break;
             case R.id.ft_mine_contact_ll:
-
+              callPhone(mPhoneTv.getText().toString());
                 break;
             case R.id.ft_mine_evaluate_mv:
                 openActivity(MineEvaluateActivity.class);

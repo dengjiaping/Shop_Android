@@ -33,6 +33,7 @@ public class MineEvaluateActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
+        mListRv.setPullLoadEnable(false);
         mineEvaluateAdapter = new MineEvaluateAdapter(3,R.layout.activity_mine_evaluate_item,new EvaluateViewHolder());
         mListRv.setAdapter(mineEvaluateAdapter);
 

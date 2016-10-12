@@ -11,4 +11,5 @@ import com.shop.Net.Bean.UserBean;
  */
 public class Token {
     private String token = SPrefUtil.Function.getData(DataKey.USER,"").equals("") ?  "": ((UserBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(DataKey.USER,""), UserBean.class)).getData().getToken();
+
 }

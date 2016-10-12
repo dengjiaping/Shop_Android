@@ -64,6 +64,7 @@ public class SubmitOrderActivity extends BaseActvity {
         fillData();
     }
 
+
     private void fillData() {
         switch (TYPE) {
             case 0:

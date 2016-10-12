@@ -17,6 +17,7 @@ import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.ChooseAddressBean;
 import com.shop.Net.Param.EditAddressParam;
 import com.shop.Net.Param.AddAddressParam;
+import com.shop.Net.Param.Token;
 import com.shop.R;
 
 /**
@@ -91,11 +92,18 @@ public class EditorAddressActivity extends BaseActvity {
             mNameEt.setText(addressBean.getContact());
             mPhoneEt.setText(addressBean.getPhone());
             if (addressBean.getSex().equals("0")) {
-                mBoysRb.setChecked(true);
+                mGirlsRb.setChecked(true);
                 sex = 0;
             } else {
-                mGirlsRb.setChecked(true);
+                mBoysRb.setChecked(true);
                 sex = 1;
+            }
+            if (addressBean.getIs_default().equals("0")){
+                 mDefaultSb.setChecked(false);
+                is_default = 0;
+            }else {
+                mDefaultSb.setChecked(true);
+                is_default = 1;
             }
             mCityEt.setText(addressBean.getCity().getId());
             mAreaEt.setText(addressBean.getArea().getId());
@@ -130,7 +138,7 @@ public class EditorAddressActivity extends BaseActvity {
                         } else {
                             is_default = 0;
                         }
-                        Post(ActionKey.EDIT_ADDRESS, new EditAddressParam("02dd2b6cf803dfa77f2dd5cc95e69651",addressBean.getId(), name, phone,String.valueOf(is_default),String.valueOf(sex),city,area,community,building,unit,layer,room), BaseBean.class);
+                        Post(ActionKey.EDIT_ADDRESS, new EditAddressParam(addressBean.getId(),name, phone,String.valueOf(is_default),String.valueOf(sex),city,area,community,building,unit,layer,room), BaseBean.class);
                         break;
                     case 2://添加地址
 
@@ -161,7 +169,7 @@ public class EditorAddressActivity extends BaseActvity {
                             ToastInfo("联系人电话不能为空");
                             return;
                         }
-                        Post(ActionKey.ADDRESS_ADD, new AddAddressParam(add_name, add_phone, String.valueOf(is_default),String.valueOf(sex),add_city,add_area,add_community,add_unit,add_layer,add_room,"02dd2b6cf803dfa77f2dd5cc95e69651",add_building), BaseBean.class);
+                        Post(ActionKey.ADDRESS_ADD, new AddAddressParam(add_name, add_phone, String.valueOf(is_default),String.valueOf(sex),add_city,add_area,add_community,add_unit,add_layer,add_room,add_building), BaseBean.class);
 
                         break;
                 }
@@ -242,6 +250,9 @@ public class EditorAddressActivity extends BaseActvity {
                     ToastInfo("添加成功");
                     animFinsh();
                     kingData.sendBroadCast(Config.ADD_ADDRESS);
+                }else if (baseBean.getCode()==2001){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
                 }else {
                     ToastInfo(baseBean.getMsg());
                 }
@@ -252,6 +263,9 @@ public class EditorAddressActivity extends BaseActvity {
                     ToastInfo("修改成功");
                     animFinsh();
                     kingData.sendBroadCast(Config.ADD_ADDRESS);
+                }else if (bean.getCode()==2001){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
                 }else {
                     ToastInfo(bean.getMsg());
                 }

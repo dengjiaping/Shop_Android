@@ -21,6 +21,7 @@ import com.shop.Net.Bean.AddressBean;
 import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Param.AddressParam;
 import com.shop.Net.Param.DelAddressParam;
+import com.shop.Net.Param.Token;
 import com.shop.R;
 
 /**
@@ -60,10 +61,10 @@ public class AddressManagerActivity extends BaseActvity {
         kingData.registerWatcher(Config.ADD_ADDRESS, new KingData.KingCallBack() {
             @Override
             public void onChange() {
-                Post(ActionKey.ADDRESS_INDEX, new AddressParam("02dd2b6cf803dfa77f2dd5cc95e69651"), AddressBean.class);
+                Post(ActionKey.ADDRESS_INDEX, new Token(), AddressBean.class);
             }
         });
-        Post(ActionKey.ADDRESS_INDEX, new AddressParam("02dd2b6cf803dfa77f2dd5cc95e69651"), AddressBean.class);
+        Post(ActionKey.ADDRESS_INDEX, new Token(), AddressBean.class);
         setOnClicks(mAddRl);
         mTitleRightTv.setOnClickListener(new View.OnClickListener() {
 
@@ -87,7 +88,7 @@ public class AddressManagerActivity extends BaseActvity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Post(ActionKey.ADDRESS_INDEX, new AddressParam("02dd2b6cf803dfa77f2dd5cc95e69651"), AddressBean.class);
+                        Post(ActionKey.ADDRESS_INDEX, new Token(), AddressBean.class);
                     }
                 },1000);
 
@@ -122,8 +123,11 @@ public class AddressManagerActivity extends BaseActvity {
                     } else {
                         mNoneRl.setVisibility(View.VISIBLE);
                     }
-                } else {
-                  ToastInfo(addressBean.getMsg());
+                } else if (addressBean.getCode()==2001){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                }else {
+                    ToastInfo(addressBean.getMsg());
                 }
                 break;
             case ActionKey.DEL_ADDRESS:
@@ -131,6 +135,9 @@ public class AddressManagerActivity extends BaseActvity {
                 if (bean.getCode()==200){
                     ToastInfo("删除成功");
                     kingData.sendBroadCast(Config.ADD_ADDRESS);
+                }else if (bean.getCode()==2001){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
                 }else {
                     ToastInfo(bean.getMsg());
                 }
@@ -183,7 +190,7 @@ public class AddressManagerActivity extends BaseActvity {
             addressViewHolder.mDelIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                  Post(ActionKey.DEL_ADDRESS,new DelAddressParam("02dd2b6cf803dfa77f2dd5cc95e69651",addressBean.getData().get(i).getId()), BaseBean.class);
+                  Post(ActionKey.DEL_ADDRESS,new DelAddressParam(addressBean.getData().get(i).getId()), BaseBean.class);
                 }
             });
 

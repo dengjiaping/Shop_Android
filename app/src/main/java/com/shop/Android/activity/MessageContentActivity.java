@@ -4,7 +4,6 @@ import android.widget.TextView;
 
 import com.shop.Android.base.BaseActvity;
 import com.shop.Net.ActionKey;
-import com.shop.Net.Bean.MessageBean;
 import com.shop.Net.Bean.MessageContentBean;
 import com.shop.Net.Param.MessageContentParam;
 import com.shop.R;
@@ -33,7 +32,7 @@ public class MessageContentActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-        Post(ActionKey.MESSAGE_CONTENT,new MessageContentParam("02dd2b6cf803dfa77f2dd5cc95e69651",id), MessageContentBean.class);
+        Post(ActionKey.MESSAGE_CONTENT,new MessageContentParam(id), MessageContentBean.class);
     }
 
     @Override
@@ -45,6 +44,9 @@ public class MessageContentActivity extends BaseActvity {
                     mTitleTv.setText(messageContentBean.getData().getTitle());
                     mTimeTv.setText(messageContentBean.getData().getCreated_time());
                     mContentTv.setText(messageContentBean.getData().getContent());
+                }else if (messageContentBean.getCode()==2001){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
                 }else {
                     ToastInfo(messageContentBean.getMsg());
                 }

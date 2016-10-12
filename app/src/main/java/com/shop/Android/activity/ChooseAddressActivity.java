@@ -42,25 +42,25 @@ public class ChooseAddressActivity extends BaseActvity {
         F();
         switch (type){
             case 1:
-                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id),ChooseAddressBean.class);
                 break;
             case 2:
-                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id),ChooseAddressBean.class);
                 break;
             case 3:
-                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id),ChooseAddressBean.class);
                 break;
             case 4:
-                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id),ChooseAddressBean.class);
                 break;
             case 5:
-                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id),ChooseAddressBean.class);
                 break;
             case 6:
-                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id),ChooseAddressBean.class);
                 break;
             case 7:
-                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id,"02dd2b6cf803dfa77f2dd5cc95e69651"),ChooseAddressBean.class);
+                Post(ActionKey.CHOOSE_ADDRESS,new ChooseAddressParam(id),ChooseAddressBean.class);
                 break;
 
         }
@@ -117,6 +117,9 @@ public class ChooseAddressActivity extends BaseActvity {
                 if (chooseAddressBean.getCode()==200){
                     chooseAddressAdapter = new ChooseAddressAdapter(chooseAddressBean.getData().size(),R.layout.activity_choose_address_item,new ViewHolder());
                     mAddressLv.setAdapter(chooseAddressAdapter);
+                }else if (chooseAddressBean.getCode()==2001){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
                 }else {
                     ToastInfo(chooseAddressBean.getMsg());
                 }

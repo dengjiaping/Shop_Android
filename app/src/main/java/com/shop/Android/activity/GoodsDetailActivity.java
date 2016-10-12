@@ -336,6 +336,9 @@ public class GoodsDetailActivity extends BaseActvity {
         });
         setOnClicks(mCarLl, mAddTv, mUpIv, mBgV, mOrderTv, mCollectLl);
 
+        setOnClicks(mCarLl, mAddTv, mUpIv);
+
+
     }
 
     private void addRecycleView() {
@@ -750,6 +753,7 @@ public class GoodsDetailActivity extends BaseActvity {
             case R.id.ay_detail_up_iv:
                 mScrollXsc.smoothScrollTo(0, 0);
                 break;
+
             case R.id.ay_detail_bg_v:
                 mCardFl.setVisibility(View.GONE);
                 mBgV.setVisibility(View.GONE);
@@ -763,6 +767,7 @@ public class GoodsDetailActivity extends BaseActvity {
                 }
                 SubmitOrderActivity.TYPE = 0;
                 openActivity(SubmitOrderActivity.class);
+
                 break;
         }
 
