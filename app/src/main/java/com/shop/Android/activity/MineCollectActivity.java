@@ -45,7 +45,7 @@ public class MineCollectActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-        kingData.registerWatcher(ActionKey.COLLECT_INDEX, new KingData.KingCallBack() {
+        kingData.registerWatcher(Config.COLLECT, new KingData.KingCallBack() {
             @Override
             public void onChange() {
                 Post(ActionKey.COLLECT_INDEX, new Token(), CollectBean.class);
@@ -91,9 +91,10 @@ public class MineCollectActivity extends BaseActvity {
                     ToastInfo("取消收藏成功");
                     kingData.sendBroadCast(Config.COLLECT);
                 }else if (bean.getCode()==2001){
-
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
                 }else {
-
+                    ToastInfo(bean.getMsg());
                 }
                 break;
         }
@@ -121,6 +122,7 @@ public class MineCollectActivity extends BaseActvity {
             slideItemWrapLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    kingData.sendBroadCast(Config.COLLECT);
                     Post(ActionKey.CANCEL_COLLECT, new CancelCollectParam(collectBean.getData().get(i).getGoods_id()), CollectBean.class);
                 }
             });

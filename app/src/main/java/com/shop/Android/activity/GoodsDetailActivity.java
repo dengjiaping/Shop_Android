@@ -87,7 +87,6 @@ public class GoodsDetailActivity extends BaseActvity {
     private ViewPager mPicVp;
     private RecyclerView mHotRv;
     private LinearLayout mCarLl;
-    private LinearLayout mCollectLl;
     private TextView mAddTv;
     private XRefreshView mRefreshXrv;
     private XScrollView mScrollXsc;
@@ -308,7 +307,7 @@ public class GoodsDetailActivity extends BaseActvity {
             }
         });
 
-        setOnClicks(mCarLl, mAddTv, mUpIv,mCollectLl);
+        setOnClicks(mCarLl, mAddTv, mUpIv);
 
 
     }
@@ -721,9 +720,6 @@ public class GoodsDetailActivity extends BaseActvity {
             case R.id.ay_detail_up_iv:
                 mScrollXsc.smoothScrollTo(0, 0);
                 break;
-
-            case R.id.ay_detail_collect_ll:
-             break;
 
             case R.id.ay_detail_bg_v:
                 mCardFl.setVisibility(View.GONE);

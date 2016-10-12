@@ -8,8 +8,8 @@ public class Config {
     public static String DATA = "";
     public static int TYPE = 0 ;
     public static final String ADD_ADDRESS = "add";
-
     public static final String COLLECT = "collect";
+    public static  String WEB_URL = "";
 
 
 

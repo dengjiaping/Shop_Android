@@ -27,11 +27,85 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp">
+                    android:layout_height="120dp">
+
+                    <LinearLayout
+                        android:id="@+id/ay_details_wait_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/waitx_order"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:textSize="14dp"
+                            android:text="还需支付￥"
+                            android:layout_weight="1"
+                            android:layout_marginTop="20dp"
+                            android:gravity="right"
+                            />
+
+                        <TextView
+                            android:id="@+id/ay_details_order_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="365元"
+                            android:layout_weight="1"
+                            android:textSize="14dp"
+                            android:layout_marginTop="20dp"
+                            android:textColor="@color/text_color"
+                            />
+
+
+                    </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/ay_details_cancel_rl"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:background="@mipmap/cancel_orderx">
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/ay_details_distribution_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/distribution_orderx"
+                        android:visibility="gone"
+                        >
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/ay_details_undistributionx_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/undistributionx"
+                        android:visibility="gone">
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/ay_details_finish_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/finish_orderx"
+                        android:visibility="gone">
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/ay_details_evaluation_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/evaluation_orderx"
+                        android:visibility="gone">
 
                     </RelativeLayout>
 

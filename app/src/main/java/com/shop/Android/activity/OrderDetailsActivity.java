@@ -1,5 +1,7 @@
 package com.shop.Android.activity;
 
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shop.Android.base.BaseActvity;
@@ -21,6 +23,12 @@ public class OrderDetailsActivity extends BaseActvity {
     private TextView mSendTv;
     private TextView mPayTv;
     private TextView mCancelTv;
+    private LinearLayout mWaitLl;
+    private RelativeLayout mCancelRl;
+    private RelativeLayout mDistributionRl;
+    private RelativeLayout mUndistributionxRl;
+    private RelativeLayout mFinishRl;
+    private RelativeLayout mEvaluationRl;
 
     @Override
     protected int loadLayout() {
@@ -37,7 +45,7 @@ public class OrderDetailsActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-        setOnClicks(mPayTv);
+        setOnClicks(mPayTv,mCancelTv);
     }
 
     @Override
@@ -45,6 +53,8 @@ public class OrderDetailsActivity extends BaseActvity {
         switch (i) {
             case R.id.ay_details_pay_tv:
                 openActivity(SubmitOrderActivity.class);
+                break;
+            case R.id.ay_details_cancel_tv:
                 break;
         }
     }

@@ -9,10 +9,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.king.Base.CutActivity;
+import com.king.Utils.GsonUtil;
+import com.king.Utils.SPrefUtil;
 import com.shop.Android.Config;
+import com.shop.Android.DataKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Bean.EditUserInfoBean;
+import com.shop.Net.Bean.UserBean;
 import com.shop.Net.Param.HearderParam;
 import com.shop.R;
 
@@ -43,7 +48,7 @@ public class PersonalInfoActivity extends BaseActvity {
     private RelativeLayout mGirlsRl;
     private String gender;
     private File poster;
-
+    private UserBean userBean;
     @Override
     protected int loadLayout() {
         return R.layout.activity_personal;
@@ -60,6 +65,22 @@ public class PersonalInfoActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
+        userBean= ((UserBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(DataKey.USER,""), UserBean.class));
+        if (userBean!=null){
+            mNicknameTv.setText(userBean.getData().getUser_info().getNick_name());
+            mNicknameEt.setText(userBean.getData().getUser_info().getNick_name());
+            GlideCircle(userBean.getData().getUser_info().getPoster(),mHeaderIv);
+            mPhoneTv.setText(userBean.getData().getUser_info().getPhone());
+            if (userBean.getData().getUser_info().getGender().equals("0")){
+                mSexTv.setText("女");
+                mGirlsIv.setVisibility(View.VISIBLE);
+                mBoysIv.setVisibility(View.GONE);
+            }else {
+                mSexTv.setText("男");
+                mGirlsIv.setVisibility(View.GONE);
+                mBoysIv.setVisibility(View.VISIBLE);
+            }
+        }
         CutActivity.setCallback(new CutActivity.OnPostFile() {
             @Override
             public void onPost(File file, Activity activity) {
@@ -73,7 +94,7 @@ public class PersonalInfoActivity extends BaseActvity {
             @Override
             public void onClick(View view) {
                 String name = mNicknameEt.getText().toString().trim();
-                Post(ActionKey.EDIT_USER, new HearderParam("02dd2b6cf803dfa77f2dd5cc95e69651", String.valueOf(gender),name, poster), BaseBean.class);
+                Post(ActionKey.EDIT_USER, new HearderParam( gender,name, poster), EditUserInfoBean.class);
             }
         });
     }
@@ -82,10 +103,15 @@ public class PersonalInfoActivity extends BaseActvity {
     public void onSuccess(String what, Object result) {
         switch (what){
             case ActionKey.EDIT_USER:
-                BaseBean bean = (BaseBean) result;
+                EditUserInfoBean bean = (EditUserInfoBean) result;
                 if (bean.getCode()==200){
                     ToastInfo("修改成功");
+                    userBean.getData().getUser_info().setPoster(bean.getData().getPoster());
+                    userBean.getData().getUser_info().setGender(bean.getData().getGender());
+                    userBean.getData().getUser_info().setNick_name(bean.getData().getNick_name());
+                    SPrefUtil.Function.putData(DataKey.USER, GsonUtil.Bean2Str(userBean));
                     kingData.sendBroadCast(Config.ICON);
+                    animFinsh();
                 }else {
                     ToastInfo(bean.getMsg());
                 }

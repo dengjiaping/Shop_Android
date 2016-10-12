@@ -48,12 +48,12 @@
 
     </RelativeLayout>
 
-    <com.shop.Android.widget.RefreshListView
+    <com.shop.Android.widget.AnimNoLineRefreshListView
         android:id="@+id/ay_integral_list_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
 
-    </com.shop.Android.widget.RefreshListView>
+    </com.shop.Android.widget.AnimNoLineRefreshListView>
 
 </LinearLayout>

@@ -47,6 +47,12 @@ public class ActionKey {
     //取消收藏
     public static final String CANCEL_COLLECT = "collect/del";
 
+    // 用户协议
+    public static final String USER_SERVICE = "setting/agree";
+
+    //关于我们
+    public static final String ABOUT = "setting/abourt";
+
     //添加收藏
     public static final String ADD_COLLECT = "collect/add";
 
