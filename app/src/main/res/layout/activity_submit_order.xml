@@ -22,7 +22,7 @@
             <LinearLayout
                 android:id="@+id/ay_submit_add_ll"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -30,8 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@mipmap/addressbjx"
-                    />
+                    android:src="@mipmap/addressbjx"/>
 
                 <RelativeLayout
                     android:id="@+id/ay_submit_add_rl"
@@ -62,7 +61,7 @@
                 <RelativeLayout
                     android:id="@+id/ay_submit_address_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="75dp"
                     android:visibility="gone">
 
                     <TextView
@@ -151,6 +150,7 @@
                 android:background="@color/color_fe" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
@@ -312,6 +312,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="30dp">
 
@@ -401,11 +402,12 @@
                 android:layout_height="30dp">
 
                 <TextView
+                    android:id="@+id/ay_submit_lowest_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="满20元买配送费"
+                    android:text="满20元免配送费"
                     android:textColor="@color/my_color"
                     android:textSize="14dp" />
             </RelativeLayout>
@@ -503,7 +505,7 @@
                 android:layout_centerHorizontal="true"
                 android:textSize="14dp"
                 android:textColor="@color/white"
-                android:text="提价订单"/>
+                android:text="提交订单"/>
 
         </RelativeLayout>
 

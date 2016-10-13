@@ -126,6 +126,9 @@ public class LoginActivity extends BaseActvity {
                 UserBean userBean = (UserBean) result;
                 if (userBean.getCode() == 200) {
                     SPrefUtil.Function.putData(DataKey.USER, GsonUtil.Bean2Str(userBean));
+                    if(kingData.getData(DataKey.LOGIN) != null && Integer.valueOf(kingData.getData(DataKey.LOGIN)) == 1){
+                        kingData.sendBroadCast("REFRESHCAR");
+                    }
                     animFinsh();
                 } else {
                     ToastInfo(userBean.getMsg());

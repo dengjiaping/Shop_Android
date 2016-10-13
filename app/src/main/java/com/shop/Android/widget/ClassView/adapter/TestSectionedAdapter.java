@@ -131,9 +131,6 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                 }
                 pruductCagests.get(section).getProduct().get(position).setNumber(num);
                 viewHolder.shoppingNum.setText(pruductCagests.get(section).getProduct().get(position).getNumber() + "");
-                if (callBackListener != null) {
-                    callBackListener.updateProduct(pruductCagests.get(section).getProduct().get(position), "1");
-                }
                 if (mHolderClickListener != null) {
                     int[] start_location = new int[2];
                     viewHolder.shoppingNum.getLocationInWindow(start_location);//获取点击商品图片的位置
@@ -151,6 +148,10 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
 
                 ShopCar.add(thing);
                 ShopCar.print();
+
+                if (callBackListener != null) {
+                    callBackListener.updateProduct(pruductCagests.get(section).getProduct().get(position), "1");
+                }
             }
         });
 
@@ -166,9 +167,6 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                     }
                     pruductCagests.get(section).getProduct().get(position).setNumber(num);
                     viewHolder.shoppingNum.setText(pruductCagests.get(section).getProduct().get(position).getNumber() + "");
-                    if (callBackListener != null) {
-                        callBackListener.updateProduct(pruductCagests.get(section).getProduct().get(position), "2");
-                    }
                 }
 
                 thing.setId(pruductCagests.get(section).getProduct().get(position).getId());
@@ -180,6 +178,10 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
 
                 ShopCar.add(thing);
                 ShopCar.print();
+
+                if (callBackListener != null) {
+                    callBackListener.updateProduct(pruductCagests.get(section).getProduct().get(position), "2");
+                }
             }
         });
 

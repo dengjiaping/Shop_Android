@@ -22,12 +22,13 @@
             android:layout_width="30dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/car_icon_selector"
             android:button="@null"
             android:checked="true"/>
 
         <TextView
+            android:id="@+id/item_car_shop_tv"
             android:textSize="14dp"
             android:textColor="#333"
             android:text="姐儿会便利店"

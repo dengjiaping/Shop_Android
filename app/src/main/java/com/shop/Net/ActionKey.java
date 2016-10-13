@@ -53,8 +53,6 @@ public class ActionKey {
     //关于我们
     public static final String ABOUT = "setting/abourt";
 
-    //添加收藏
-    public static final String ADD_COLLECT = "collect/add";
 
     //订单首页
     public static final String ORDER_INDEX = "order/orders";
@@ -81,5 +79,31 @@ public class ActionKey {
     public static final String SEARCH = "goods/search";
     //商品分类列表
     public static final String GOODSCATE = "goods/categoods";
+
+    //添加收藏
+    public static final String ADDCOLLECT = "collect/add";
+    //互动首页
+    public static final String INTERACTINDEX = "interact/index";
+    //互动详情
+    public static final String INTERACTDETAIL = "interact/detail";
+    //评论
+    public static final String INTERACTADD = "interact/add";
+
+    //购物车同步
+    public static final String CAREQUA = "shopcart/cart";
+    //清空购物车
+    public static final String CLEARCAR = "shopcart/clear";
+
+    //提交订单
+    public static final String COMMITORDER = "order/commit";
+    //获取配送费
+    public static final String FEE = "order/freightinfo";
+    //时间特卖
+    public static final String TIMESELL = "goods/panic";
+
+    //支付
+    public static final String PAY = "order/pay";
+    //取消收藏
+    public static final String CANCELCOLLECT = "collect/del";
 }
 

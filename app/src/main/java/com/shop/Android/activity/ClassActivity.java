@@ -51,7 +51,7 @@ import java.util.List;
 /**
  * Created by admin on 2016/9/22.
  */
-public class ClassActivity extends BaseActvity implements onCallBackListener, ShopToDetailListener {
+public class ClassActivity extends BaseActvity implements onCallBackListener {
 
 
     private String TAG = "class";
@@ -90,12 +90,6 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
     protected void init() {
         animation_viewGroup = createAnimLayout();
         F();
-
-        if (ShopCar.getNum() > 0) {
-            mRedTv.setVisibility(View.VISIBLE);
-        }
-        mRedTv.setText(ShopCar.getNum() + "");
-
         setOnClicks(mBgV, mOverTv, mCarIv, mBackTv, mCarFl);
     }
 
@@ -154,9 +148,7 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
 
     private List<ShopProduct> shopProductsAll;
 
-    private ListView mShoplistLv;
 
-    private ShopAdapter shopAdapter;
 
     public List<ProductType> getData() {
         productCategorizes = new ArrayList<>();
@@ -282,9 +274,6 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
         } else {
             adapter.notifyDataSetChanged();
         }
-        shopAdapter = new ShopAdapter(mContext, productList);
-        mShoplistLv.setAdapter(shopAdapter);
-        shopAdapter.setShopToDetailListener(this);
 
         mListLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -511,125 +500,22 @@ public class ClassActivity extends BaseActvity implements onCallBackListener, Sh
      */
     @Override
     public void updateProduct(ShopProduct product, String type) {
-        if (type.equals("1")) {
-            if (!productList.contains(product)) {
-                productList.add(product);
-            } else {
-                for (ShopProduct shopProduct : productList) {
-                    if (product.getId() == shopProduct.getId()) {
-                        shopProduct.setNumber(shopProduct.getNumber());
-                    }
-                }
-            }
-        } else if (type.equals("2")) {
-            if (productList.contains(product)) {
-                if (product.getNumber() == 0) {
-                    productList.remove(product);
-                } else {
-                    for (ShopProduct shopProduct : productList) {
-                        if (product.getId() == shopProduct.getId()) {
-                            shopProduct.setNumber(shopProduct.getNumber());
-                        }
-                    }
-                }
-
-            }
+        if(ShopCar.getNum() > 0){
+            mRedTv.setText(ShopCar.getNum() + "");
+            mRedTv.setVisibility(View.VISIBLE);
+        }else {
+            mRedTv.setVisibility(View.GONE);
         }
-        shopAdapter.notifyDataSetChanged();
-        setPrise();
     }
 
-    @Override
-    public void onUpdateDetailList(ShopProduct product, String type) {
-        if (type.equals("1")) {
-            for (int i = 0; i < productCategorizes.size(); i++) {
-                shopProductsAll = productCategorizes.get(i).getProduct();
-                for (ShopProduct shopProduct : shopProductsAll) {
-                    if (product.getId() == shopProduct.getId()) {
-                        shopProduct.setNumber(product.getNumber());
-                    }
-                }
-            }
-        } else if (type.equals("2")) {
-            for (int i = 0; i < productCategorizes.size(); i++) {
-                shopProductsAll = productCategorizes.get(i).getProduct();
-                for (ShopProduct shopProduct : shopProductsAll) {
-                    if (product.getId() == shopProduct.getId()) {
-                        shopProduct.setNumber(product.getNumber());
-                    }
-                }
-            }
-        }
-        sectionedAdapter.notifyDataSetChanged();
-        setPrise();
-    }
 
-    @Override
-    public void onRemovePriduct(ShopProduct product) {
-        for (int i = 0; i < productCategorizes.size(); i++) {
-            shopProductsAll = productCategorizes.get(i).getProduct();
-            for (ShopProduct shopProduct : shopProductsAll) {
-                if (product.getId() == shopProduct.getId()) {
-                    productList.remove(product);
-                    shopAdapter.notifyDataSetChanged();
-                    shopProduct.setNumber(shopProduct.getNumber());
-                }
-            }
-        }
-        sectionedAdapter.notifyDataSetChanged();
-        shopAdapter.notifyDataSetChanged();
-        setPrise();
-    }
+
 
     /**
      * 更新购物车价格
      */
     private TextView mPriceTv;
 
-//    public void setPrise() {
-//        double sum = 0;
-//        int shopNum = 0;
-//        for (ShopProduct pro : productList) {
-////            sum = sum + (pro.getNumber() * Double.parseDouble(pro.getPrice()));
-//            sum = DoubleUtil.sum(sum, DoubleUtil.mul((double) pro.getNumber(), Double.parseDouble(pro.getPrice())));
-//            shopNum = shopNum + pro.getNumber();
-//        }
-//        if (shopNum > 0) {
-//            mNumTv.setVisibility(View.VISIBLE);
-//        } else {
-//            mNumTv.setVisibility(View.GONE);
-//        }
-//        if (sum > 0) {
-//            mPriceTv.setVisibility(View.VISIBLE);
-//        } else {
-//            mDefaultTv.setVisibility(View.VISIBLE);
-//        }
-//        mPriceTv.setText("合计:¥" + " " + (new DecimalFormat("0.00")).format(sum));
-//        mNumTv.setText(String.valueOf(shopNum));
-//    }
-
-
-    public void setPrise() {
-        double sum = 0;
-        int shopNum = 0;
-        for (ShopProduct pro : productList) {
-//            sum = sum + (pro.getNumber() * Double.parseDouble(pro.getPrice()));
-            sum = DoubleUtil.sum(sum, DoubleUtil.mul((double) pro.getNumber(), Double.parseDouble(pro.getPrice())));
-            shopNum = shopNum + pro.getNumber();
-        }
-        if (shopNum > 0) {
-            mRedTv.setVisibility(View.VISIBLE);
-        } else {
-            mRedTv.setVisibility(View.GONE);
-        }
-        if (sum > 0) {
-            mPriceTv.setVisibility(View.VISIBLE);
-        } else {
-            mDefaultTv.setVisibility(View.VISIBLE);
-        }
-        mPriceTv.setText("合计:¥" + " " + (new DecimalFormat("0.00")).format(sum));
-        mRedTv.setText(String.valueOf(shopNum));
-    }
 
 
 }

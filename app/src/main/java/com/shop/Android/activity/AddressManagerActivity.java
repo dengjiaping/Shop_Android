@@ -13,6 +13,7 @@ import com.king.Base.KingAdapter;
 import com.king.Base.KingData;
 import com.king.Utils.GsonUtil;
 import com.shop.Android.Config;
+import com.shop.Android.DataKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.RefreshListView;
@@ -104,6 +105,11 @@ public class AddressManagerActivity extends BaseActvity {
         mListRv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(mTitleRightTv.getText().toString().equals("管理")){
+                    kingData.putData(DataKey.ADDRESS,GsonUtil.Bean2Str(addressBean.getData().get(i)));
+                    kingData.sendBroadCast("ZZADDDRESS");
+                    animFinsh();
+                }
             }
         });
     }
