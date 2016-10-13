@@ -4,84 +4,86 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:focusable="true"
+        android:layout_marginBottom="60dp"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:layout_height="50dp"
+            android:background="#F9F9F9"
+            android:gravity="center_vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#F9F9F9"
-                android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="距结束倒计时"
+                android:textColor="#929292"
+                android:textSize="17dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="距结束倒计时"
-                    android:textColor="#929292"
-                    android:textSize="17dp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ft_time_bg_gray"
-                    android:text="03"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="  :  "
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ft_time_bg_gray"
-                    android:text="03"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="  :  "
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/ft_time_bg_gray"
-                    android:text="03"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
-            <com.shop.Android.widget.NoScrollListView
-                android:id="@+id/ft_time_list_lv"
-                android:layout_width="match_parent"
+            <View
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:divider="@null"
-                android:listSelector="@color/transparent"
-                android:scrollbars="none" />
+                android:layout_weight="1" />
+
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/ft_time_hour_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ft_time_bg_gray"
+                android:text="03"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  :  "
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/ft_time_min_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ft_time_bg_gray"
+                android:text="03"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  :  "
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/ft_time_sec_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ft_time_bg_gray"
+                android:text="03"
+                android:textSize="16dp" />
+
         </LinearLayout>
-    </ScrollView>
+
+        <com.shop.Android.widget.AnimNoLineRefreshListView
+            android:id="@+id/ft_time_list_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none" />
+    </LinearLayout>
 
 
 </LinearLayout>

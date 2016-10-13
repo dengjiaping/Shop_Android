@@ -97,7 +97,7 @@ public class MineFragment extends BaseFragment {
                 openActivity(MineCollectActivity.class);
                 break;
             case R.id.ft_mine_contact_ll:
-              callPhone(mPhoneTv.getText().toString());
+              callPhone(mPhoneTv.getText().toString(),mContext);
                 break;
             case R.id.ft_mine_evaluate_mv:
                 openActivity(MineEvaluateActivity.class);

@@ -209,7 +209,7 @@ public class AddressBean extends BaseBean {
 
         public static class CityBean {
             private String id;
-            private Object name;
+            private String name;
 
             public String getId() {
                 return id;
@@ -219,18 +219,18 @@ public class AddressBean extends BaseBean {
                 this.id = id;
             }
 
-            public Object getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Object name) {
+            public void setName(String name) {
                 this.name = name;
             }
         }
 
         public static class AreaBean {
             private String id;
-            private Object name;
+            private String name;
 
             public String getId() {
                 return id;
@@ -240,18 +240,18 @@ public class AddressBean extends BaseBean {
                 this.id = id;
             }
 
-            public Object getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Object name) {
+            public void setName(String name) {
                 this.name = name;
             }
         }
 
         public static class VillageBean {
             private String id;
-            private Object name;
+            private String name;
 
             public String getId() {
                 return id;
@@ -261,18 +261,18 @@ public class AddressBean extends BaseBean {
                 this.id = id;
             }
 
-            public Object getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Object name) {
+            public void setName(String name) {
                 this.name = name;
             }
         }
 
         public static class BuildBean {
             private String id;
-            private Object name;
+            private String name;
 
             public String getId() {
                 return id;
@@ -282,18 +282,18 @@ public class AddressBean extends BaseBean {
                 this.id = id;
             }
 
-            public Object getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Object name) {
+            public void setName(String name) {
                 this.name = name;
             }
         }
 
         public static class UnitBean {
             private String id;
-            private Object name;
+            private String name;
 
             public String getId() {
                 return id;
@@ -303,18 +303,18 @@ public class AddressBean extends BaseBean {
                 this.id = id;
             }
 
-            public Object getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Object name) {
+            public void setName(String name) {
                 this.name = name;
             }
         }
 
         public static class FloorBean {
             private String id;
-            private Object name;
+            private String name;
 
             public String getId() {
                 return id;
@@ -324,18 +324,18 @@ public class AddressBean extends BaseBean {
                 this.id = id;
             }
 
-            public Object getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Object name) {
+            public void setName(String name) {
                 this.name = name;
             }
         }
 
         public static class RoomBean {
             private String id;
-            private Object name;
+            private String name;
 
             public String getId() {
                 return id;
@@ -345,11 +345,11 @@ public class AddressBean extends BaseBean {
                 this.id = id;
             }
 
-            public Object getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Object name) {
+            public void setName(String name) {
                 this.name = name;
             }
         }

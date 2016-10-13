@@ -53,8 +53,6 @@ public class ActionKey {
     //关于我们
     public static final String ABOUT = "setting/abourt";
 
-    //添加收藏
-    public static final String ADD_COLLECT = "collect/add";
 
     //发送验证码
     public static final String CODE = "login/verify";
@@ -82,6 +80,18 @@ public class ActionKey {
     //购物车同步
     public static final String CAREQUA = "shopcart/cart";
     //清空购物车
-    public static final String CLEARCAR = "shopcart/delete";
+    public static final String CLEARCAR = "shopcart/clear";
+
+    //提交订单
+    public static final String COMMITORDER = "order/commit";
+    //获取配送费
+    public static final String FEE = "order/freightinfo";
+    //时间特卖
+    public static final String TIMESELL = "goods/panic";
+
+    //支付
+    public static final String PAY = "order/pay";
+    //取消收藏
+    public static final String CANCELCOLLECT = "collect/del";
 }
 

@@ -35,12 +35,14 @@ import com.shop.Android.BaseApplication;
 import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
 import com.shop.Android.activity.LoginActivity;
+import com.shop.Android.activity.SubmitOrderActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.base.TestAdapter;
 import com.shop.Android.base.TestTwoAdapter;
 import com.shop.Android.widget.AnimRefreshListView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Bean.IndexBean;
 import com.shop.Net.Bean.ShopCarBean;
 import com.shop.Net.Param.CarSave;
 import com.shop.Net.Param.Ids;
@@ -160,6 +162,9 @@ public class CarFragment extends BaseFragment {
                     ToastInfo(baseBean.getMsg());
                     openActivity(LoginActivity.class);
                     kingData.putData(DataKey.LOGIN, 1);
+                }else if(baseBean.getCode() == 200){
+                    SubmitOrderActivity.TYPE = 1;
+                    openActivity(SubmitOrderActivity.class);
                 }
                 break;
             case "CARQUA":
@@ -209,7 +214,7 @@ public class CarFragment extends BaseFragment {
                     }
                 }
                 kingData.sendBroadCast("CAR");
-                Post(ActionKey.CLEARCAR, new Ids(ShopCar.clear()), BaseBean.class);
+                Post(ActionKey.CLEARCAR, new Token(), BaseBean.class);
                 break;
             case ActionKey.CLEARCAR:
                 baseBean = (BaseBean) result;
@@ -280,6 +285,7 @@ public class CarFragment extends BaseFragment {
         CheckBox mTickIv;
         View mMinusTv;
         View mAddTv;
+        TextView mShopTv;
     }
 
     private boolean isCheckedRefresh = false;
@@ -338,13 +344,17 @@ public class CarFragment extends BaseFragment {
                 view = createConvertView(i);
                 viewHolder.mTickIv = UIUtil.findViewById(view, R.id.item_car_tick_iv);
                 try {
-                    ((CarViewHolder) (viewHolder)).mNameTv = UIUtil.findViewById(view, R.id.item_car_name_tv);
-                    ((CarViewHolder) (viewHolder)).mIconIv = UIUtil.findViewById(view, R.id.item_car_icon_iv);
-                    ((CarViewHolder) (viewHolder)).mWeightTv = UIUtil.findViewById(view, R.id.item_car_weight_tv);
-                    ((CarViewHolder) (viewHolder)).mPriceTv = UIUtil.findViewById(view, R.id.item_car_price_tv);
-                    ((CarViewHolder) (viewHolder)).mNumTv = UIUtil.findViewById(view, R.id.item_car_num_tv);
-                    ((CarViewHolder) (viewHolder)).mMinusTv = UIUtil.findViewById(view, R.id.item_car_minus_tv);
-                    ((CarViewHolder) (viewHolder)).mAddTv = UIUtil.findViewById(view, R.id.item_car_add_tv);
+                    if (i == 0) {
+                        viewHolder.mShopTv = UIUtil.findViewById(view, R.id.item_car_shop_tv);
+                    } else {
+                        ((CarViewHolder) (viewHolder)).mNameTv = UIUtil.findViewById(view, R.id.item_car_name_tv);
+                        ((CarViewHolder) (viewHolder)).mIconIv = UIUtil.findViewById(view, R.id.item_car_icon_iv);
+                        ((CarViewHolder) (viewHolder)).mWeightTv = UIUtil.findViewById(view, R.id.item_car_weight_tv);
+                        ((CarViewHolder) (viewHolder)).mPriceTv = UIUtil.findViewById(view, R.id.item_car_price_tv);
+                        ((CarViewHolder) (viewHolder)).mNumTv = UIUtil.findViewById(view, R.id.item_car_num_tv);
+                        ((CarViewHolder) (viewHolder)).mMinusTv = UIUtil.findViewById(view, R.id.item_car_minus_tv);
+                        ((CarViewHolder) (viewHolder)).mAddTv = UIUtil.findViewById(view, R.id.item_car_add_tv);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -354,7 +364,8 @@ public class CarFragment extends BaseFragment {
             }
             if (i == 0) {
                 ((CarViewHolder) (viewHolder)).mTickIv.setChecked(ShopCar.isValidCar());
-            }else {
+                viewHolder.mShopTv.setText(((IndexBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(SPKey.INDEX, ""), IndexBean.class)).getData().getShop().getName());
+            } else {
                 ((CarViewHolder) (viewHolder)).mTickIv.setChecked(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(ShopCar.getKeys().get(i - 1)), Goods.class)).isValid());
             }
             try {
@@ -385,7 +396,7 @@ public class CarFragment extends BaseFragment {
                             ShopCar.isNotice = true;
                             mPriceTv.setText("  ￥" + ShopCar.allPrice());
                             ((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).setText(Integer.valueOf(((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).getText().toString()) + 1 + "");
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             mListLv.setAdapter(adapter);
                         }
 

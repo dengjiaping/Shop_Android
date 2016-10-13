@@ -189,6 +189,7 @@
                                 android:src="@drawable/goods_detail_icon1" />
 
                             <TextView
+                                android:id="@+id/ay_detail_status_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -211,6 +212,7 @@
                             android:textSize="14dp" />
 
                         <TextView
+                            android:id="@+id/ay_detail_time_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ay_detail_shop_tv"
