@@ -116,7 +116,7 @@ public class AddressManagerActivity extends BaseActvity {
             case ActionKey.ADDRESS_INDEX:
                 addressBean = (AddressBean) result;
                 if (addressBean.getCode() == 200) {
-                    if (addressBean != null) {
+                    if (addressBean.getData() != null) {
                         mNoneRl.setVisibility(View.GONE);
                         addressAdapter = new AddressAdapter(addressBean.getData().size(), R.layout.activity_address_item, new AddressViewHolder());
                         mListRv.setAdapter(addressAdapter);
@@ -184,8 +184,8 @@ public class AddressManagerActivity extends BaseActvity {
             }
             addressViewHolder.mNameTv.setText(addressBean.getData().get(i).getContact());
             addressViewHolder.mPhoneTv.setText(addressBean.getData().get(i).getPhone());
-            addressViewHolder.mAreaTv.setText(addressBean.getData().get(i).getCity().getId()+addressBean.getData().get(i).getArea().getId()+addressBean.getData().get(i).getVillage().getId());
-            addressViewHolder.mDetailsTv.setText(addressBean.getData().get(i).getUnit().getId()+addressBean.getData().get(i).getFloor().getId()+addressBean.getData().get(i).getRoom().getId()+"室");
+            addressViewHolder.mAreaTv.setText(addressBean.getData().get(i).getCity().getName()+addressBean.getData().get(i).getArea().getName()+addressBean.getData().get(i).getVillage().getName());
+            addressViewHolder.mDetailsTv.setText(addressBean.getData().get(i).getUnit().getName()+addressBean.getData().get(i).getFloor().getName()+addressBean.getData().get(i).getRoom().getName());
 
             addressViewHolder.mDelIv.setOnClickListener(new View.OnClickListener() {
                 @Override
