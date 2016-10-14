@@ -10,16 +10,14 @@ import android.widget.TextView;
 import com.king.Base.KingAdapter;
 import com.king.Base.KingData;
 import com.king.Utils.GsonUtil;
-import com.king.Utils.LogCat;
 import com.king.Utils.SPrefUtil;
 import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.NoScrollListView;
-import com.shop.Android.wxapi.WXPayEntryActivity;
+import com.shop.wxapi.WXPayEntryActivity;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.AddressBean;
-import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.FeeBean;
 import com.shop.Net.Bean.IndexBean;
 import com.shop.Net.Bean.OrderInfoBean;
@@ -29,7 +27,6 @@ import com.shop.R;
 import com.shop.ShopCar.Goods;
 import com.shop.ShopCar.ShopCar;
 import com.shop.ShopCar.TMShopCar;
-import com.shop.Utils.DoubleUtil;
 
 /**
  * Created by admin on 2016/9/27.
@@ -115,7 +112,7 @@ public class SubmitOrderActivity extends BaseActvity {
                 mTotalTv.setText("￥" + ShopCar.allPrice());
                 mActualTv.setText("￥" + (Double.valueOf(ShopCar.allPrice()) > lowest ? (Double.valueOf(ShopCar.allPrice())) : (Double.valueOf(ShopCar.allPrice())) + fee));
                 mPriceTv.setText(mActualTv.getText().toString());
-                goodsListAdapter = new GoodsListAdapter(ShopCar.getMap().size(), R.layout.activity_submit_order_item, new GoodsListViewHolder());
+                goodsListAdapter = new GoodsListAdapter(ShopCar.isInValid(), R.layout.activity_submit_order_item, new GoodsListViewHolder());
                 mScrollLv.setAdapter(goodsListAdapter);
                 break;
             case 2:
@@ -225,9 +222,9 @@ public class SubmitOrderActivity extends BaseActvity {
                     ((GoodsListViewHolder) o).mNumTv.setText("x" + ((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(TMShopCar.getKeys().get(i)), Goods.class)).getCount());
                     break;
                 case 1:
-                    ((GoodsListViewHolder) o).mNameTv.setText(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(ShopCar.getKeys().get(i)), Goods.class)).getTitle());
-                    ((GoodsListViewHolder) o).mPriceTv.setText("￥" + ((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(ShopCar.getKeys().get(i)), Goods.class)).getPrice());
-                    ((GoodsListViewHolder) o).mNumTv.setText("x" + ((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(ShopCar.getKeys().get(i)), Goods.class)).getCount());
+                    ((GoodsListViewHolder) o).mNameTv.setText(((Goods) GsonUtil.Str2Bean(ShopCar.getValidMap().get(ShopCar.getValidKeys().get(i)), Goods.class)).getTitle());
+                    ((GoodsListViewHolder) o).mPriceTv.setText("￥" + ((Goods) GsonUtil.Str2Bean(ShopCar.getValidMap().get(ShopCar.getValidKeys().get(i)), Goods.class)).getPrice());
+                    ((GoodsListViewHolder) o).mNumTv.setText("x" + ((Goods) GsonUtil.Str2Bean(ShopCar.getValidMap().get(ShopCar.getValidKeys().get(i)), Goods.class)).getCount());
                     break;
                 case 2:
                     break;

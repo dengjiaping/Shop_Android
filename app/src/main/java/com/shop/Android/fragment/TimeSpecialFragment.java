@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -54,11 +55,11 @@ public class TimeSpecialFragment extends KingFragment {
     private TextView mHourTv;
     private TextView mMinTv;
     private TextView mSecTv;
+    private boolean isFirst = true;
 
 
     @Override
     protected int loadLayout() {
-        Post(ActionKey.TIMESELL, new SpecialSell("1", page + ""), TimeBean.class);
         return R.layout.fragment_time;
     }
 
@@ -66,19 +67,6 @@ public class TimeSpecialFragment extends KingFragment {
 
     private CountDownTimer timer;
 
-    public String getTimeToStamp(String time) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-        Date date = new Date();
-
-        try {
-            date = sdf.parse(time);
-        } catch (ParseException var4) {
-            var4.printStackTrace();
-        }
-
-        String tmptime = String.valueOf(date.getTime()).substring(0, 10);
-        return tmptime;
-    }
 
     private long mmSec = 0;
 
@@ -147,9 +135,24 @@ public class TimeSpecialFragment extends KingFragment {
                         mListLv.setAdapter(adapter);
                     }
                 } else {
-                    ToastInfo("没有更多数据了");
+                    SystemToastInfo("没有更多数据了");
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onStart(String what) {
+        if (isFirst) {
+            super.onStart(what);
+            isFirst = false;
+        } else {
+            switch (what) {
+                case ActionKey.TIMESELL:
+                    break;
+                case ActionKey.TIMESELL + "page":
+                    break;
+            }
         }
     }
 
@@ -169,6 +172,12 @@ public class TimeSpecialFragment extends KingFragment {
                 CallServer.Post(ActionKey.TIMESELL + "page", ActionKey.TIMESELL, new SpecialSell("1", page + ""), TimeBean.class, TimeSpecialFragment.this);
             }
         });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mListLv.startRefresh();
+            }
+        }, 100);
     }
 
     @Override
@@ -226,7 +235,7 @@ public class TimeSpecialFragment extends KingFragment {
                         thing.setImage(dataBean.getImage());
                         thing.setTitle(dataBean.getTitle());
                         thing.setPrice(dataBean.getActivity_price());
-                        addCart((ImageView) ((RelativeLayout)view.getParent()).getChildAt(0));
+                        addCart((ImageView) ((RelativeLayout) view.getParent()).getChildAt(0));
                     }
                 });
             } catch (Exception e) {

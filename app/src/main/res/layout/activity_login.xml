@@ -122,7 +122,7 @@
             android:layout_height="380dp">
             <ImageView
                 android:background="@drawable/logo_bg"
-                android:src="@drawable/default_image"
+                android:src="@drawable/logo"
                 android:layout_width="120dp"
                 android:layout_centerHorizontal="true"
                 android:layout_height="120dp" />

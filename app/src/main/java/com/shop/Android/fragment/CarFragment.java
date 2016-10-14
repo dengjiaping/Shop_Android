@@ -42,6 +42,7 @@ import com.shop.Android.base.TestTwoAdapter;
 import com.shop.Android.widget.AnimRefreshListView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Bean.FeeBean;
 import com.shop.Net.Bean.IndexBean;
 import com.shop.Net.Bean.ShopCarBean;
 import com.shop.Net.Param.CarSave;
@@ -71,6 +72,7 @@ public class CarFragment extends BaseFragment {
 
     @Override
     protected void initTitleBar() {
+        Post(ActionKey.FEE, new Token(), FeeBean.class);
         initTitle("购物车");
         mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
     }
@@ -83,6 +85,7 @@ public class CarFragment extends BaseFragment {
             @Override
             public void onChange() {
                 Post(ActionKey.CAREQUA, new Token(), ShopCarBean.class);
+                Post(ActionKey.FEE, new Token(), FeeBean.class);
             }
         });
         Post(ActionKey.CAREQUA, new Token(), ShopCarBean.class);
@@ -145,24 +148,37 @@ public class CarFragment extends BaseFragment {
     protected void onClickSet(int i) {
         switch (i) {
             case R.id.ft_car_order_tv:
-                CallServer.Post("CARQUA", ActionKey.CAREQUA, new Token(), ShopCarBean.class, this);
+                if (ShopCar.isInValid() > 0) {
+                    CallServer.Post("CARQUA", ActionKey.CAREQUA, new Token(), ShopCarBean.class, this);
+                } else {
+                    ToastInfo("请先选择至少一件商品");
+                }
                 break;
         }
     }
 
     private Goods thing = new Goods();
     private boolean isAdd = false;
+    private TextView mMarkTv;
 
     @Override
     public void onSuccess(String what, Object result) {
         switch (what) {
+            case ActionKey.FEE:
+                FeeBean bean = (FeeBean) result;
+                if (bean.getCode() == 2001) {
+                    break;
+                } else {
+                    mMarkTv.setText("(配送费" + bean.getData().getFreight() + "元)");
+                }
+                break;
             case ActionKey.CARSAVE:
                 BaseBean baseBean = (BaseBean) result;
                 if (baseBean.getCode() == 2001) {
                     ToastInfo(baseBean.getMsg());
                     openActivity(LoginActivity.class);
                     kingData.putData(DataKey.LOGIN, 1);
-                }else if(baseBean.getCode() == 200){
+                } else if (baseBean.getCode() == 200) {
                     SubmitOrderActivity.TYPE = 1;
                     openActivity(SubmitOrderActivity.class);
                 }
@@ -459,6 +475,7 @@ public class CarFragment extends BaseFragment {
                             adapter.notifyDataSetChanged();
                         }
                     }
+                    mPriceTv.setText("  ￥" + ShopCar.allPrice());
 
                 }
             });

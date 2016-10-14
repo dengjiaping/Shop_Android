@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.king.Base.KingAdapter;
 import com.king.Base.KingFragment;
 import com.king.Internet.user_method.CallServer;
+import com.king.Utils.ToastUtil;
 import com.shop.Android.activity.GoodsDetailActivity;
 import com.shop.Android.activity.SpecialSellActivity;
 import com.shop.Android.base.TestAdapter;
@@ -44,6 +45,16 @@ public class StorageFragment extends KingFragment {
     protected int loadLayout() {
         Post(ActionKey.TIMESELL, new SpecialSell("2", page + ""), TimeBean.class);
         return R.layout.fragment_storage;
+    }
+
+    @Override
+    public void onStart(String what) {
+        switch (what) {
+            case ActionKey.TIMESELL:
+                break;
+            case ActionKey.TIMESELL + "page":
+                break;
+        }
     }
 
     @Override
@@ -77,7 +88,7 @@ public class StorageFragment extends KingFragment {
                         mListLv.setAdapter(adapter);
                     }
                 } else {
-                    ToastInfo("没有更多数据了");
+                    SystemToastInfo("没有更多数据了");
                 }
                 break;
         }
@@ -159,7 +170,7 @@ public class StorageFragment extends KingFragment {
                         thing.setImage(dataBean.getImage());
                         thing.setTitle(dataBean.getTitle());
                         thing.setPrice(dataBean.getActivity_price());
-                        addCart((ImageView) ((RelativeLayout)view.getParent()).getChildAt(0));
+                        addCart((ImageView) ((RelativeLayout) view.getParent()).getChildAt(0));
                     }
                 });
             } catch (Exception e) {

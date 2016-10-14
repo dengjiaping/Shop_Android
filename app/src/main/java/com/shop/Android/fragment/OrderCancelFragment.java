@@ -18,7 +18,6 @@ import com.shop.Android.base.BaseFragment;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.Android.widget.RefreshListView;
-import com.shop.Android.wxapi.WXPayEntryActivity;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.OrderBean;
@@ -26,6 +25,7 @@ import com.shop.Net.Param.Order;
 import com.shop.Net.Param.OrderDetailsParam;
 import com.shop.Net.Param.OrderWaitPayParam;
 import com.shop.R;
+import com.shop.wxapi.WXPayEntryActivity;
 
 import java.util.List;
 

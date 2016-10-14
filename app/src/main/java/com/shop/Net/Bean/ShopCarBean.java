@@ -25,7 +25,7 @@ public class ShopCarBean extends BaseBean {
         private String subtitled;
         private String image;
         private int err;
-        private int newprice;
+        private String newprice;
         private int newcount;
 
         public String getId() {
@@ -84,11 +84,11 @@ public class ShopCarBean extends BaseBean {
             this.err = err;
         }
 
-        public int getNewprice() {
+        public String getNewprice() {
             return newprice;
         }
 
-        public void setNewprice(int newprice) {
+        public void setNewprice(String newprice) {
             this.newprice = newprice;
         }
 
