@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import com.king.Dialog.CustomDialog;
 import com.king.Utils.DialogUtil;
+import com.king.Utils.SPrefUtil;
+import com.shop.Android.DataKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.R;
 
@@ -73,7 +75,10 @@ public class SetActivity extends BaseActvity {
                ibuilder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialogInterface, int i) {
+                       SPrefUtil.Function.removeData(DataKey.USER);
                        dialogInterface.dismiss();
+                       animFinsh();
+                       openActivity(LoginActivity.class);
                    }
                });
                ibuilder1.setNegativeButton("取消",null);

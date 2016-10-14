@@ -54,6 +54,18 @@ public class ActionKey {
     public static final String ABOUT = "setting/abourt";
 
 
+    //订单首页
+    public static final String ORDER_INDEX = "order/orders";
+
+    //订单详情
+    public static final String ORDER_DETAILS = "order/info";
+
+    // 取消订单
+    public static final String CANCEL_ORDER = "order/cancel";
+
+    // 删除订单
+    public static final String DEL_ORDER = "order/delete";
+
     //发送验证码
     public static final String CODE = "login/verify";
     //登录

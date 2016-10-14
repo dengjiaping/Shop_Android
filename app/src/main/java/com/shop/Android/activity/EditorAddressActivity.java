@@ -105,13 +105,21 @@ public class EditorAddressActivity extends BaseActvity {
                 mDefaultSb.setChecked(true);
                 is_default = 1;
             }
-            mCityEt.setText(addressBean.getCity().getId());
-            mAreaEt.setText(addressBean.getArea().getId());
-            mCommunityEt.setText(addressBean.getVillage().getId());
-            mLayerEt.setText(addressBean.getFloor().getId());
-            mUnitEt.setText(addressBean.getUnit().getId());
-            mBuildingEt.setText(addressBean.getBuild().getId());
-            mRoomEt.setText(addressBean.getRoom().getId());
+            mCityEt.setText(addressBean.getCity().getName());
+            mAreaEt.setText(addressBean.getArea().getName());
+            mCommunityEt.setText(addressBean.getVillage().getName());
+            mLayerEt.setText(addressBean.getFloor().getName());
+            mUnitEt.setText(addressBean.getUnit().getName());
+            mBuildingEt.setText(addressBean.getBuild().getName());
+            mRoomEt.setText(addressBean.getRoom().getName());
+
+            city_id = addressBean.getCity().getId();
+            area_id = addressBean.getArea().getId();
+            community_id = addressBean.getVillage().getId();
+            layer_id = addressBean.getFloor().getId();
+            unit_id = addressBean.getUnit().getId();
+            building_id = addressBean.getBuild().getId();
+            room_id = addressBean.getRoom().getId();
         }
         setOnClicks(mCityEt, mAreaEt, mBuildingEt, mCommunityEt, mLayerEt, mRoomEt, mUnitEt);
         mTitleRightTv.setOnClickListener(new View.OnClickListener() {
@@ -127,21 +135,34 @@ public class EditorAddressActivity extends BaseActvity {
                             sex = 0;
                         }
                         String city = mCityEt.getText().toString().trim();
+                        String cities  = city_id+"#"+city;
+
                         String area = mAreaEt.getText().toString().trim();
+                        String areas = area_id+"#"+area;
+
                         String community = mCommunityEt.getText().toString().trim();
+                        String communities = community_id+"#"+community;
+
                         String building = mBuildingEt.getText().toString().trim();
+                        String builds = building_id + "#"+building;
+
                         String unit = mUnitEt.getText().toString().trim();
+                        String units = unit_id+"#"+unit;
+
                         String layer = mLayerEt.getText().toString().trim();
+                        String layers = layer_id+"#"+layer;
+
                         String room = mRoomEt.getText().toString().trim();
+                        String rooms = room_id+ "#"+room;
+
                         if (mDefaultSb.isChecked()) {
                             is_default = 1;
                         } else {
                             is_default = 0;
                         }
-                        Post(ActionKey.EDIT_ADDRESS, new EditAddressParam(addressBean.getId(),name, phone,String.valueOf(is_default),String.valueOf(sex),city,area,community,building,unit,layer,room), BaseBean.class);
+                        Post(ActionKey.EDIT_ADDRESS, new EditAddressParam(addressBean.getId(),name, phone,String.valueOf(is_default),String.valueOf(sex),cities,areas,communities,builds,units,layers,rooms), BaseBean.class);
                         break;
                     case 2://添加地址
-
                         String add_name = mNameEt.getText().toString().trim();
                         String add_phone = mPhoneEt.getText().toString().trim();
                         if (mBoysRb.isChecked()) {
@@ -150,26 +171,40 @@ public class EditorAddressActivity extends BaseActvity {
                             sex = 0;
                         }
                         String add_city = mCityEt.getText().toString().trim();
+                        String city_ = city_id+"#"+add_city;
+
                         String add_area = mAreaEt.getText().toString().trim();
+                        String area_ =area_id+"#"+add_area;
+
                         String add_community = mCommunityEt.getText().toString().trim();
+                        String community_ = community_id+"#"+add_community;
+
                         String add_building = mBuildingEt.getText().toString().trim();
+                        String build_ = building_id + "#"+add_building;
+
                         String add_unit = mUnitEt.getText().toString().trim();
+                        String unit_ = unit_id+"#"+add_unit;
+
                         String add_layer = mLayerEt.getText().toString().trim();
+                        String layer_ = layer_id+"#"+add_layer;
+
                         String add_room = mRoomEt.getText().toString().trim();
+                        String room_ = room_id+ "#"+add_room;
+
                         if (mDefaultSb.isChecked()) {
                             is_default = 1;
                         } else {
                             is_default = 0;
                         }
-                        if (add_name.isEmpty()){
+                        if (add_name.equals("")){
                             ToastInfo("联系人不能为空");
                             return;
                         }
-                        if (CheckUtil.isPhone(mPhoneEt)){
+                        if (!CheckUtil.isPhone(mPhoneEt)){
                             ToastInfo("联系人电话不能为空");
                             return;
                         }
-                        Post(ActionKey.ADDRESS_ADD, new AddAddressParam(add_name, add_phone, String.valueOf(is_default),String.valueOf(sex),add_city,add_area,add_community,add_unit,add_layer,add_room,add_building), BaseBean.class);
+                        Post(ActionKey.ADDRESS_ADD, new AddAddressParam(add_name, add_phone, String.valueOf(is_default),String.valueOf(sex),city_,area_,community_,unit_,layer_,room_,build_), BaseBean.class);
 
                         break;
                 }

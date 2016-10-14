@@ -9,6 +9,7 @@ public class Config {
     public static int TYPE = 0 ;
     public static final String ADD_ADDRESS = "add";
     public static final String COLLECT = "collect";
+    public static final String ORDER = "order";
     public static  String WEB_URL = "";
 
 
