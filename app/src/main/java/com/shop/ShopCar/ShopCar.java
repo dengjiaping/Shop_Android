@@ -43,6 +43,27 @@ public class ShopCar {
         return map;
     }
 
+
+    public static HashMap<String, String> getValidMap() {
+        HashMap<String, String> hashMap = new HashMap<>();
+        for (int i = 0; i < keys.size(); i++) {
+            if (((Goods) GsonUtil.Str2Bean(map.get(keys.get(i)), Goods.class)).isValid()) {
+                hashMap.put(((Goods) GsonUtil.Str2Bean(map.get(keys.get(i)), Goods.class)).getId(), map.get(keys.get(i)));
+            }
+        }
+        return hashMap;
+    }
+
+    public static ArrayList<String> getValidKeys() {
+        ArrayList<String> key = new ArrayList<>();
+        for (int i = 0; i < keys.size(); i++) {
+            if (((Goods) GsonUtil.Str2Bean(map.get(keys.get(i)), Goods.class)).isValid()) {
+                key.add(((Goods) GsonUtil.Str2Bean(map.get(keys.get(i)), Goods.class)).getId());
+            }
+        }
+        return key;
+    }
+
     public static void ClearSelf() {
         isNotice = true;
         map.clear();
@@ -50,11 +71,11 @@ public class ShopCar {
         num = 0;
     }
 
-    public static void mergeButNotAdd(Goods g,boolean isAdd) {
+    public static void mergeButNotAdd(Goods g, boolean isAdd) {
         if (map.containsKey(g.getId())) {
-            if(isAdd){
+            if (isAdd) {
                 map.remove(g.getId());
-                map.put(g.getId(),GsonUtil.Bean2Str(g));
+                map.put(g.getId(), GsonUtil.Bean2Str(g));
             }
         }
         if (isNotice) {
@@ -62,11 +83,11 @@ public class ShopCar {
         }
     }
 
-    public static void merge(Goods g,boolean isAdd) {
+    public static void merge(Goods g, boolean isAdd) {
         if (map.containsKey(g.getId())) {
-            if(isAdd){
+            if (isAdd) {
                 map.remove(g.getId());
-                map.put(g.getId(),GsonUtil.Bean2Str(g));
+                map.put(g.getId(), GsonUtil.Bean2Str(g));
             }
         } else {
             num = num + Integer.valueOf(g.getCount());
@@ -113,11 +134,11 @@ public class ShopCar {
         }
     }
 
-    public static int isInValid(){
+    public static int isInValid() {
         int num1 = 0;
         for (String key : keys) {
-            if(((Goods)GsonUtil.Str2Bean(map.get(key),Goods.class)).isValid()){
-                num1 ++ ;
+            if (((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).isValid()) {
+                num1++;
             }
         }
         return num1;
@@ -127,20 +148,21 @@ public class ShopCar {
     public static void Invalid() {
         isValidCar = false;
         for (String key : keys) {
-            Goods thing = ((Goods)GsonUtil.Str2Bean(map.get(key),Goods.class));
+            Goods thing = ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class));
             thing.setValid(false);
             isNotice = false;
-            merge(thing,true);
+            merge(thing, true);
             isNotice = true;
         }
     }
+
     public static void Valid() {
         isValidCar = true;
         for (String key : keys) {
-            Goods thing = ((Goods)GsonUtil.Str2Bean(map.get(key),Goods.class));
+            Goods thing = ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class));
             thing.setValid(true);
             isNotice = false;
-            merge(thing,true);
+            merge(thing, true);
             isNotice = true;
         }
     }
@@ -152,7 +174,9 @@ public class ShopCar {
     public static String allPrice() {
         double price = 0;
         for (String key : keys) {
-            price = price + Integer.valueOf(((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getCount()) * Double.valueOf(((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getPrice());
+            if (((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).isValid()) {
+                price = price + Integer.valueOf(((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getCount()) * Double.valueOf(((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getPrice());
+            }
         }
         return price + "";
     }

@@ -1,4 +1,4 @@
-package com.shop.Android.wxapi;
+package com.shop.wxapi;
 
 
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
@@ -17,17 +17,24 @@ import com.king.Utils.DateUtil;
 import com.king.Utils.GsonUtil;
 import com.king.Utils.SPrefUtil;
 import com.king.Utils.ToastUtil;
-import com.king.Utils.UIUtil;
 import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
+import com.shop.Android.activity.LoginActivity;
 import com.shop.Android.alipy.PayResult;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.AlipayBean;
-import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.IndexBean;
+import com.shop.Net.Bean.WeixinBean;
 import com.shop.Net.Param.Pay;
 import com.shop.R;
+import com.tencent.mm.sdk.constants.ConstantsAPI;
+import com.tencent.mm.sdk.modelbase.BaseReq;
+import com.tencent.mm.sdk.modelbase.BaseResp;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +43,7 @@ import java.util.Date;
 /**
  * Created by admin on 2016/8/19.
  */
-public class WXPayEntryActivity extends BaseActvity {
+public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandler {
 
     private String TAG = "pay";
     private CheckBox mWeixinCb;
@@ -44,6 +51,8 @@ public class WXPayEntryActivity extends BaseActvity {
     private TextView mPriceTv;
     private TextView mOrderTv;
     private TextView mNumberTv;
+    private RelativeLayout mWeixinRl;
+    private RelativeLayout mAlipayRl;
 
     private int state = 0;
 
@@ -63,12 +72,13 @@ public class WXPayEntryActivity extends BaseActvity {
     protected void init() {
         initTitle("支付订单");
         F();
+        msgApi = WXAPIFactory.createWXAPI(WXPayEntryActivity.this, null);
         kingData.registerWatcher("ZZREFRESHPAY", new KingData.KingCallBack() {
             @Override
             public void onChange() {
                 mPriceTv.setText(kingData.getData(DataKey.PRICE));
                 mOrderTv.setText("确认支付" + kingData.getData(DataKey.PRICE));
-                mNumberTv.setText(((IndexBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(SPKey.INDEX,""),IndexBean.class)).getData().getShop().getName());
+                mNumberTv.setText(((IndexBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(SPKey.INDEX, ""), IndexBean.class)).getData().getShop().getName());
 
                 if (timer == null) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -122,7 +132,7 @@ public class WXPayEntryActivity extends BaseActvity {
             }
         });
 
-        setOnClicks(mOrderTv);
+        setOnClicks(mOrderTv, mWeixinRl, mAlipayRl);
 
 
     }
@@ -132,11 +142,20 @@ public class WXPayEntryActivity extends BaseActvity {
         switch (i) {
             case R.id.ay_pay_order_tv:
                 if (mWeixinCb.isChecked()) {
-                    WeixinPay();
+                    Post(ActionKey.PAY, new Pay(kingData.getData(DataKey.ID), "2"), WeixinBean.class);
                 } else if (mAlipayCb.isChecked()) {
                     Post(ActionKey.PAY, new Pay(kingData.getData(DataKey.ID), "1"), AlipayBean.class);
                 }
                 break;
+            case R.id.ay_pay_alipay_rl:
+                mAlipayCb.setChecked(true);
+                mWeixinCb.setChecked(false);
+                break;
+            case R.id.ay_pay_weixin_rl:
+                mWeixinCb.setChecked(true);
+                mAlipayCb.setChecked(false);
+                break;
+
         }
 
     }
@@ -145,10 +164,24 @@ public class WXPayEntryActivity extends BaseActvity {
     public void onSuccess(String what, Object result) {
         switch (what) {
             case ActionKey.PAY:
-                AlipayBean alipayBean = (AlipayBean) result;
-                if (alipayBean.getCode() == 200) {
-                    AlipayPay(alipayBean);
+                if (mWeixinCb.isChecked()) {
+                    WeixinBean weixinBean = (WeixinBean) result;
+                    if (weixinBean.getCode() == 200) {
+                        WeixinPay(weixinBean);
+                    } else if (weixinBean.getCode() == 2001) {
+                        ToastInfo(weixinBean.getMsg());
+                        openActivity(LoginActivity.class);
+                    }
+                } else if (mAlipayCb.isChecked()) {
+                    AlipayBean alipayBean = (AlipayBean) result;
+                    if (alipayBean.getCode() == 200) {
+                        AlipayPay(alipayBean);
+                    } else if (alipayBean.getCode() == 2001) {
+                        ToastInfo(alipayBean.getMsg());
+                        openActivity(LoginActivity.class);
+                    }
                 }
+
                 break;
         }
     }
@@ -211,8 +244,49 @@ public class WXPayEntryActivity extends BaseActvity {
         payThread.start();
     }
 
-    private void WeixinPay() {
+    private IWXAPI msgApi;
+    public static String appId;
 
+    private void WeixinPay(WeixinBean weixinBean) {
+        msgApi.handleIntent(getIntent(), WXPayEntryActivity.this);
+        // 将该app注册到微信
+        msgApi.registerApp(weixinBean.getData().getAppid());
+        appId = weixinBean.getData().getAppid();
+        sendBroadcast(new Intent("com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP"));
+        PayReq request = new PayReq();
+        request.appId = weixinBean.getData().getAppid();
+        request.partnerId = weixinBean.getData().getPartnerid();
+        request.prepayId = weixinBean.getData().getPrepayid();
+        request.packageValue = weixinBean.getData().getPackageX();
+        request.nonceStr = weixinBean.getData().getNoncestr();
+        request.timeStamp = weixinBean.getData().getTimestamp();
+        request.sign = weixinBean.getData().getSign();
+        ToastInfo("获取订单中...");
+        msgApi.sendReq(request);
+    }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        msgApi.handleIntent(intent, this);
+    }
+
+    @Override
+    public void onReq(BaseReq baseReq) {
+
+    }
+
+    @Override
+    public void onResp(BaseResp baseResp) {
+        if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+            if (baseResp.errCode == 0) {
+                ToastInfo("支付成功");
+            } else if (baseResp.errCode == -1) {
+                ToastInfo("支付失败");
+            } else if (baseResp.errCode == -2) {
+                ToastInfo("取消支付");
+            }
+        }
     }
 }

@@ -107,11 +107,16 @@
 
         </activity>
 
+        <receiver android:name=".wxapi.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+
         <activity
-            android:name=".Android.wxapi.WXPayEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".wxapi.WXPayEntryActivity"
+            android:launchMode="singleTask"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".Android.activity.ClassActivity"

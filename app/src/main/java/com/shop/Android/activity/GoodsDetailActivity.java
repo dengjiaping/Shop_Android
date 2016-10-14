@@ -745,6 +745,7 @@ public class GoodsDetailActivity extends BaseActvity {
                         mCardFl.setVisibility(View.GONE);
                         mBgV.setVisibility(View.GONE);
                         mCardshopLl.setVisibility(View.GONE);
+                        mOrderTv.setVisibility(View.GONE);
                     }
                     mOrderTv.setVisibility(View.VISIBLE);
                 }

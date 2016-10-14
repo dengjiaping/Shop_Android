@@ -53,7 +53,7 @@ public class AnimNoLineRefreshListView extends LinearLayout {
     private int mTouchSlop;
 
     private XRefreshView mRefreshXrv;
-    private final int mPinnedTime = 1000;
+    private final int mPinnedTime = 2000;
 
     private void init(Context context) {
         final View view = View.inflate(context, R.layout.refresh_anim_no_line_layout, this);

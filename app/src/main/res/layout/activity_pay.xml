@@ -154,6 +154,7 @@
             android:background="#CDCDCD" />
 
         <RelativeLayout
+            android:id="@+id/ay_pay_weixin_rl"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@color/white">
@@ -210,6 +211,7 @@
             android:background="#F9F9F9" />
 
         <RelativeLayout
+            android:id="@+id/ay_pay_alipay_rl"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@color/white">
