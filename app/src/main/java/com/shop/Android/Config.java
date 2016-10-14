@@ -11,6 +11,10 @@ public class Config {
     public static final String COLLECT = "collect";
     public static final String ORDER = "order";
     public static  String WEB_URL = "";
+    public static final String PAY_ORDER = "pay_order";
+    public static final String CANCEL_ORDER = "cancel_order";
+    public static final String FINISH_ORDER = "finish_order";
+    public static final String ORDER_ID = "order_id";
 
 
 

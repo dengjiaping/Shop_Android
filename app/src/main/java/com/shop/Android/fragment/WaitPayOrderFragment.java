@@ -15,12 +15,14 @@ import com.king.Dialog.CustomDialog;
 import com.king.Internet.user_interface.xCallback;
 import com.king.Internet.user_method.CallServer;
 import com.shop.Android.Config;
+import com.shop.Android.DataKey;
 import com.shop.Android.activity.LoginActivity;
 import com.shop.Android.activity.OrderDetailsActivity;
 import com.shop.Android.activity.SubmitOrderActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.NoScrollListView;
+import com.shop.Android.wxapi.WXPayEntryActivity;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.OrderBean;
@@ -87,20 +89,20 @@ public class WaitPayOrderFragment extends BaseFragment {
             case ActionKey.ORDER_INDEX:
                orderBean = (OrderBean) result;
                 if (orderBean.getCode()==200){
-                    waitPayOrderAdapter = new WaitPayOrderAdapter(orderBean.getData().size(),R.layout.fragment_order_item,new WaitPayViewHolder());
-                    mListRv.setAdapter(waitPayOrderAdapter);
-                }else if (orderBean.getCode()==2001){
-                    ToastInfo("请登录");
-                    openActivity(LoginActivity.class);
+                    try {
+                        waitPayOrderAdapter = new WaitPayOrderAdapter(orderBean.getData().size(),R.layout.fragment_order_item,new WaitPayViewHolder());
+                        mListRv.setAdapter(waitPayOrderAdapter);
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
                 }else {
                     ToastInfo(orderBean.getMsg());
                 }
                 break;
-            case ActionKey.DEL_ORDER:
+            case ActionKey.CANCEL_ORDER:
                BaseBean bean = (BaseBean) result;
                 if (bean.getCode()==200){
                     ToastInfo("取消成功");
-                    kingData.sendBroadCast(Config.ORDER);
                 }else if (bean.getCode()==2001){
                     ToastInfo("请登录");
                     openActivity(LoginActivity.class);
@@ -128,8 +130,13 @@ public class WaitPayOrderFragment extends BaseFragment {
         public void padData(int i, Object o) {
             WaitPayViewHolder viewHolder = (WaitPayViewHolder) o;
             final OrderBean.DataBean bean = orderBean.getData().get(i);
-            goodsBean = orderBean.getData().get(i).getGoods();
-            goodsAdapter = new GoodsAdapter(goodsBean.size(),R.layout.item_order_goods,new GoodsViewHolder());
+            try {
+                goodsBean = orderBean.getData().get(i).getGoods();
+                goodsAdapter = new GoodsAdapter(goodsBean.size(),R.layout.item_order_goods,new GoodsViewHolder());
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+
             viewHolder.mListSv.setAdapter(goodsAdapter);
             viewHolder.mNameTv.setText(bean.getShop_name());
             viewHolder.mTotalTv.setText("￥"+bean.getTotal_price());
@@ -148,7 +155,11 @@ public class WaitPayOrderFragment extends BaseFragment {
             viewHolder.mPayTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                openActivity(SubmitOrderActivity.class);
+                    kingData.putData(DataKey.ID,bean.getId());
+                    kingData.putData(DataKey.PRICE,bean.getTotal_price());
+                    kingData.putData(DataKey.TIME,bean.getEnd_time());
+                    kingData.sendBroadCast("ZZREFRESHPAY");
+                openActivity(WXPayEntryActivity.class);
                 }
             });
            viewHolder.mDelTv.setOnClickListener(new View.OnClickListener() {
@@ -160,8 +171,9 @@ public class WaitPayOrderFragment extends BaseFragment {
                    ibuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                        @Override
                        public void onClick(DialogInterface dialogInterface, int i) {
-                           Post(ActionKey.DEL_ORDER,new OrderDetailsParam(bean.getId()),BaseBean.class);
+                           Post(ActionKey.CANCEL_ORDER,new OrderDetailsParam(bean.getId()),BaseBean.class);
                            dissLoadingDialog();
+                           kingData.sendBroadCast(Config.ORDER);
                        }
                    });
                    ibuilder.setNegativeButton("取消", null);
@@ -171,11 +183,10 @@ public class WaitPayOrderFragment extends BaseFragment {
             viewHolder.mListSv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    kingData.putData(DataKey.ORDER,bean.getId());
+                    kingData.sendBroadCast(Config.ORDER_ID);
                     openActivity(OrderDetailsActivity.class);
-                    Intent intent = new Intent(mAppContext,OrderDetailsActivity.class);
-                    intent.putExtra("id",bean.getId());
-                    startActivity(intent);
-                    mActivity.overridePendingTransition(com.king.R.anim.in_from_right, com.king.R.anim.out_to_left);
+
                 }
             });
 

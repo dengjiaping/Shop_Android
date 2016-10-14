@@ -63,6 +63,7 @@ public class WXPayEntryActivity extends BaseActvity {
     protected void init() {
         initTitle("支付订单");
         F();
+
         kingData.registerWatcher("ZZREFRESHPAY", new KingData.KingCallBack() {
             @Override
             public void onChange() {
