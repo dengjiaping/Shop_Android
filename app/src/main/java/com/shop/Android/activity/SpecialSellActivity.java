@@ -1,41 +1,27 @@
 package com.shop.Android.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.graphics.Color;
-import android.graphics.PathMeasure;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.king.Base.KingActivity;
-import com.king.FlycoTableLayout.CommonTabLayout;
 import com.king.FlycoTableLayout.SlidingTabLayout;
 import com.king.Utils.GsonUtil;
-import com.king.Utils.PixelUtil;
-import com.shop.Android.fragment.IndexFragment;
-import com.shop.Android.fragment.MineFragment;
 import com.shop.Android.fragment.StorageFragment;
 import com.shop.Android.fragment.TimeSpecialFragment;
 import com.shop.Android.widget.ClassView.adapter.ShopAdapter;
 import com.shop.Android.widget.ClassView.mode.ShopProduct;
 import com.shop.R;
 import com.shop.ShopCar.Goods;
-import com.shop.ShopCar.ShopCar;
 import com.shop.ShopCar.TMShopCar;
 
 import java.util.ArrayList;
@@ -89,10 +75,8 @@ public class SpecialSellActivity extends KingActivity {
     }
 
     @Override
-    protected void init() {
-        F();
-        mContentVp.setAdapter(new MyFragmentPagerAdapter(fragmentManager));
-        mTabStl.setViewPager(mContentVp, titles);
+    protected void onResume() {
+        super.onResume();
         if (TMShopCar.getNum() > 0) {
             mRedTv.setVisibility(View.VISIBLE);
         } else {
@@ -100,6 +84,13 @@ public class SpecialSellActivity extends KingActivity {
         }
         mRedTv.setText(TMShopCar.getNum() + "");
 
+    }
+
+    @Override
+    protected void init() {
+        F();
+        mContentVp.setAdapter(new MyFragmentPagerAdapter(fragmentManager));
+        mTabStl.setViewPager(mContentVp, titles);
         setOnClicks(mCarLl, mBgV, mOrderTv);
 
     }
@@ -150,7 +141,6 @@ public class SpecialSellActivity extends KingActivity {
                 }
                 break;
             case R.id.ay_special_add_tv:
-
                 productList = new ArrayList<>();
                 for (String key : TMShopCar.getKeys()) {
                     ShopProduct shopProduct = new ShopProduct();

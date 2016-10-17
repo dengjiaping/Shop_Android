@@ -15,5 +15,7 @@ public class DataKey {
     public static final String ID = "ID";
     public static final String NUMBER = "NUMBER";
     public static final String TIME = "TIME";
+    public static final String TYPE = "TYPE";
+    public static final String URL = "URL";
     public static final String ORDER = "ORDER";
 }

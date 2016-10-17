@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:maxEms="5"
             android:maxLines="1"
             android:ellipsize="end"
             android:text="安卓12进口儿童牛奶1安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml25ml"

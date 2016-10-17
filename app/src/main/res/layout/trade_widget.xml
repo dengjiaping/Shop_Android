@@ -14,9 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxEms="10"
         android:paddingLeft="20dp"
         android:singleLine="true"
-        android:text=""
+        android:text="我的我的的哦玩的我的我的的哦玩的"
         android:textColor="@color/black" />
 
     <LinearLayout

@@ -164,7 +164,8 @@ public class SubmitOrderActivity extends BaseActvity {
                             kingData.putData(DataKey.PRICE, getText(mActualTv));
                             kingData.putData(DataKey.ID, orderInfoBean.getData().getOrderinfo().getId());
                             kingData.putData(DataKey.NUMBER, orderInfoBean.getData().getOrderinfo().getNumber());
-                            kingData.putData(DataKey.TIME,orderInfoBean.getData().getOrderinfo().getEnd_time());
+                            kingData.putData(DataKey.TIME, orderInfoBean.getData().getOrderinfo().getEnd_time());
+                            kingData.putData(DataKey.TYPE, "0");
                             kingData.sendBroadCast("ZZREFRESHPAY");
                             openActivity(WXPayEntryActivity.class);
                         } else {
@@ -177,8 +178,10 @@ public class SubmitOrderActivity extends BaseActvity {
                             kingData.putData(DataKey.PRICE, getText(mActualTv));
                             kingData.putData(DataKey.ID, orderInfoBean.getData().getOrderinfo().getId());
                             kingData.putData(DataKey.NUMBER, orderInfoBean.getData().getOrderinfo().getNumber());
-                            kingData.putData(DataKey.TIME,orderInfoBean.getData().getOrderinfo().getEnd_time());
+                            kingData.putData(DataKey.TIME, orderInfoBean.getData().getOrderinfo().getEnd_time());
+                            kingData.putData(DataKey.TYPE, "1");
                             kingData.sendBroadCast("ZZREFRESHPAY");
+                            kingData.sendBroadCast("CAR");
                             openActivity(WXPayEntryActivity.class);
                         } else {
                             ToastInfo(orderInfoBean.getMsg());

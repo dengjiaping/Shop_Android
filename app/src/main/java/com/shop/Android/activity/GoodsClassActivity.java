@@ -64,10 +64,11 @@ public class GoodsClassActivity extends BaseActvity {
             case ActionKey.GOODSCATE:
                 goodsCateBean = (GoodsCateBean) result;
                 if (goodsCateBean.getCode() == 200) {
+                    PictureUtil.GlideSpecial(goodsCateBean.getData().getCate_detail().getDetail_image(), mIconIv);
                     if (adapter == null) {
-                        adapter = new GridAdapter(goodsCateBean.getData().size(), R.layout.item_goodsclass_grid, new GridViewHolder());
+                        adapter = new GridAdapter(goodsCateBean.getData().getGoods_list().size(), R.layout.item_goodsclass_grid, new GridViewHolder());
                     } else {
-                        adapter.setSize(goodsCateBean.getData().size());
+                        adapter.setSize(goodsCateBean.getData().getGoods_list().size());
                     }
                     mGridGv.setAdapter(adapter);
                 }
@@ -83,7 +84,6 @@ public class GoodsClassActivity extends BaseActvity {
             mRedTv.setVisibility(View.VISIBLE);
         }
         mRedTv.setText(ShopCar.getNum() + "");
-        PictureUtil.GlideSpecial(kingData.getData(DataKey.IMAGE), mIconIv);
         setOnClicks(mCarFl);
     }
 
@@ -120,7 +120,7 @@ public class GoodsClassActivity extends BaseActvity {
         @Override
         public void padData(int i, Object o) {
             GridViewHolder viewHolder = (GridViewHolder) o;
-            final GoodsCateBean.DataBean dataBean = goodsCateBean.getData().get(i);
+            final GoodsCateBean.DataBean.GoodsListBean dataBean = goodsCateBean.getData().getGoods_list().get(i);
             Glide(dataBean.getImage(), viewHolder.mIconIv);
             viewHolder.mNameTv.setText(dataBean.getTitle());
             viewHolder.mSubtitleTv.setText(dataBean.getSubtitled());
