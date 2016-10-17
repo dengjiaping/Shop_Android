@@ -53,25 +53,30 @@ public class PayOrderFragment extends BaseFragment {
     @Override
     protected void init() {
         F();
-        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2", String.valueOf(page)), OrderBean.class);
         kingData.registerWatcher(Config.PAY_ORDER, new KingData.KingCallBack() {
             @Override
             public void onChange() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2", String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class);
             }
         });
+        mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2", String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class);
             }
 
             @Override
             public void onLoadMore() {
-                page++;
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2", String.valueOf(page)), OrderBean.class);
+
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class);
     }
 
     @Override
@@ -83,11 +88,12 @@ public class PayOrderFragment extends BaseFragment {
                 orderBean = (OrderBean) result;
                 if (MainActivity.index==2) {
                     if (orderBean.getCode() == 200) {
-                        try {
+                        if (orderBean.getData()==null || orderBean.getData().size()==0){
+                            mRelayoutRl.setVisibility(View.VISIBLE);
+                        }else {
+                            mRelayoutRl.setVisibility(View.GONE);
                             payOrderAdapter = new PayOrderAdapter(orderBean.getData().size(), R.layout.fragment_order_item, new PayViewHolder());
                             mListRv.setAdapter(payOrderAdapter);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
                         }
 
                     } else if (orderBean.getCode()==2001){
@@ -208,11 +214,16 @@ public class PayOrderFragment extends BaseFragment {
         @Override
         public void padData(int i, Object o) {
             PayGoodsViewHolder viewHolder = (PayGoodsViewHolder) o;
-            viewHolder.mNameTv.setText(goodBean.get(i).getTitle());
-            viewHolder.mNumTv.setText("x" + goodBean.get(i).getNumber());
-            viewHolder.mPriceTv.setText("￥" + goodBean.get(i).getPrice());
-            viewHolder.mWeightTv.setText(goodBean.get(i).getSubtitle());
-            Glide(goodBean.get(i).getImage(), viewHolder.mImgIv);
+            try {
+                viewHolder.mNameTv.setText(goodBean.get(i).getTitle());
+                viewHolder.mNumTv.setText("x" + goodBean.get(i).getNumber());
+                viewHolder.mPriceTv.setText("￥" + goodBean.get(i).getPrice());
+                viewHolder.mWeightTv.setText(goodBean.get(i).getSubtitle());
+                Glide(goodBean.get(i).getImage(), viewHolder.mImgIv);
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+
         }
     }
 

@@ -57,7 +57,6 @@ public class MsgActivity extends BaseActvity {
         mContentRlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ToastInfo("123");
                 Intent intent = new Intent(mContext,MessageContentActivity.class);
                 intent.putExtra("id",messageBean.getData().get(i).getId());
                 startActivity(intent);

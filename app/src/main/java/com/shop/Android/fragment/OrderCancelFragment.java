@@ -44,7 +44,6 @@ public class OrderCancelFragment extends BaseFragment {
     private OrderBean orderBean;
     private List<OrderBean.DataBean.GoodsBean> goodBeanCancel;
     private OrderBean.DataBean bean;
-    private int page = 0;
 
 
     @Override
@@ -56,25 +55,28 @@ public class OrderCancelFragment extends BaseFragment {
     @Override
     protected void init() {
         F();
-        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4", String.valueOf(page)), OrderBean.class);
         kingData.registerWatcher(Config.CANCEL_ORDER, new KingData.KingCallBack() {
             @Override
             public void onChange() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4", String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4"), OrderBean.class);
             }
         });
+        mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4", String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4"), OrderBean.class);
             }
 
             @Override
             public void onLoadMore() {
-                page++;
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4", String.valueOf(page)), OrderBean.class);
             }
         });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4"), OrderBean.class);
     }
 
     @Override
@@ -86,7 +88,7 @@ public class OrderCancelFragment extends BaseFragment {
                 orderBean = (OrderBean) result;
                 if (MainActivity.index==2) {
                     if (orderBean.getCode() == 200) {
-                        if (orderBean.getData() == null) {
+                        if (orderBean.getData() == null || orderBean.getData().size()==0) {
                             mRelayoutRl.setVisibility(View.VISIBLE);
                         } else {
                             mRelayoutRl.setVisibility(View.GONE);
@@ -107,8 +109,11 @@ public class OrderCancelFragment extends BaseFragment {
                 }
                 break;
 
+
         }
     }
+
+
 
     @Override
     protected void onClickSet(int i) {
@@ -242,13 +247,14 @@ public class OrderCancelFragment extends BaseFragment {
 
         @Override
         public void padData(int i, Object o) {
+            try {
             OrderBean.DataBean.GoodsBean goodsBean = bean.getGoods().get(i);
             CancelGoodsViewHolder viewHolder = (CancelGoodsViewHolder) o;
             viewHolder.mNameTv.setText(goodsBean.getTitle());
             viewHolder.mNumTv.setText("x" + goodsBean.getNumber());
             viewHolder.mPriceTv.setText("￥" + goodsBean.getPrice());
             viewHolder.mWeightTv.setText(goodsBean.getSubtitle());
-            try {
+
                 Glide(goodsBean.getImage(), viewHolder.mImgIv);
             }catch (Exception px){
                 px.printStackTrace();

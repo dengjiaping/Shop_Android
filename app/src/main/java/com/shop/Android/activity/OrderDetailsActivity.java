@@ -15,10 +15,12 @@ import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.Android.widget.TimeTextView;
 import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.OrderDetailsBean;
 import com.shop.Net.Param.OrderDetailsParam;
 import com.shop.R;
 import com.shop.Utils.TimeUtils;
+import com.shop.wxapi.WXPayEntryActivity;
 
 /**
  * Created by admin on 2016/9/26.
@@ -107,6 +109,22 @@ public class OrderDetailsActivity extends BaseActvity {
                                          mTimesTv.run();
                                      }
                                  }
+                                 mCancelTv.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View view) {
+                                         Post(ActionKey.CANCEL_ORDER, new OrderDetailsParam(orderDetailsBean.getData().getId()), BaseBean.class);
+                                     }
+                                 });
+                                 mPayTv.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View view) {
+                                         kingData.putData(DataKey.ID,orderDetailsBean.getData().getId());
+                                         kingData.putData(DataKey.PRICE,orderDetailsBean.getData().getTotal_price());
+                                         kingData.putData(DataKey.TIME,orderDetailsBean.getData().getEnd_time());
+                                         kingData.sendBroadCast("ZZREFRESHPAY");
+                                         openActivity(WXPayEntryActivity.class);
+                                     }
+                                 });
                                  break;
                              case 2:
                                  mWaitLl.setVisibility(View.VISIBLE);

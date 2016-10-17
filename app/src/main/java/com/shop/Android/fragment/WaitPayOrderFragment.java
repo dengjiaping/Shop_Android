@@ -46,7 +46,6 @@ public class WaitPayOrderFragment extends BaseFragment {
     private GoodsAdapter goodsAdapter;
     private OrderBean orderBean ;
     private List<OrderBean.DataBean.GoodsBean> goodsBean;
-    private int page = 0;
     @Override
     protected int loadLayout() {
         return R.layout.fragment_wait_pay_order;
@@ -56,23 +55,21 @@ public class WaitPayOrderFragment extends BaseFragment {
     @Override
     protected void init() {
         F();
-        Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1",String.valueOf(page)), OrderBean.class);
         kingData.registerWatcher(Config.ORDER, new KingData.KingCallBack() {
             @Override
             public void onChange() {
-                Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1",String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class);
             }
         });
+        mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {
-                Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1",String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class);
             }
 
             @Override
             public void onLoadMore() {
-                page++;
-                Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1",String.valueOf(page)), OrderBean.class);
             }
         });
 
@@ -81,6 +78,7 @@ public class WaitPayOrderFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class);
     }
 
     @Override
@@ -92,12 +90,15 @@ public class WaitPayOrderFragment extends BaseFragment {
                orderBean = (OrderBean) result;
                 if (MainActivity.index==2){
                     if (orderBean.getCode()==200){
-                        try {
-                            waitPayOrderAdapter = new WaitPayOrderAdapter(orderBean.getData().size(),R.layout.fragment_order_item,new WaitPayViewHolder());
-                            mListRv.setAdapter(waitPayOrderAdapter);
-                        }catch (Exception ex){
-                            ex.printStackTrace();
-                        }
+
+                            if (orderBean.getData()==null|| orderBean.getData().size()==0){
+                                mRelayoutRl.setVisibility(View.VISIBLE);
+                            }else {
+                                mRelayoutRl.setVisibility(View.GONE);
+                                waitPayOrderAdapter = new WaitPayOrderAdapter(orderBean.getData().size(),R.layout.fragment_order_item,new WaitPayViewHolder());
+                                mListRv.setAdapter(waitPayOrderAdapter);
+                            }
+
                     }else if (orderBean.getCode()==2001){
                         ToastInfo("请登录");
                         openActivity(LoginActivity.class);
@@ -106,6 +107,7 @@ public class WaitPayOrderFragment extends BaseFragment {
                     }
                 }
                 break;
+
 
         }
     }
@@ -236,7 +238,6 @@ public class WaitPayOrderFragment extends BaseFragment {
 
                 }
             });
-
         }
     }
     class WaitPayViewHolder{
@@ -262,11 +263,16 @@ public class WaitPayOrderFragment extends BaseFragment {
         @Override
         public void padData(int i, Object o) {
             GoodsViewHolder viewHolder = (GoodsViewHolder) o;
-            viewHolder.mNameTv.setText(goodsBean.get(i).getSubtitle());
-            viewHolder.mNumTv.setText("x"+goodsBean.get(i).getNumber());
-            viewHolder.mPriceTv.setText("￥"+goodsBean.get(i).getPrice());
-            viewHolder.mWeightTv.setText(goodsBean.get(i).getTitle());
-            Glide(goodsBean.get(i).getImage(),viewHolder.mImgIv);
+            try {
+                viewHolder.mNameTv.setText(goodsBean.get(i).getSubtitle());
+                viewHolder.mNumTv.setText("x"+goodsBean.get(i).getNumber());
+                viewHolder.mPriceTv.setText("￥"+goodsBean.get(i).getPrice());
+                viewHolder.mWeightTv.setText(goodsBean.get(i).getTitle());
+                Glide(goodsBean.get(i).getImage(),viewHolder.mImgIv);
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+
         }
     }
     class GoodsViewHolder{

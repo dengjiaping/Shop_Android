@@ -39,7 +39,6 @@ public class OrderFinishFragment extends BaseFragment {
     private RelativeLayout mRelayoutRl;
     private FinishOrderAdapter finishOrderAdapter;
     private FinishGoodsAdapter finishGoodsAdapter;
-    private int page = 0;
     private OrderBean orderBean;
     private List<OrderBean.DataBean.GoodsBean> goodsBeen;
 
@@ -52,25 +51,29 @@ public class OrderFinishFragment extends BaseFragment {
     @Override
     protected void init() {
         F();
-        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("3", String.valueOf(page)), OrderBean.class);
         kingData.registerWatcher(Config.FINISH_ORDER, new KingData.KingCallBack() {
             @Override
             public void onChange() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("3", String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("3"), OrderBean.class);
             }
         });
+        mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("3", String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("3"), OrderBean.class);
             }
 
             @Override
             public void onLoadMore() {
-                page++;
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("3", String.valueOf(page)), OrderBean.class);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("3"), OrderBean.class);
     }
 
     @Override
@@ -82,7 +85,7 @@ public class OrderFinishFragment extends BaseFragment {
                 orderBean = (OrderBean) result;
                 if (MainActivity.index==2) {
                     if (orderBean.getCode() == 200) {
-                        if (orderBean.getData() == null) {
+                        if (orderBean.getData() == null || orderBean.getData().size()==0) {
                             mRelayoutRl.setVisibility(View.VISIBLE);
                         } else {
                             mRelayoutRl.setVisibility(View.GONE);
@@ -102,7 +105,6 @@ public class OrderFinishFragment extends BaseFragment {
                     }
                 }
                 break;
-
         }
     }
 
@@ -238,11 +240,16 @@ public class OrderFinishFragment extends BaseFragment {
         @Override
         public void padData(int i, Object o) {
             FinishGoodsViewHolder viewHolder = (FinishGoodsViewHolder) o;
-            viewHolder.mNameTv.setText(goodsBeen.get(i).getTitle());
-            viewHolder.mNumTv.setText("x" + goodsBeen.get(i).getNumber());
-            viewHolder.mPriceTv.setText("￥" + goodsBeen.get(i).getPrice());
-            viewHolder.mWeightTv.setText(goodsBeen.get(i).getSubtitle());
-            Glide(goodsBeen.get(i).getImage(), viewHolder.mImgIv);
+            try {
+                viewHolder.mNameTv.setText(goodsBeen.get(i).getTitle());
+                viewHolder.mNumTv.setText("x" + goodsBeen.get(i).getNumber());
+                viewHolder.mPriceTv.setText("￥" + goodsBeen.get(i).getPrice());
+                viewHolder.mWeightTv.setText(goodsBeen.get(i).getSubtitle());
+                Glide(goodsBeen.get(i).getImage(), viewHolder.mImgIv);
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+
         }
     }
 
