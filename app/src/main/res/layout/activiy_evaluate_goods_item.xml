@@ -11,7 +11,7 @@
         android:background="@color/white">
         
         <ImageView
-            android:id="@+id/ay_evaluate_img_iv"
+            android:id="@+id/item_evaluate_img_iv"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_centerVertical="true"
@@ -20,10 +20,10 @@
             />
 
         <TextView
-            android:id="@+id/ay_evaluate_name_tv"
+            android:id="@+id/item_evaluate_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/ay_evaluate_img_iv"
+            android:layout_toRightOf="@+id/item_evaluate_img_iv"
             android:textColor="@color/text_color"
             android:textSize="14dp"
             android:layout_marginLeft="10dp"
@@ -31,18 +31,18 @@
             android:text="零食坚果炒货山核桃长寿包宝宝"/>
 
         <TextView
-            android:id="@+id/ay_evaluate_content_tv"
+            android:id="@+id/item_evaluate_content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ay_evaluate_name_tv"
-            android:layout_toRightOf="@+id/ay_evaluate_img_iv"
+            android:layout_below="@+id/item_evaluate_name_tv"
+            android:layout_toRightOf="@+id/item_evaluate_img_iv"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/color_888"
             android:text="三只松鼠专场"/>
 
         <TextView
-            android:id="@+id/ay_evaluate_price_tv"
+            android:id="@+id/item_evaluate_price_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -70,6 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="评价"
+            android:textColor="@color/text_color"
+            android:textSize="14dp"
             android:layout_marginLeft="10dp"
             />
         
@@ -79,8 +81,8 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/ay_evaluate_praise_rb"
-                android:layout_width="100dp"
+                android:id="@+id/item_evaluate_praise_rb"
+                android:layout_width="90dp"
                 android:layout_height="35dp"
                 android:button="@null"
                 android:text="好评"
@@ -91,8 +93,8 @@
                 android:layout_gravity="center"
                 android:background="@drawable/evaluate_select"/>
             <RadioButton
-                android:id="@+id/ay_evaluate_middle_rb"
-                android:layout_width="100dp"
+                android:id="@+id/item_evaluate_middle_rb"
+                android:layout_width="90dp"
                 android:layout_height="35dp"
                 android:button="@null"
                 android:text="中评"
@@ -103,8 +105,8 @@
                 android:layout_gravity="center"
                 android:background="@drawable/evaluate_select"/>
             <RadioButton
-                android:id="@+id/ay_evaluate_bad_rb"
-                android:layout_width="100dp"
+                android:id="@+id/item_evaluate_bad_rb"
+                android:layout_width="90dp"
                 android:layout_height="35dp"
                 android:button="@null"
                 android:text="差评"
@@ -140,7 +142,7 @@
             android:layout_marginRight="10dp"/>
 
         <EditText
-            android:id="@+id/ay_evaluate_feel_et"
+            android:id="@+id/item_evaluate_feel_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/transparent"
@@ -189,7 +191,7 @@
         android:background="@color/white">
         
         <TextView
-            android:id="@+id/ay_evaluate_submit_tv"
+            android:id="@+id/item_evaluate_submit_tv"
             android:layout_width="100dp"
             android:layout_height="35dp"
             android:layout_alignParentRight="true"

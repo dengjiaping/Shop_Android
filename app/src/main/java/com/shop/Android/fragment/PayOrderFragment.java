@@ -1,18 +1,31 @@
 package com.shop.Android.fragment;
 
+import android.content.DialogInterface;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
+import com.king.Base.KingData;
+import com.king.Dialog.CustomDialog;
+import com.king.Internet.user_interface.xCallback;
+import com.king.Internet.user_method.CallServer;
+import com.shop.Android.Config;
+import com.shop.Android.DataKey;
 import com.shop.Android.activity.LoginActivity;
+import com.shop.Android.activity.MainActivity;
+import com.shop.Android.activity.OrderDetailsActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.NoScrollListView;
 import com.shop.Android.widget.RefreshListView;
 import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.OrderBean;
+import com.shop.Net.Param.Order;
+import com.shop.Net.Param.OrderDetailsParam;
 import com.shop.Net.Param.OrderWaitPayParam;
 import com.shop.R;
 
@@ -33,23 +46,30 @@ public class PayOrderFragment extends BaseFragment {
 
     @Override
     protected int loadLayout() {
+
         return R.layout.fragment_pay_order;
     }
 
     @Override
     protected void init() {
         F();
-        Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("2",String.valueOf(page)), OrderBean.class);
+        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2", String.valueOf(page)), OrderBean.class);
+        kingData.registerWatcher(Config.PAY_ORDER, new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2", String.valueOf(page)), OrderBean.class);
+            }
+        });
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {
-                Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("2",String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2", String.valueOf(page)), OrderBean.class);
             }
 
             @Override
             public void onLoadMore() {
                 page++;
-                Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("2",String.valueOf(page)), OrderBean.class);
+                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2", String.valueOf(page)), OrderBean.class);
             }
         });
     }
@@ -58,17 +78,36 @@ public class PayOrderFragment extends BaseFragment {
     public void onSuccess(String what, Object result) {
         mListRv.onRefreshComplete();
         mListRv.onLoadComplete();
-        switch (what){
+        switch (what) {
             case ActionKey.ORDER_INDEX:
                 orderBean = (OrderBean) result;
-                if (orderBean.getCode()==200){
-                    payOrderAdapter = new PayOrderAdapter(orderBean.getData().size(),R.layout.fragment_order_item,new PayViewHolder());
-                    mListRv.setAdapter(payOrderAdapter);
-                }else if (orderBean.getCode()==2001){
+                if (MainActivity.index==2) {
+                    if (orderBean.getCode() == 200) {
+                        try {
+                            payOrderAdapter = new PayOrderAdapter(orderBean.getData().size(), R.layout.fragment_order_item, new PayViewHolder());
+                            mListRv.setAdapter(payOrderAdapter);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                    } else if (orderBean.getCode()==2001){
+                        ToastInfo("请登录");
+                        openActivity(LoginActivity.class);
+                    }else {
+                        ToastInfo(orderBean.getMsg());
+                    }
+                }
+                break;
+
+            case ActionKey.ORDER_COMPLETE:
+                BaseBean baseBean = (BaseBean) result;
+                if (baseBean.getCode() == 200) {
+                    ToastInfo("确认收货成功");
+                } else if (baseBean.getCode() == 2001) {
                     ToastInfo("请登录");
                     openActivity(LoginActivity.class);
-                }else {
-                    ToastInfo(orderBean.getMsg());
+                } else {
+                    ToastInfo(baseBean.getMsg());
                 }
                 break;
         }
@@ -88,26 +127,65 @@ public class PayOrderFragment extends BaseFragment {
         @Override
         public void padData(int i, Object o) {
             PayViewHolder viewHolder = (PayViewHolder) o;
+            final OrderBean.DataBean bean = orderBean.getData().get(i);
             goodBean = orderBean.getData().get(i).getGoods();
-            payGoodsAdapter = new PayGoodsAdapter(goodBean.size(),R.layout.item_order_goods,new PayGoodsViewHolder());
+            payGoodsAdapter = new PayGoodsAdapter(goodBean.size(), R.layout.item_order_goods, new PayGoodsViewHolder());
             viewHolder.mListSv.setAdapter(payGoodsAdapter);
-            viewHolder.mNameTv.setText(orderBean.getData().get(i).getShop_name());
-            viewHolder.mTotalTv.setText("￥"+orderBean.getData().get(i).getTotal_price());
-            viewHolder.mFeeTv.setText("配送费: ￥"+orderBean.getData().get(i).getExpenses());
-            viewHolder.mNumTv.setText("共 "+goodBean.size()+"件");
-            switch (orderBean.getData().get(i).getStatus()){
+            viewHolder.mNameTv.setText(bean.getShop_name());
+            viewHolder.mTotalTv.setText("￥" + bean.getTotal_price());
+            viewHolder.mFeeTv.setText("配送费: ￥" + bean.getExpenses());
+            viewHolder.mNumTv.setText("共 " + goodBean.size() + "件");
+            switch (bean.getStatus()) {
                 case 3:
                     viewHolder.mTypeTv.setText("送货中");
+                    viewHolder.mDelTv.setText("确认收货");
+                    viewHolder.mPayTv.setVisibility(View.VISIBLE);
+                    viewHolder.mPayTv.setText("查看详情");
+                    viewHolder.mPayTv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            kingData.putData(DataKey.ORDER, bean.getId());
+                            kingData.sendBroadCast(Config.ORDER_ID);
+                            openActivity(OrderDetailsActivity.class);
+                        }
+                    });
+                    viewHolder.mDelTv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Post(ActionKey.ORDER_COMPLETE, new OrderDetailsParam(bean.getId()), BaseBean.class);
+                            kingData.sendBroadCast(Config.PAY_ORDER);
+                        }
+                    });
+
                     break;
                 case 4:
                     viewHolder.mTypeTv.setText("未送货");
+                    viewHolder.mPayTv.setText("查看详情");
+                    viewHolder.mPayTv.setVisibility(View.VISIBLE);
+                    viewHolder.mDelTv.setVisibility(View.GONE);
+                    viewHolder.mPayTv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            kingData.putData(DataKey.ORDER, bean.getId());
+                            kingData.sendBroadCast(Config.ORDER_ID);
+                            openActivity(OrderDetailsActivity.class);
+                        }
+                    });
                     break;
             }
+            viewHolder.mListSv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    kingData.putData(DataKey.ORDER, bean.getId());
+                    kingData.sendBroadCast(Config.ORDER_ID);
+                    openActivity(OrderDetailsActivity.class);
+                }
+            });
             viewHolder.mTimeTv.setVisibility(View.GONE);
         }
     }
 
-    class PayViewHolder{
+    class PayViewHolder {
         String TAG = "order";
         NoScrollListView mListSv;
         TextView mNameTv;
@@ -116,8 +194,11 @@ public class PayOrderFragment extends BaseFragment {
         TextView mTotalTv;
         TextView mNumTv;
         TextView mFeeTv;
+        TextView mPayTv;
+        TextView mDelTv;
     }
-    class PayGoodsAdapter extends KingAdapter{
+
+    class PayGoodsAdapter extends KingAdapter {
 
         public PayGoodsAdapter(int size, int layoutId, Object viewHolder) {
             super(size, layoutId, viewHolder);
@@ -127,14 +208,15 @@ public class PayOrderFragment extends BaseFragment {
         @Override
         public void padData(int i, Object o) {
             PayGoodsViewHolder viewHolder = (PayGoodsViewHolder) o;
-            viewHolder.mNameTv.setText(goodBean.get(i).getSubtitle());
-            viewHolder.mNumTv.setText("x"+goodBean.get(i).getNumber());
-            viewHolder.mPriceTv.setText("￥"+goodBean.get(i).getPrice());
-            viewHolder.mWeightTv.setText(goodBean.get(i).getTitle());
-            Glide(goodBean.get(i).getImage(),viewHolder.mImgIv);
+            viewHolder.mNameTv.setText(goodBean.get(i).getTitle());
+            viewHolder.mNumTv.setText("x" + goodBean.get(i).getNumber());
+            viewHolder.mPriceTv.setText("￥" + goodBean.get(i).getPrice());
+            viewHolder.mWeightTv.setText(goodBean.get(i).getSubtitle());
+            Glide(goodBean.get(i).getImage(), viewHolder.mImgIv);
         }
     }
-    class PayGoodsViewHolder{
+
+    class PayGoodsViewHolder {
         String TAG = "goods";
         ImageView mImgIv;
         TextView mNameTv;

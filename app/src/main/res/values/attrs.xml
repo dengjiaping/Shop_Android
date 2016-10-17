@@ -13,4 +13,6 @@
     <declare-styleable name="board_column">
         <attr name="column" format="integer" localization="suggested" />
     </declare-styleable>
+    <declare-styleable name="TimeTextView">
+    </declare-styleable>
 </resources>

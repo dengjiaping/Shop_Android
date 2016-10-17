@@ -82,7 +82,7 @@
                 android:layout_marginLeft="10dp"/>
 
             <TextView
-                android:id="@+id/item_mine_num_tv"
+                android:id="@+id/item_mine_number_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
