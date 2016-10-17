@@ -68,6 +68,16 @@ public class ActionKey {
     // 确认订单
     public static final String ORDER_COMPLETE = "order/complete";
 
+    // 评价首页
+    public static final String EVALUATE_INDEXT = "comment/goodscomment";
+
+    //提交评价
+
+    public static final String SUBMIT_GOODS = "comment/save";
+
+    //我的积分
+    public static final String INTEGRAL = "user/integral";
+
     //发送验证码
     public static final String CODE = "login/verify";
     //登录

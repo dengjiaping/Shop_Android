@@ -7,6 +7,24 @@ import java.util.List;
  */
 public class OrderDetailsBean extends BaseBean {
 
+    /**
+     * id : 132
+     * shop_name : 小小便利店（蔚蓝商务港）
+     * order_number : 1610141119258553
+     * remark :
+     * expenses : 10.00
+     * total_price : 15.00
+     * pay_type : 1
+     * status : 7
+     * receiver_phone : 18096674262
+     * receiver_contacts : 魏亮
+     * receiver_address : 合肥市蜀山区华府骏苑3栋5单元3层301室
+     * created_time : 2016-10-14 11:19:25
+     * end_time : 0
+     * send_time :
+     * goods : [{"id":"307","image":"http://imgqn6.fruitday.com/images/product_pic/4895/1/1-270x270-4895-7SH5WSW1.jpg","title":"海尔（Haier）BCD-251WDGW 251升 无霜两门冰箱（白色）","subtitle":"正宗砀山水梨","price":"1.00","number":"1","type":"1"},{"id":"308","image":"http://imgqn5.fruitday.com/images/product_pic/12207/1/1-270x270-12207-SR6PACY3.jpg","title":"南翔小笼包","subtitle":"一袋100克","price":"1.00","number":"1","type":"1"},{"id":"309","image":"http://img.zgtuku.com/images/front_pic2/h/39/18/2136227498.jpg","title":"薯片","subtitle":"一袋100克","price":"1.00","number":"3","type":"1"}]
+     */
+
     private DataBean data;
 
     public DataBean getData() {
@@ -20,6 +38,8 @@ public class OrderDetailsBean extends BaseBean {
     public static class DataBean {
         private String id;
         private String shop_name;
+        private String order_number;
+        private String remark;
         private String expenses;
         private String total_price;
         private String pay_type;
@@ -29,13 +49,14 @@ public class OrderDetailsBean extends BaseBean {
         private String receiver_address;
         private String created_time;
         private String end_time;
+        private String send_time;
         /**
-         * id : 73
-         * image : http://img.zgtuku.com/images/front_pic2/h/39/18/2136227498.jpg
-         * title : 薯片tt
-         * subtitle : 一袋100克
+         * id : 307
+         * image : http://imgqn6.fruitday.com/images/product_pic/4895/1/1-270x270-4895-7SH5WSW1.jpg
+         * title : 海尔（Haier）BCD-251WDGW 251升 无霜两门冰箱（白色）
+         * subtitle : 正宗砀山水梨
          * price : 1.00
-         * number : 5
+         * number : 1
          * type : 1
          */
 
@@ -55,6 +76,22 @@ public class OrderDetailsBean extends BaseBean {
 
         public void setShop_name(String shop_name) {
             this.shop_name = shop_name;
+        }
+
+        public String getOrder_number() {
+            return order_number;
+        }
+
+        public void setOrder_number(String order_number) {
+            this.order_number = order_number;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
         }
 
         public String getExpenses() {
@@ -127,6 +164,14 @@ public class OrderDetailsBean extends BaseBean {
 
         public void setEnd_time(String end_time) {
             this.end_time = end_time;
+        }
+
+        public String getSend_time() {
+            return send_time;
+        }
+
+        public void setSend_time(String send_time) {
+            this.send_time = send_time;
         }
 
         public List<GoodsBean> getGoods() {

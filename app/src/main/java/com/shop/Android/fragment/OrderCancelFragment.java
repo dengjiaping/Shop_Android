@@ -10,9 +10,12 @@ import android.widget.TextView;
 import com.king.Base.KingAdapter;
 import com.king.Base.KingData;
 import com.king.Dialog.CustomDialog;
+import com.king.Internet.user_interface.xCallback;
+import com.king.Internet.user_method.CallServer;
 import com.shop.Android.Config;
 import com.shop.Android.DataKey;
 import com.shop.Android.activity.LoginActivity;
+import com.shop.Android.activity.MainActivity;
 import com.shop.Android.activity.OrderDetailsActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
@@ -39,12 +42,14 @@ public class OrderCancelFragment extends BaseFragment {
     private CancelOrderAdapter cancelOrderAdapter;
     private CancelGoodsAdapter cancelGoodsAdapter;
     private OrderBean orderBean;
+    private List<OrderBean.DataBean.GoodsBean> goodBeanCancel;
     private OrderBean.DataBean bean;
-    private List<OrderBean.DataBean.GoodsBean> goodsBeen;
     private int page = 0;
+
 
     @Override
     protected int loadLayout() {
+
         return R.layout.fragment_cancel_order;
     }
 
@@ -74,35 +79,34 @@ public class OrderCancelFragment extends BaseFragment {
 
     @Override
     public void onSuccess(String what, Object result) {
+        mListRv.onRefreshComplete();
+        mListRv.onLoadComplete();
         switch (what) {
             case ActionKey.ORDER_INDEX:
                 orderBean = (OrderBean) result;
-                if (orderBean.getCode() == 200) {
-                    if (orderBean.getData() == null) {
-                        mRelayoutRl.setVisibility(View.VISIBLE);
-                    } else {
-                        mRelayoutRl.setVisibility(View.GONE);
-                        try {
-                            cancelOrderAdapter = new CancelOrderAdapter(orderBean.getData().size(), R.layout.fragment_order_item, new CancelViewHolder());
-                            mListRv.setAdapter(cancelOrderAdapter);
-                        }catch (Exception ex){
-                            ex.printStackTrace();
-                        }
+                if (MainActivity.index==2) {
+                    if (orderBean.getCode() == 200) {
+                        if (orderBean.getData() == null) {
+                            mRelayoutRl.setVisibility(View.VISIBLE);
+                        } else {
+                            mRelayoutRl.setVisibility(View.GONE);
+                            try {
+                                cancelOrderAdapter = new CancelOrderAdapter(orderBean.getData().size(), R.layout.fragment_order_item, new CancelViewHolder());
+                                mListRv.setAdapter(cancelOrderAdapter);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
 
+                        }
+                    } else if (orderBean.getCode()==2001){
+                        ToastInfo("请登录");
+                        openActivity(LoginActivity.class);
+                    }else {
+                        ToastInfo(orderBean.getMsg());
                     }
-                } else {
-                    ToastInfo(orderBean.getMsg());
                 }
                 break;
-            case ActionKey.DEL_ORDER:
-                BaseBean baseBean = (BaseBean) result;
-                if (baseBean.getCode() == 200) {
-                    ToastInfo("删除成功");
-                } else if (baseBean.getCode() == 2001) {
-                    ToastInfo("请登录");
-                    openActivity(LoginActivity.class);
-                }
-                break;
+
         }
     }
 
@@ -121,17 +125,17 @@ public class OrderCancelFragment extends BaseFragment {
         public void padData(int i, Object o) {
             CancelViewHolder viewHolder = (CancelViewHolder) o;
             bean = orderBean.getData().get(i);
-            goodsBeen = orderBean.getData().get(i).getGoods();
+            goodBeanCancel = orderBean.getData().get(i).getGoods();
+            viewHolder.mNameTv.setText(bean.getShop_name());
+            viewHolder.mTotalTv.setText("￥" + bean.getTotal_price());
+            viewHolder.mFeeTv.setText("配送费: ￥" + bean.getExpenses());
+            viewHolder.mNumTv.setText("共 " + goodBeanCancel.size() + "件");
             try {
-                cancelGoodsAdapter = new CancelGoodsAdapter(orderBean.getData().get(i).getGoods().size(), R.layout.item_order_goods, new CancelGoodsViewHolder());
+                cancelGoodsAdapter = new CancelGoodsAdapter(goodBeanCancel.size(), R.layout.item_order_goods, new CancelGoodsViewHolder());
                 viewHolder.mListSv.setAdapter(cancelGoodsAdapter);
             }catch (Exception ex){
                 ex.printStackTrace();
             }
-            viewHolder.mNameTv.setText(bean.getShop_name());
-            viewHolder.mTotalTv.setText("￥" + bean.getTotal_price());
-            viewHolder.mFeeTv.setText("配送费: ￥" + bean.getExpenses());
-            viewHolder.mNumTv.setText("共 " + goodsBeen.size() + "件");
             viewHolder.mListSv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -148,15 +152,51 @@ public class OrderCancelFragment extends BaseFragment {
                     viewHolder.mDelTv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            final CustomDialog.Builder ibuilder = new CustomDialog.Builder(mContext);
+                            final CustomDialog.Builder ibuilder = new CustomDialog.Builder(mActivity);
                             ibuilder.setTitle("删除订单");
                             ibuilder.setMessage("你确定要删除订单吗？");
                             ibuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Post(ActionKey.DEL_ORDER, new OrderDetailsParam(bean.getId()), BaseBean.class);
-                                    dissLoadingDialog();
-                                    kingData.sendBroadCast(Config.CANCEL_ORDER);
+                                public void onClick(final DialogInterface dialogInterface, int i) {
+                                    CallServer.Post(ActionKey.DEL_ORDER, ActionKey.DEL_ORDER, new OrderDetailsParam(bean.getId()), BaseBean.class, new xCallback() {
+                                        @Override
+                                        public void onSuccess(String s, Object o) {
+                                            mListRv.onRefreshComplete();
+                                            mListRv.onLoadComplete();
+                                            BaseBean baseBean = (BaseBean) o;
+                                            if (baseBean.getCode() == 200) {
+                                                ToastInfo("删除成功");
+                                                kingData.sendBroadCast(Config.CANCEL_ORDER);
+                                                dialogInterface.dismiss();
+                                            } else if (baseBean.getCode() == 2001) {
+                                                ToastInfo("请登录");
+                                                openActivity(LoginActivity.class);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFinished(String s) {
+                                            mListRv.onRefreshComplete();
+                                            mListRv.onLoadComplete();
+                                        }
+
+                                        @Override
+                                        public void onError(String s) {
+                                            mListRv.onRefreshComplete();
+                                            mListRv.onLoadComplete();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(String s) {
+
+                                        }
+
+                                        @Override
+                                        public void onStart(String s) {
+
+                                        }
+                                    });
+
 
                                 }
                             });
@@ -202,13 +242,14 @@ public class OrderCancelFragment extends BaseFragment {
 
         @Override
         public void padData(int i, Object o) {
+            OrderBean.DataBean.GoodsBean goodsBean = bean.getGoods().get(i);
             CancelGoodsViewHolder viewHolder = (CancelGoodsViewHolder) o;
-            viewHolder.mNameTv.setText(goodsBeen.get(i).getTitle());
-            viewHolder.mNumTv.setText("x" + goodsBeen.get(i).getNumber());
-            viewHolder.mPriceTv.setText("￥" + goodsBeen.get(i).getPrice());
-            viewHolder.mWeightTv.setText(goodsBeen.get(i).getSubtitle());
+            viewHolder.mNameTv.setText(goodsBean.getTitle());
+            viewHolder.mNumTv.setText("x" + goodsBean.getNumber());
+            viewHolder.mPriceTv.setText("￥" + goodsBean.getPrice());
+            viewHolder.mWeightTv.setText(goodsBean.getSubtitle());
             try {
-                Glide(goodsBeen.get(i).getImage(), viewHolder.mImgIv);
+                Glide(goodsBean.getImage(), viewHolder.mImgIv);
             }catch (Exception px){
                 px.printStackTrace();
             }

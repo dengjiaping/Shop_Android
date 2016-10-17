@@ -27,7 +27,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:id="@+id/ay_details_wait_ll"
@@ -76,7 +76,7 @@
                         android:id="@+id/ay_details_distribution_rl"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@mipmap/distribution_orderx"
+                        android:background="@mipmap/distribution_order"
                         android:visibility="gone"
                         >
 
@@ -95,7 +95,7 @@
                         android:id="@+id/ay_details_finish_rl"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@mipmap/finish_orderx"
+                        android:background="@mipmap/finish_order"
                         android:visibility="gone">
 
                     </RelativeLayout>
@@ -111,20 +111,31 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/ay_details_times_ll"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/white"
+                    android:orientation="horizontal"
                     android:visibility="gone">
+
+                    <com.shop.Android.widget.TimeTextView
+                        android:id="@+id/ay_details_times_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:text="请在26分17秒"
+                        android:textColor="@color/my_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:text="请在26分17秒内完成订单,超时订单自动取消"
-                        android:textColor="@color/my_color" />
-                </RelativeLayout>
+                        android:layout_gravity="center_vertical"
+                        android:textSize="14dp"
+                        android:textColor="@color/my_color"
+                        android:text="内完成订单,超时订单自动取消"/>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -204,9 +215,11 @@
                     android:background="@color/color_fe" />
 
                 <com.shop.Android.widget.NoScrollListView
+                    android:id="@+id/ay_details_list_sv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+                    android:divider="@null"
                     android:scrollbars="none">
 
                 </com.shop.Android.widget.NoScrollListView>
@@ -387,38 +400,45 @@
             android:layout_height="0.5dp"
             android:background="@color/color_fe" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:orientation="horizontal"
             android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/ay_details_cancel_tv"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/order_btn"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:text="取消订单"
+                android:textColor="@color/text_color"
+                android:textSize="12dp" />
+
 
             <TextView
                 android:id="@+id/ay_details_pay_tv"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/order_btn_selector"
                 android:gravity="center"
                 android:text="立即支付"
+                android:layout_gravity="center_vertical"
                 android:textColor="@color/my_color"
                 android:textSize="12dp" />
 
-            <TextView
-                android:id="@+id/ay_details_cancel_tv"
-                android:layout_width="80dp"
-                android:layout_height="35dp"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/ay_details_pay_tv"
-                android:background="@drawable/order_btn"
-                android:gravity="center"
-                android:text="取消订单"
-                android:textColor="@color/text_color"
-                android:textSize="12dp" />
 
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
 
