@@ -21,6 +21,7 @@ import com.king.Base.KingData;
 import com.king.Dialog.CustomDialog;
 import com.king.Internet.user_method.CallServer;
 import com.king.KingApplication;
+import com.king.KingConfig;
 import com.king.Utils.DialogUtil;
 import com.king.Utils.FUtil;
 import com.king.Utils.GsonUtil;
@@ -72,7 +73,6 @@ public class CarFragment extends BaseFragment {
 
     @Override
     protected void initTitleBar() {
-        Post(ActionKey.FEE, new Token(), FeeBean.class);
         initTitle("购物车");
         mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
     }
@@ -89,21 +89,29 @@ public class CarFragment extends BaseFragment {
             }
         });
         Post(ActionKey.CAREQUA, new Token(), ShopCarBean.class);
+        Post(ActionKey.FEE, new Token(), FeeBean.class);
         kingData.registerWatcher("CAR", new KingData.KingCallBack() {
             @Override
             public void onChange() {
-                if (ShopCar.getMap().size() > 0) {
-                    if (adapter == null) {
-                        adapter = new CarAdapter(ShopCar.getMap().size() + 1);
-                        mListLv.setAdapter(adapter);
+                try {
+                    if (ShopCar.getMap().size() > 0) {
+                        if (adapter == null) {
+                            adapter = new CarAdapter(ShopCar.getMap().size() + 1);
+                            mListLv.setAdapter(adapter);
+                        } else {
+                            adapter.setSize(ShopCar.getMap().size() + 1);
+                            mListLv.setAdapter(adapter);
+                        }
+                        mPriceTv.setText("  ￥" + ShopCar.allPrice());
                     } else {
-                        adapter.setSize(ShopCar.getMap().size() + 1);
-                        mListLv.setAdapter(adapter);
+                        //// TODO: 2016/10/10 购物车为空的操作
+                        mListLv.setAdapter(null);
+                        mPriceTv.setText("  ￥0");
                     }
-                    mPriceTv.setText("  ￥" + ShopCar.allPrice());
-                } else {
-                    //// TODO: 2016/10/10 购物车为空的操作
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
         });
         if (ShopCar.getMap().size() > 0) {
@@ -149,7 +157,7 @@ public class CarFragment extends BaseFragment {
         switch (i) {
             case R.id.ft_car_order_tv:
                 if (ShopCar.isInValid() > 0) {
-                    CallServer.Post("CARQUA", ActionKey.CAREQUA, new Token(), ShopCarBean.class, this);
+                    CallServer.Post("CARADD", ActionKey.CARSAVE, new CarSave(ShopCar.commit()), BaseBean.class, this);
                 } else {
                     ToastInfo("请先选择至少一件商品");
                 }
@@ -172,8 +180,18 @@ public class CarFragment extends BaseFragment {
                     mMarkTv.setText("(配送费" + bean.getData().getFreight() + "元)");
                 }
                 break;
-            case ActionKey.CARSAVE:
+            case "CARADD":
                 BaseBean baseBean = (BaseBean) result;
+                if (baseBean.getCode() == 2001) {
+                    ToastInfo(baseBean.getMsg());
+                    openActivity(LoginActivity.class);
+                    kingData.putData(DataKey.LOGIN, 1);
+                } else if (baseBean.getCode() == 200) {
+                    CallServer.Post("CARQUA", ActionKey.CAREQUA, new Token(), ShopCarBean.class, this);
+                }
+                break;
+            case ActionKey.CARSAVE:
+                baseBean = (BaseBean) result;
                 if (baseBean.getCode() == 2001) {
                     ToastInfo(baseBean.getMsg());
                     openActivity(LoginActivity.class);
@@ -186,6 +204,7 @@ public class CarFragment extends BaseFragment {
             case "CARQUA":
                 //比对成功
                 ShopCarBean shopCarBean = (ShopCarBean) result;
+                String msg = "";
                 if (shopCarBean.getCode() == 200) {
                     if (shopCarBean.getData() != null && shopCarBean.getData().size() != 0) {
                         for (int i = 0; i < shopCarBean.getData().size(); i++) {
@@ -195,7 +214,6 @@ public class CarFragment extends BaseFragment {
                             thing.setTitle(shopCarBean.getData().get(i).getTitle());
                             thing.setSubTitle(shopCarBean.getData().get(i).getSubtitled());
                             thing.setPrice(shopCarBean.getData().get(i).getPrice());
-                            String msg = "";
                             switch (shopCarBean.getData().get(i).getErr()) {
                                 case 2://库存不足
                                     msg = msg + thing.getTitle() + "库存不足,已调整到最大库存;";
@@ -217,20 +235,26 @@ public class CarFragment extends BaseFragment {
                             }
                             if (!msg.isEmpty()) {
                                 isAdd = true;
-                                DialogUtil.getDialog("提示", msg, "知道了", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                    }
-                                }).show();
                             }
                             ShopCar.mergeButNotAdd(thing, isAdd);
                             isAdd = false;
                         }
+                        if (!msg.isEmpty())
+                            kingData.sendBroadCast("CAR");
+                    }
+                    if (!msg.isEmpty()) {
+                        getDialog("提示", msg, "知道了", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Post(ActionKey.CLEARCAR, new Token(), BaseBean.class);
+                                dialogInterface.dismiss();
+                            }
+                        }).show();
+                    } else {
+                        Post(ActionKey.CLEARCAR, new Token(), BaseBean.class);
                     }
                 }
-                kingData.sendBroadCast("CAR");
-                Post(ActionKey.CLEARCAR, new Token(), BaseBean.class);
+
                 break;
             case ActionKey.CLEARCAR:
                 baseBean = (BaseBean) result;
@@ -252,19 +276,15 @@ public class CarFragment extends BaseFragment {
                             thing.setTitle(shopCarBean.getData().get(i).getTitle());
                             thing.setSubTitle(shopCarBean.getData().get(i).getSubtitled());
                             thing.setPrice(shopCarBean.getData().get(i).getPrice());
-                            String msg = "";
                             switch (shopCarBean.getData().get(i).getErr()) {
                                 case 2://库存不足
-                                    msg = msg + thing.getTitle() + "库存不足,已调整到最大库存;";
                                     thing.setCount(shopCarBean.getData().get(i).getNewcount() + "");
                                     thing.setMaxNum(shopCarBean.getData().get(i).getNewcount() + "");
                                     break;
                                 case 3://价格变动
-                                    msg = msg + thing.getTitle() + "价格变动,已做相应调整;";
                                     thing.setPrice(shopCarBean.getData().get(i).getNewprice() + "");
                                     break;
                                 case 4://库存不足价格变动
-                                    msg = msg + thing.getTitle() + "库存不足,价格变动,已调整到最大库存,价格也做相应调整;";
                                     thing.setCount(shopCarBean.getData().get(i).getNewcount() + "");
                                     thing.setPrice(shopCarBean.getData().get(i).getNewprice() + "");
                                     thing.setMaxNum(shopCarBean.getData().get(i).getNewcount() + "");
@@ -272,21 +292,24 @@ public class CarFragment extends BaseFragment {
                                 case 5://下架删除  不会出现
                                     break;
                             }
-                            if (!msg.isEmpty()) {
-                                DialogUtil.getDialog("提示", msg, "知道了", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                    }
-                                }).show();
-                            }
                             ShopCar.add(thing);
                         }
                     }
                 }
                 kingData.sendBroadCast("CAR");
+                CallServer.Post("CARCLEAR", ActionKey.CLEARCAR, new Token(), BaseBean.class, this);
                 break;
         }
+    }
+
+    private CustomDialog getDialog(String title, String msg, String confirm, DialogInterface.OnClickListener lister) {
+        CustomDialog.Builder ibuilder = new CustomDialog.Builder(mContext);
+        ibuilder.setTitle(title);
+        ibuilder.setMessage(msg);
+        ibuilder.setPositiveButton(confirm, lister);
+        CustomDialog dialog = ibuilder.create();
+        dialog.setCancelable(false);
+        return dialog;
     }
 
     private CarAdapter adapter;
@@ -421,25 +444,62 @@ public class CarFragment extends BaseFragment {
 
                 ((CarViewHolder) (viewHolder)).mMinusTv.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(final View view) {
                         try {
-                            Goods goods = GsonUtil.Str2Bean(ShopCar.getMap().get(ShopCar.getKeys().get(i - 1)), Goods.class);
-                            goods.setCount("-1");
-                            ShopCar.isNotice = false;
-                            ShopCar.add(goods);
-                            ShopCar.isNotice = true;
-                            ((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).setText(Integer.valueOf(((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).getText().toString()) - 1 + "");
-                            if (Integer.valueOf(((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).getText().toString()) == 0) {
-                                adapter.setSize(ShopCar.getMap().size() + 1);
-                                if (ShopCar.getMap().size() == 0) {
-                                    mListLv.setAdapter(null);
-                                    //// TODO: 2016/10/10 购物车没有数据
-                                } else {
-                                    adapter.notifyDataSetChanged();
+                            final Goods goods = GsonUtil.Str2Bean(ShopCar.getMap().get(ShopCar.getKeys().get(i - 1)), Goods.class);
+                            if (goods.getCount().equals("1")) {
+                                CustomDialog.Builder ibuilder = new CustomDialog.Builder(mContext);
+                                ibuilder.setTitle("提示");
+                                ibuilder.setMessage("是否从购物车移除该商品?");
+                                ibuilder.setPositiveButton("移除", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        goods.setCount("-1");
+                                        ShopCar.isNotice = false;
+                                        ShopCar.add(goods);
+                                        ((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).setText(Integer.valueOf(((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).getText().toString()) - 1 + "");
+                                        ShopCar.isNotice = true;
+                                        if (Integer.valueOf(((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).getText().toString()) == 0) {
+                                            adapter.setSize(ShopCar.getMap().size() + 1);
+                                            if (ShopCar.getMap().size() == 0) {
+                                                mListLv.setAdapter(null);
+                                                //// TODO: 2016/10/10 购物车没有数据
+                                            } else {
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                        mPriceTv.setText("  ￥" + ShopCar.allPrice());
+                                        ShopCar.print();
+                                        dialogInterface.dismiss();
+                                    }
+                                });
+                                ibuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                });
+                                CustomDialog dialog = ibuilder.create();
+                                dialog.setCancelable(false);
+                                dialog.show();
+                            } else {
+                                goods.setCount("-1");
+                                ShopCar.isNotice = false;
+                                ShopCar.add(goods);
+                                ((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).setText(Integer.valueOf(((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).getText().toString()) - 1 + "");
+                                ShopCar.isNotice = true;
+                                if (Integer.valueOf(((TextView) ((LinearLayout) ((view).getParent())).getChildAt(1)).getText().toString()) == 0) {
+                                    adapter.setSize(ShopCar.getMap().size() + 1);
+                                    if (ShopCar.getMap().size() == 0) {
+                                        mListLv.setAdapter(null);
+                                        //// TODO: 2016/10/10 购物车没有数据
+                                    } else {
+                                        adapter.notifyDataSetChanged();
+                                    }
                                 }
+                                mPriceTv.setText("  ￥" + ShopCar.allPrice());
+                                ShopCar.print();
                             }
-                            mPriceTv.setText("  ￥" + ShopCar.allPrice());
-                            ShopCar.print();
                         } catch (Exception e) {
                             adapter.notifyDataSetChanged();
                         }
@@ -477,6 +537,32 @@ public class CarFragment extends BaseFragment {
                     }
                     mPriceTv.setText("  ￥" + ShopCar.allPrice());
 
+                }
+            });
+            ((SlideItemWrapLayout) view).getRightBackView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    CustomDialog.Builder ibuilder = new CustomDialog.Builder(mContext);
+                    ibuilder.setTitle("提示");
+                    ibuilder.setMessage("是否从购物车移除该商品?");
+                    ibuilder.setPositiveButton("移除", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int p) {
+                            ((SlideItemWrapLayout) v.getParent()).removeAllViews();
+                            ShopCar.delete(ShopCar.getKeys().get(i - 1));
+                            mPriceTv.setText("  ￥" + ShopCar.allPrice());
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    ibuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    CustomDialog dialog = ibuilder.create();
+                    dialog.setCancelable(false);
+                    dialog.show();
                 }
             });
             //数据填充

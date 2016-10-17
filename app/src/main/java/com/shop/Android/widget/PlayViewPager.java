@@ -39,6 +39,11 @@ public class PlayViewPager extends RelativeLayout {
     private MyAdapter mAdapter;
     //    private TextView mText;
     private LinearLayout mPoint;
+
+    public List<View> getmListViews() {
+        return mListViews;
+    }
+
     private List<View> mListViews;
     private int lastPosition;
     private boolean isRunning = false;

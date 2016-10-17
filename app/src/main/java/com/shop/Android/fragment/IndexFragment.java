@@ -44,6 +44,7 @@ import com.king.View.refreshview.ui.smileyloadingview.SmileyHeaderView;
 import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
 import com.shop.Android.activity.ClassActivity;
+import com.shop.Android.activity.DisplayActivity;
 import com.shop.Android.activity.EachOtherActivity;
 import com.shop.Android.activity.GoodsClassActivity;
 import com.shop.Android.activity.GoodsDetailActivity;
@@ -111,20 +112,94 @@ public class IndexFragment extends BaseFragment {
             banUrls[i] = indexBean.getData().getBan().get(i).getImage();
         }
         mPlayviewPvp.setUrls(banUrls);
+        for(int i = 0;i < mPlayviewPvp.getmListViews().size();i ++){
+            final int position = i;
+            mPlayviewPvp.getmListViews().get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(indexBean.getData().getBan().get(position).getType().equals("1")){
+                        kingData.putData(DataKey.URL,indexBean.getData().getBan().get(position).getUrl());
+                        openActivity(DisplayActivity.class);
+                    }else {
+                        //goods
+                        GoodsDetail.goods_id = indexBean.getData().getBan().get(position).getGoods_id();
+                        GoodsDetail.type = "1";
+                        openActivity(GoodsDetailActivity.class);
+                    }
+                }
+            });
+        }
         //四张图片的效果
         for (int i = 0; i < indexBean.getData().getMid().size(); i++) {
+            final int position = i;
             switch (indexBean.getData().getMid().get(i).getPosition()) {
                 case "2"://左边大图
                     Glide(indexBean.getData().getMid().get(i).getImage(), mPiconeIv);
+                    mPiconeIv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(indexBean.getData().getMid().get(position).getType().equals("1")){
+                                kingData.putData(DataKey.URL,indexBean.getData().getMid().get(position).getUrl());
+                                openActivity(DisplayActivity.class);
+                            }else {
+                                //goods
+                                GoodsDetail.goods_id = indexBean.getData().getMid().get(position).getGoods_id();
+                                GoodsDetail.type = "1";
+                                openActivity(GoodsDetailActivity.class);
+                            }
+                        }
+                    });
                     break;
                 case "3"://右边上图
                     Glide(indexBean.getData().getMid().get(i).getImage(), mPictwoIv);
+                    mPictwoIv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(indexBean.getData().getMid().get(position).getType().equals("1")){
+                                kingData.putData(DataKey.URL,indexBean.getData().getMid().get(position).getUrl());
+                                openActivity(DisplayActivity.class);
+                            }else {
+                                //goods
+                                GoodsDetail.goods_id = indexBean.getData().getMid().get(position).getGoods_id();
+                                GoodsDetail.type = "1";
+                                openActivity(GoodsDetailActivity.class);
+                            }
+                        }
+                    });
                     break;
                 case "4"://右边左底图
                     Glide(indexBean.getData().getMid().get(i).getImage(), mPicthreeIv);
+                    mPicthreeIv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(indexBean.getData().getMid().get(position).getType().equals("1")){
+                                kingData.putData(DataKey.URL,indexBean.getData().getMid().get(position).getUrl());
+                                openActivity(DisplayActivity.class);
+                            }else {
+                                //goods
+                                GoodsDetail.goods_id = indexBean.getData().getMid().get(position).getGoods_id();
+                                GoodsDetail.type = "1";
+                                openActivity(GoodsDetailActivity.class);
+                            }
+                        }
+                    });
                     break;
                 case "5"://右边右底图:
                     Glide(indexBean.getData().getMid().get(i).getImage(), mPicfourIv);
+                    mPicfourIv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(indexBean.getData().getMid().get(position).getType().equals("1")){
+                                kingData.putData(DataKey.URL,indexBean.getData().getMid().get(position).getUrl());
+                                openActivity(DisplayActivity.class);
+                            }else {
+                                //goods
+                                GoodsDetail.goods_id = indexBean.getData().getMid().get(position).getGoods_id();
+                                GoodsDetail.type = "1";
+                                openActivity(GoodsDetailActivity.class);
+                            }
+                        }
+                    });
                     break;
             }
         }

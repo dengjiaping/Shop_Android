@@ -28,6 +28,8 @@ import com.shop.Net.Bean.IndexBean;
 import com.shop.Net.Bean.WeixinBean;
 import com.shop.Net.Param.Pay;
 import com.shop.R;
+import com.shop.ShopCar.ShopCar;
+import com.shop.ShopCar.TMShopCar;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -72,6 +74,7 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
     protected void init() {
         initTitle("支付订单");
         F();
+
         msgApi = WXAPIFactory.createWXAPI(WXPayEntryActivity.this, null);
         kingData.registerWatcher("ZZREFRESHPAY", new KingData.KingCallBack() {
             @Override
@@ -199,6 +202,14 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         ToastUtil.showToast("支付成功");
+                        switch (kingData.getData(DataKey.TYPE)){
+                            case "0":
+                                TMShopCar.clear();
+                                break;
+                            case "1":
+                                ShopCar.ClearSelf();
+                                break;
+                        }
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -282,6 +293,14 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
         if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (baseResp.errCode == 0) {
                 ToastInfo("支付成功");
+                switch (kingData.getData(DataKey.TYPE)){
+                    case "0":
+                        TMShopCar.clear();
+                        break;
+                    case "1":
+                        ShopCar.ClearSelf();
+                        break;
+                }
             } else if (baseResp.errCode == -1) {
                 ToastInfo("支付失败");
             } else if (baseResp.errCode == -2) {
