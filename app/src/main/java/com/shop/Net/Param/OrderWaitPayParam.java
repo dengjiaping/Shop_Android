@@ -5,10 +5,8 @@ package com.shop.Net.Param;
  */
 public class OrderWaitPayParam extends Token {
     private String ordertype;
-    private String page;
 
-    public OrderWaitPayParam(String ordertype, String page) {
+    public OrderWaitPayParam(String ordertype) {
         this.ordertype = ordertype;
-        this.page = page;
     }
 }

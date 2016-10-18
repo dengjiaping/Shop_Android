@@ -45,13 +45,14 @@ public class MineCollectActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
+
+        Post(ActionKey.COLLECT_INDEX, new Token(), CollectBean.class);
         kingData.registerWatcher(Config.COLLECT, new KingData.KingCallBack() {
             @Override
             public void onChange() {
                 Post(ActionKey.COLLECT_INDEX, new Token(), CollectBean.class);
             }
         });
-        Post(ActionKey.COLLECT_INDEX, new Token(), CollectBean.class);
         mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
@@ -119,7 +120,7 @@ public class MineCollectActivity extends BaseActvity {
             viewHolder.mNumTv.setText(collectBean.getData().get(i).getSubtitled());
             Glide(collectBean.getData().get(i).getImage(), viewHolder.mPhotoIv);
 
-            slideItemWrapLayout.setOnClickListener(new View.OnClickListener() {
+            slideItemWrapLayout.getRightBackView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     kingData.sendBroadCast(Config.COLLECT);

@@ -31,8 +31,8 @@ public class OrderFragment extends BaseFragment {
     protected void initTitleBar() {
         initTitle("订单中心");
         mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
-        mTitleRightIv.setImageResource(R.drawable.search_white);
-        mTitleRightIv.setVisibility(View.VISIBLE);
+//        mTitleRightIv.setImageResource(R.drawable.search_white);
+//        mTitleRightIv.setVisibility(View.VISIBLE);
     }
 
 
