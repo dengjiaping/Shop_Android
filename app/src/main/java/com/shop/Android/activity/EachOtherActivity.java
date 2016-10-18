@@ -5,14 +5,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.king.Utils.GsonUtil;
+import com.king.Utils.SPrefUtil;
 import com.king.View.slidelistview.KingSlideAdapter;
 import com.king.View.slidelistview.SlideListView;
 import com.king.View.slidelistview.wrap.SlideItemWrapLayout;
+import com.shop.Android.DataKey;
+import com.shop.Android.SPKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.AnimRefreshListView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.EachOtherBean;
+import com.shop.Net.Bean.IndexBean;
 import com.shop.Net.Param.InteractDetail;
 import com.shop.R;
 
@@ -68,6 +73,9 @@ public class EachOtherActivity extends BaseActvity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 InteractDetail.interact_id = eachOtherBean.getData().get(i).getId();
+                kingData.putData(DataKey.CONTENT,eachOtherBean.getData().get(i).getContent());
+                kingData.putData(DataKey.TIME,eachOtherBean.getData().get(i).getCreated_time());
+                kingData.putData(DataKey.TITLE,eachOtherBean.getData().get(i).getTitle());
                 openActivity(EvalueActivity.class);
             }
         });
@@ -120,6 +128,7 @@ public class EachOtherActivity extends BaseActvity {
             viewHolder.mContentTv.setText(eachOtherBean.getData().get(i).getContent());
             viewHolder.mTimeTv.setText(eachOtherBean.getData().get(i).getCreated_time());
             viewHolder.mNumTv.setText(eachOtherBean.getData().get(i).getComment_num());
+            viewHolder.mNameTv.setText(((IndexBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(SPKey.INDEX,""),IndexBean.class)).getData().getShop().getName());
         }
 
         @Override

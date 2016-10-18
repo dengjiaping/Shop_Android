@@ -7,6 +7,8 @@
 
     <include layout="@layout/com_title_system" />
 
+    <include layout="@layout/layout_no"/>
+
 
     <com.shop.Android.widget.AnimRefreshListView
         android:id="@+id/ft_car_list_lv"
@@ -44,6 +46,7 @@
             android:textSize="14dp" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/ft_car_mark_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

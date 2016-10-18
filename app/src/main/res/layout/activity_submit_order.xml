@@ -260,7 +260,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        android:text="有商家配送"
+                        android:text="由商家配送"
                         android:textColor="@color/text_color"
                         android:textSize="12dp" />
 

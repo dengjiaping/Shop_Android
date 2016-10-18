@@ -18,4 +18,5 @@ public class DataKey {
     public static final String TYPE = "TYPE";
     public static final String URL = "URL";
     public static final String ORDER = "ORDER";
+    public static final String CONTENT = "CONTENT";
 }

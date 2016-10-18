@@ -12,6 +12,7 @@
         <include layout="@layout/com_title_system" />
 
         <ScrollView
+            android:id="@+id/ay_class_bg_sv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ADE1F7"

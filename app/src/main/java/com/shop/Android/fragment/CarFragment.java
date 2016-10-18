@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.king.Base.KingData;
+import com.king.Base.KingNoFragment;
 import com.king.Dialog.CustomDialog;
 import com.king.Internet.user_method.CallServer;
 import com.king.KingApplication;
@@ -81,15 +82,15 @@ public class CarFragment extends BaseFragment {
     @Override
     protected void init() {
         F();
+        KingNoFragment.resDra = R.drawable.cart_no;
+        KingNoFragment.text = "暂无添加商品";
         kingData.registerWatcher("REFRESHCAR", new KingData.KingCallBack() {
             @Override
             public void onChange() {
                 Post(ActionKey.CAREQUA, new Token(), ShopCarBean.class);
-                Post(ActionKey.FEE, new Token(), FeeBean.class);
             }
         });
         Post(ActionKey.CAREQUA, new Token(), ShopCarBean.class);
-        Post(ActionKey.FEE, new Token(), FeeBean.class);
         kingData.registerWatcher("CAR", new KingData.KingCallBack() {
             @Override
             public void onChange() {
@@ -103,8 +104,9 @@ public class CarFragment extends BaseFragment {
                             mListLv.setAdapter(adapter);
                         }
                         mPriceTv.setText("  ￥" + ShopCar.allPrice());
+                        has();
                     } else {
-                        //// TODO: 2016/10/10 购物车为空的操作
+                        noData();
                         mListLv.setAdapter(null);
                         mPriceTv.setText("  ￥0");
                     }
@@ -123,7 +125,7 @@ public class CarFragment extends BaseFragment {
                 mListLv.setAdapter(adapter);
             }
         } else {
-            //// TODO: 2016/10/10 购物车为空的操作
+            noData();
         }
         mPriceTv.setText("  ￥" + ShopCar.allPrice());
 
@@ -167,19 +169,10 @@ public class CarFragment extends BaseFragment {
 
     private Goods thing = new Goods();
     private boolean isAdd = false;
-    private TextView mMarkTv;
 
     @Override
     public void onSuccess(String what, Object result) {
         switch (what) {
-            case ActionKey.FEE:
-                FeeBean bean = (FeeBean) result;
-                if (bean.getCode() == 2001) {
-                    break;
-                } else {
-                    mMarkTv.setText("(配送费" + bean.getData().getFreight() + "元)");
-                }
-                break;
             case "CARADD":
                 BaseBean baseBean = (BaseBean) result;
                 if (baseBean.getCode() == 2001) {
@@ -463,7 +456,7 @@ public class CarFragment extends BaseFragment {
                                             adapter.setSize(ShopCar.getMap().size() + 1);
                                             if (ShopCar.getMap().size() == 0) {
                                                 mListLv.setAdapter(null);
-                                                //// TODO: 2016/10/10 购物车没有数据
+                                                noData();
                                             } else {
                                                 adapter.notifyDataSetChanged();
                                             }
@@ -492,7 +485,7 @@ public class CarFragment extends BaseFragment {
                                     adapter.setSize(ShopCar.getMap().size() + 1);
                                     if (ShopCar.getMap().size() == 0) {
                                         mListLv.setAdapter(null);
-                                        //// TODO: 2016/10/10 购物车没有数据
+                                        noData();
                                     } else {
                                         adapter.notifyDataSetChanged();
                                     }

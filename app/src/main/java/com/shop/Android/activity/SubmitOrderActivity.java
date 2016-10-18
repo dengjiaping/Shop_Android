@@ -92,7 +92,6 @@ public class SubmitOrderActivity extends BaseActvity {
                 mAddressTv.setText(dataBean.getCity().getName() + dataBean.getArea().getName() + dataBean.getVillage().getName());
             }
         });
-
         setOnClicks(mAddLl, mOrderRl);
     }
 
@@ -151,10 +150,14 @@ public class SubmitOrderActivity extends BaseActvity {
         }
     }
 
+    private Goods thing = new Goods();
     private OrderInfoBean orderInfoBean;
+    private boolean isAdd = false;
+    private boolean isDelete = false;
 
     @Override
     public void onSuccess(String what, Object result) {
+        String msg = "";
         switch (what) {
             case ActionKey.COMMITORDER:
                 switch (TYPE) {
@@ -167,9 +170,53 @@ public class SubmitOrderActivity extends BaseActvity {
                             kingData.putData(DataKey.TIME, orderInfoBean.getData().getOrderinfo().getEnd_time());
                             kingData.putData(DataKey.TYPE, "0");
                             kingData.sendBroadCast("ZZREFRESHPAY");
+                            animFinsh();
                             openActivity(WXPayEntryActivity.class);
                         } else {
-                            ToastInfo(orderInfoBean.getMsg());
+                            for (int i = 0; i < orderInfoBean.getData().getFail().size(); i++) {
+                                thing.setId(orderInfoBean.getData().getFail().get(i).getId());
+                                thing.setImage(orderInfoBean.getData().getFail().get(i).getImage());
+                                thing.setCount(orderInfoBean.getData().getFail().get(i).getStock());
+                                thing.setTitle(orderInfoBean.getData().getFail().get(i).getTitle());
+                                thing.setSubTitle(orderInfoBean.getData().getFail().get(i).getSubtitled());
+                                thing.setPrice(orderInfoBean.getData().getFail().get(i).getPrice());
+                                switch (orderInfoBean.getData().getFail().get(i).getErr()) {
+                                    case 2://库存不足
+                                        msg = msg + thing.getTitle() + "库存不足,已调整到最大库存;";
+                                        thing.setCount(orderInfoBean.getData().getFail().get(i).getNewcount() + "");
+                                        thing.setMaxNum(orderInfoBean.getData().getFail().get(i).getNewcount() + "");
+                                        break;
+                                    case 3://价格变动
+                                        msg = msg + thing.getTitle() + "价格变动,已做相应调整;";
+                                        thing.setPrice(orderInfoBean.getData().getFail().get(i).getNewprice() + "");
+                                        break;
+                                    case 4://库存不足价格变动
+                                        msg = msg + thing.getTitle() + "库存不足,价格变动,已调整到最大库存,价格也做相应调整;";
+                                        thing.setCount(orderInfoBean.getData().getFail().get(i).getNewcount() + "");
+                                        thing.setPrice(orderInfoBean.getData().getFail().get(i).getNewprice() + "");
+                                        thing.setMaxNum(orderInfoBean.getData().getFail().get(i).getNewcount() + "");
+                                        break;
+                                    case 5://下架删除  不会出现
+                                        msg = msg.isEmpty() ? "特卖商品" + thing.getTitle() + "已经下架,已从当前购物车移除" : msg + ",特卖商品" + thing.getTitle() + "已经下架,已从当前购物车移除";
+                                        TMShopCar.delete(thing.getId());
+                                        isDelete = true;
+                                        if (TMShopCar.getMap().size() == 0) {
+                                            msg = msg + ",当前购物车没有物品了,请去选购!";
+                                            animFinsh();
+                                        }
+                                        break;
+                                }
+                                if (!msg.isEmpty()) {
+                                    isAdd = true;
+                                }
+                                if (!isDelete) {
+                                    TMShopCar.mergeButNotAdd(thing, isAdd);
+                                    isDelete = false;
+                                }
+                                isAdd = false;
+                            }
+                            fillData();
+                            ToastInfo(msg);
                         }
                         break;
                     case 1:
@@ -182,9 +229,41 @@ public class SubmitOrderActivity extends BaseActvity {
                             kingData.putData(DataKey.TYPE, "1");
                             kingData.sendBroadCast("ZZREFRESHPAY");
                             kingData.sendBroadCast("CAR");
+                            animFinsh();
                             openActivity(WXPayEntryActivity.class);
                         } else {
-                            ToastInfo(orderInfoBean.getMsg());
+                            for (int i = 0; i < orderInfoBean.getData().getFail().size(); i++) {
+                                thing.setId(orderInfoBean.getData().getFail().get(i).getId());
+                                thing.setImage(orderInfoBean.getData().getFail().get(i).getImage());
+                                thing.setCount(orderInfoBean.getData().getFail().get(i).getStock());
+                                thing.setTitle(orderInfoBean.getData().getFail().get(i).getTitle());
+                                thing.setSubTitle(orderInfoBean.getData().getFail().get(i).getSubtitled());
+                                thing.setPrice(orderInfoBean.getData().getFail().get(i).getPrice());
+                                switch (orderInfoBean.getData().getFail().get(i).getErr()) {
+                                    case 2://库存不足
+                                        msg = msg + thing.getTitle() + "库存不足,已调整到最大库存;";
+                                        thing.setCount(orderInfoBean.getData().getFail().get(i).getNewcount() + "");
+                                        thing.setMaxNum(orderInfoBean.getData().getFail().get(i).getNewcount() + "");
+                                        break;
+                                    case 3://价格变动
+                                        msg = msg + thing.getTitle() + "价格变动,已做相应调整;";
+                                        thing.setPrice(orderInfoBean.getData().getFail().get(i).getNewprice() + "");
+                                        break;
+                                    case 4://库存不足价格变动
+                                        msg = msg + thing.getTitle() + "库存不足,价格变动,已调整到最大库存,价格也做相应调整;";
+                                        thing.setCount(orderInfoBean.getData().getFail().get(i).getNewcount() + "");
+                                        thing.setPrice(orderInfoBean.getData().getFail().get(i).getNewprice() + "");
+                                        thing.setMaxNum(orderInfoBean.getData().getFail().get(i).getNewcount() + "");
+                                        break;
+                                }
+                                if (!msg.isEmpty()) {
+                                    isAdd = true;
+                                }
+                                ShopCar.mergeButNotAdd(thing, isAdd);
+                                isAdd = false;
+                            }
+                            fillData();
+                            ToastInfo(msg);
                         }
                         break;
                     case 2:

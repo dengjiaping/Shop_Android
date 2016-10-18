@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.king.Base.KingActivity;
 import com.king.Base.KingData;
+import com.pgyersdk.crash.PgyCrashManager;
 import com.shop.Android.Config;
 import com.shop.R;
 
@@ -27,6 +28,8 @@ public abstract class BaseActvity extends KingActivity {
         } catch (Exception e) {
         }
         listener = kingData;
+
+        PgyCrashManager.register(this);
     }
 
     protected void clearData() {
