@@ -20,6 +20,7 @@ import com.king.Utils.ToastUtil;
 import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
 import com.shop.Android.activity.LoginActivity;
+import com.shop.Android.activity.MainActivity;
 import com.shop.Android.alipy.PayResult;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Net.ActionKey;
@@ -202,14 +203,18 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         ToastUtil.showToast("支付成功");
-                        switch (kingData.getData(DataKey.TYPE)){
+                        switch (kingData.getData(DataKey.TYPE)) {
                             case "0":
-                                TMShopCar.clear();
+                                TMShopCar.ClearSelf();
                                 break;
                             case "1":
                                 ShopCar.ClearSelf();
                                 break;
                         }
+                        kingData.sendBroadCast("CAR");
+                        animFinsh();
+                        MainActivity.index = 2;
+                        openActivity(MainActivity.class);
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -293,14 +298,18 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
         if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (baseResp.errCode == 0) {
                 ToastInfo("支付成功");
-                switch (kingData.getData(DataKey.TYPE)){
+                switch (kingData.getData(DataKey.TYPE)) {
                     case "0":
-                        TMShopCar.clear();
+                        TMShopCar.ClearSelf();
                         break;
                     case "1":
                         ShopCar.ClearSelf();
                         break;
                 }
+                kingData.sendBroadCast("CAR");
+                animFinsh();
+                MainActivity.index = 2;
+                openActivity(MainActivity.class);
             } else if (baseResp.errCode == -1) {
                 ToastInfo("支付失败");
             } else if (baseResp.errCode == -2) {

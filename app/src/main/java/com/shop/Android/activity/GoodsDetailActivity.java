@@ -8,6 +8,7 @@ import android.animation.PropertyValuesHolder;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
@@ -371,8 +372,7 @@ public class GoodsDetailActivity extends BaseActvity {
                 }
             }
         });
-        setOnClicks(mCarLl, mAddTv, mUpIv, mBgV, mOrderTv, mCollectLl);
-
+        setOnClicks(mCarLl, mAddTv, mUpIv, mBgV, mOrderTv, mCollectLl, mCommentTv);
 
 
     }
@@ -810,6 +810,12 @@ public class GoodsDetailActivity extends BaseActvity {
                 }
                 SubmitOrderActivity.TYPE = 0;
                 openActivity(SubmitOrderActivity.class);
+                animFinsh();
+                break;
+            case R.id.ay_detail_comment_tv:
+//                Intent intent = new Intent(mContext, MineGoodsEvaluateActivity.class);
+//                intent.putExtra("id", goodsDetailBean.getData().getId());
+//                startActivity(intent);
                 break;
         }
 

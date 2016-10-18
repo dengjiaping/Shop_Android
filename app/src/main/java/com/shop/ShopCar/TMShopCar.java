@@ -32,6 +32,24 @@ public class TMShopCar {
         return map;
     }
 
+    public static void ClearSelf() {
+        isNotice = true;
+        map.clear();
+        keys.clear();
+        num = 0;
+    }
+
+    public static void mergeButNotAdd(Goods g, boolean isAdd) {
+        if (map.containsKey(g.getId())) {
+            if (isAdd) {
+                map.remove(g.getId());
+                map.put(g.getId(), GsonUtil.Bean2Str(g));
+            }
+        }
+        if (isNotice) {
+            notice();
+        }
+    }
 
     public static void add(Goods g) {
         if (map.containsKey(g.getId())) {

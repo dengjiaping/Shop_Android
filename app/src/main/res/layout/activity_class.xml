@@ -28,6 +28,8 @@
             android:textSize="16dp" />
 
         <EditText
+            android:id="@+id/ay_class_search_et"
+            android:focusable="false"
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_gravity="center"

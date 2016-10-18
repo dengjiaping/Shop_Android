@@ -67,9 +67,9 @@ public class SpecialSellActivity extends KingActivity {
 
     @Override
     public void onBackPressed() {
-        if(mCardFl.isShown()){
+        if (mCardFl.isShown()) {
             mCardFl.setVisibility(View.GONE);
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -172,6 +172,7 @@ public class SpecialSellActivity extends KingActivity {
                 }
                 SubmitOrderActivity.TYPE = 0;
                 openActivity(SubmitOrderActivity.class);
+                animFinsh();
                 break;
         }
 

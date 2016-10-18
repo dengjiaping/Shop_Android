@@ -142,7 +142,7 @@
                             android:layout_marginLeft="6dp"
                             android:layout_toRightOf="@+id/monkey"
                             android:paddingBottom="6dp"
-                            android:text="猴儿说事:"
+                            android:text="掌柜说事:"
                             android:textColor="#333"
                             android:textSize="16dp" />
 

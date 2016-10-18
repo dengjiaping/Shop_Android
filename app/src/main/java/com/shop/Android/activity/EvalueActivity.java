@@ -6,10 +6,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
+import com.king.Utils.GsonUtil;
+import com.king.Utils.SPrefUtil;
+import com.shop.Android.DataKey;
+import com.shop.Android.SPKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.base.TestAdapter;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Bean.IndexBean;
 import com.shop.Net.Bean.InteractDetailBean;
 import com.shop.Net.Param.Comment;
 import com.shop.Net.Param.InteractDetail;
@@ -24,6 +29,10 @@ public class EvalueActivity extends BaseActvity {
     private ListView mListLv;
     private EditText mContentEt;
     private TextView mSendTv;
+    private TextView mContentTv;
+    private TextView mNameTv;
+    private TextView mTimeTv;
+    private TextView mTitleTv;
 
     @Override
     protected int loadLayout() {
@@ -51,12 +60,12 @@ public class EvalueActivity extends BaseActvity {
                 break;
             case ActionKey.INTERACTADD:
                 BaseBean baseBean = (BaseBean) result;
-                if(baseBean.getCode() == 200){
+                if (baseBean.getCode() == 200) {
                     Post(ActionKey.INTERACTDETAIL, new InteractDetail(), InteractDetailBean.class);
-                }else if(baseBean.getCode() == 2001){
+                } else if (baseBean.getCode() == 2001) {
                     ToastInfo(baseBean.getMsg());
                     openActivity(LoginActivity.class);
-                }else {
+                } else {
                     ToastInfo(baseBean.getMsg());
                 }
                 break;
@@ -86,28 +95,32 @@ public class EvalueActivity extends BaseActvity {
             viewHolder.mTimeTv.setText(bean.getData().get(i).getCreated_time());
             viewHolder.mNameTv.setText(bean.getData().get(i).getNick_name());
             viewHolder.mContentTv.setText(bean.getData().get(i).getContent());
-            GlideCircle(bean.getData().get(i).getPoster(),viewHolder.mPosterIv);
+            GlideCircle(bean.getData().get(i).getPoster(), viewHolder.mPosterIv);
         }
     }
 
     @Override
     protected void initTitleBar() {
-        initTitle("评论");
+        initTitle("互动详情");
     }
 
     @Override
     protected void init() {
         F();
+        mContentTv.setText(kingData.getData(DataKey.CONTENT));
+        mTitleTv.setText(kingData.getData(DataKey.TITLE));
+        mTimeTv.setText(kingData.getData(DataKey.TIME));
+        mNameTv.setText(((IndexBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(SPKey.INDEX, ""), IndexBean.class)).getData().getShop().getName());
         setOnClicks(mSendTv);
     }
 
     @Override
     protected void onClickSet(int i) {
-        switch (i){
+        switch (i) {
             case R.id.ay_evalue_send_tv:
-                if(!getText(mContentEt).isEmpty()){
-                    Post(ActionKey.INTERACTADD,new Comment(getText(mContentEt)), BaseBean.class);
-                }else {
+                if (!getText(mContentEt).isEmpty()) {
+                    Post(ActionKey.INTERACTADD, new Comment(getText(mContentEt)), BaseBean.class);
+                } else {
                     ToastInfo("请先输入评论内容");
                 }
                 break;

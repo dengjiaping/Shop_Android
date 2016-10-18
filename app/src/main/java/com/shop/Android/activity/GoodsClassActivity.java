@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.text.SpannableString;
@@ -15,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ public class GoodsClassActivity extends BaseActvity {
     private NoScrollGridView mGridGv;
     private String page = 1 + "";
     private ImageView mIconIv;
+    private ScrollView mBgSv;
 
     @Override
     protected int loadLayout() {
@@ -64,6 +67,7 @@ public class GoodsClassActivity extends BaseActvity {
             case ActionKey.GOODSCATE:
                 goodsCateBean = (GoodsCateBean) result;
                 if (goodsCateBean.getCode() == 200) {
+                    mBgSv.setBackgroundColor(Color.parseColor(goodsCateBean.getData().getGoods_list().get(0).getColor()));
                     PictureUtil.GlideSpecial(goodsCateBean.getData().getCate_detail().getDetail_image(), mIconIv);
                     if (adapter == null) {
                         adapter = new GridAdapter(goodsCateBean.getData().getGoods_list().size(), R.layout.item_goodsclass_grid, new GridViewHolder());

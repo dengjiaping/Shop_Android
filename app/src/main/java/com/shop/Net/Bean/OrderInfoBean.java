@@ -8,7 +8,6 @@ import java.util.List;
 public class OrderInfoBean extends BaseBean {
 
 
-
     private DataBean data;
 
     public DataBean getData() {
@@ -20,8 +19,24 @@ public class OrderInfoBean extends BaseBean {
     }
 
     public static class DataBean {
+        /**
+         * id :
+         * number :
+         * end_time :
+         */
 
         private OrderinfoBean orderinfo;
+        /**
+         * id : 2
+         * stock : 1000
+         * price : 1.00
+         * image : http://imgqn6.fruitday.com/images/product_pic/4895/1/1-270x270-4895-7SH5WSW1.jpg
+         * title : 海尔（Haier）BCD-251WDGW 251升 无霜两门冰箱（白色）
+         * subtitled : 正宗砀山水梨
+         * err : 5
+         * newprice : 0
+         * newcount : 0
+         */
 
         private List<FailBean> fail;
 
@@ -75,11 +90,11 @@ public class OrderInfoBean extends BaseBean {
             private String id;
             private String stock;
             private String price;
+            private String image;
             private String title;
             private String subtitled;
-            private String image;
             private int err;
-            private String newprice;
+            private int newprice;
             private int newcount;
 
             public String getId() {
@@ -106,6 +121,14 @@ public class OrderInfoBean extends BaseBean {
                 this.price = price;
             }
 
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
+
             public String getTitle() {
                 return title;
             }
@@ -122,14 +145,6 @@ public class OrderInfoBean extends BaseBean {
                 this.subtitled = subtitled;
             }
 
-            public String getImage() {
-                return image;
-            }
-
-            public void setImage(String image) {
-                this.image = image;
-            }
-
             public int getErr() {
                 return err;
             }
@@ -138,11 +153,11 @@ public class OrderInfoBean extends BaseBean {
                 this.err = err;
             }
 
-            public String getNewprice() {
+            public int getNewprice() {
                 return newprice;
             }
 
-            public void setNewprice(String newprice) {
+            public void setNewprice(int newprice) {
                 this.newprice = newprice;
             }
 

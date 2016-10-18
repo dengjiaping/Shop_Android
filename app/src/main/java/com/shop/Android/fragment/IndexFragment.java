@@ -53,6 +53,7 @@ import com.shop.Android.activity.MainActivity;
 import com.shop.Android.activity.MsgActivity;
 import com.shop.Android.activity.SearchActivity;
 import com.shop.Android.activity.SpecialSellActivity;
+import com.shop.Android.activity.UserHelperActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.base.TestAdapter;
 import com.shop.Android.widget.MineView;
@@ -86,6 +87,7 @@ public class IndexFragment extends BaseFragment {
     private LinearLayout mSpecialLl;
 
     private XRefreshView mRefreshXrv;
+    private ImageView mArrowIv;
 
 
     private String[] banUrls;
@@ -112,15 +114,15 @@ public class IndexFragment extends BaseFragment {
             banUrls[i] = indexBean.getData().getBan().get(i).getImage();
         }
         mPlayviewPvp.setUrls(banUrls);
-        for(int i = 0;i < mPlayviewPvp.getmListViews().size();i ++){
+        for (int i = 0; i < mPlayviewPvp.getmListViews().size(); i++) {
             final int position = i;
             mPlayviewPvp.getmListViews().get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(indexBean.getData().getBan().get(position).getType().equals("1")){
-                        kingData.putData(DataKey.URL,indexBean.getData().getBan().get(position).getUrl());
+                    if (indexBean.getData().getBan().get(position).getType().equals("1")) {
+                        kingData.putData(DataKey.URL, indexBean.getData().getBan().get(position).getUrl());
                         openActivity(DisplayActivity.class);
-                    }else {
+                    } else {
                         //goods
                         GoodsDetail.goods_id = indexBean.getData().getBan().get(position).getGoods_id();
                         GoodsDetail.type = "1";
@@ -138,10 +140,10 @@ public class IndexFragment extends BaseFragment {
                     mPiconeIv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(indexBean.getData().getMid().get(position).getType().equals("1")){
-                                kingData.putData(DataKey.URL,indexBean.getData().getMid().get(position).getUrl());
+                            if (indexBean.getData().getMid().get(position).getType().equals("1")) {
+                                kingData.putData(DataKey.URL, indexBean.getData().getMid().get(position).getUrl());
                                 openActivity(DisplayActivity.class);
-                            }else {
+                            } else {
                                 //goods
                                 GoodsDetail.goods_id = indexBean.getData().getMid().get(position).getGoods_id();
                                 GoodsDetail.type = "1";
@@ -155,10 +157,10 @@ public class IndexFragment extends BaseFragment {
                     mPictwoIv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(indexBean.getData().getMid().get(position).getType().equals("1")){
-                                kingData.putData(DataKey.URL,indexBean.getData().getMid().get(position).getUrl());
+                            if (indexBean.getData().getMid().get(position).getType().equals("1")) {
+                                kingData.putData(DataKey.URL, indexBean.getData().getMid().get(position).getUrl());
                                 openActivity(DisplayActivity.class);
-                            }else {
+                            } else {
                                 //goods
                                 GoodsDetail.goods_id = indexBean.getData().getMid().get(position).getGoods_id();
                                 GoodsDetail.type = "1";
@@ -172,10 +174,10 @@ public class IndexFragment extends BaseFragment {
                     mPicthreeIv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(indexBean.getData().getMid().get(position).getType().equals("1")){
-                                kingData.putData(DataKey.URL,indexBean.getData().getMid().get(position).getUrl());
+                            if (indexBean.getData().getMid().get(position).getType().equals("1")) {
+                                kingData.putData(DataKey.URL, indexBean.getData().getMid().get(position).getUrl());
                                 openActivity(DisplayActivity.class);
-                            }else {
+                            } else {
                                 //goods
                                 GoodsDetail.goods_id = indexBean.getData().getMid().get(position).getGoods_id();
                                 GoodsDetail.type = "1";
@@ -189,10 +191,10 @@ public class IndexFragment extends BaseFragment {
                     mPicfourIv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(indexBean.getData().getMid().get(position).getType().equals("1")){
-                                kingData.putData(DataKey.URL,indexBean.getData().getMid().get(position).getUrl());
+                            if (indexBean.getData().getMid().get(position).getType().equals("1")) {
+                                kingData.putData(DataKey.URL, indexBean.getData().getMid().get(position).getUrl());
                                 openActivity(DisplayActivity.class);
-                            }else {
+                            } else {
                                 //goods
                                 GoodsDetail.goods_id = indexBean.getData().getMid().get(position).getGoods_id();
                                 GoodsDetail.type = "1";
@@ -216,6 +218,7 @@ public class IndexFragment extends BaseFragment {
         //今日特卖
         if (indexBean.getData().getActivity().getGoods() != null && indexBean.getData().getActivity().getGoods().size() != 0) {
             mTitleoneTv.setVisibility(View.INVISIBLE);
+            mArrowIv.setVisibility(View.VISIBLE);
             LinearLayoutManager layoutManager = new LinearLayoutManager(KingApplication.getAppContext());
             layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             mRecycleRv.setLayoutManager(layoutManager);
@@ -231,6 +234,7 @@ public class IndexFragment extends BaseFragment {
         } else {
             mTitleoneTv.setVisibility(View.VISIBLE);
             mTitleoneTv.setText(indexBean.getData().getActivity().getName());
+            mArrowIv.setVisibility(View.GONE);
             mRecycleRv.setVisibility(View.GONE);
         }
         new Handler().postDelayed(new Runnable() {
@@ -299,8 +303,7 @@ public class IndexFragment extends BaseFragment {
             }
         });
 
-        setOnClicks(mUpIv, mMsgIv, mSearchIv, mClassMv, mCreditMv, mPiconeIv, mPictwoIv, mSpecialLl,
-                mPicthreeIv, mPicfourIv, mEachMv);
+        setOnClicks(mUpIv, mMsgIv, mSearchIv, mClassMv, mCreditMv, mSpecialLl, mHelpMv, mEachMv);
     }
 
     private void addTitleSlideChange() {
@@ -344,6 +347,7 @@ public class IndexFragment extends BaseFragment {
     private ImageView mPicthreeIv;
     private ImageView mPicfourIv;
     private MineView mEachMv;
+    private MineView mHelpMv;
 
     @Override
     protected void onClickSet(int i) {
@@ -363,14 +367,13 @@ public class IndexFragment extends BaseFragment {
             case R.id.ft_index_credit_mv:
                 openActivity(IntegralActivity.class);
                 break;
-            case R.id.ft_index_picone_iv:
-            case R.id.ft_index_pictwo_iv:
-            case R.id.ft_index_picthree_iv:
-            case R.id.ft_index_picfour_iv:
-                openActivity(GoodsDetailActivity.class);
+            case R.id.ft_index_help_mv:
+                openActivity(UserHelperActivity.class);
                 break;
             case R.id.ft_index_special_ll:
-                openActivity(SpecialSellActivity.class);
+                if (mArrowIv.isShown()) {
+                    openActivity(SpecialSellActivity.class);
+                }
                 break;
             case R.id.ft_index_each_mv:
                 openActivity(EachOtherActivity.class);

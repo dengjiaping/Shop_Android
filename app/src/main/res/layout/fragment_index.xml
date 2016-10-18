@@ -55,6 +55,7 @@
                             app:mv_right_line_isvisible="false" />
 
                         <com.shop.Android.widget.MineView
+                            android:id="@+id/ft_index_help_mv"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -217,6 +218,7 @@
                                 android:textSize="12dp" />
 
                             <ImageView
+                                android:id="@+id/ft_index_arrow_iv"
                                 android:layout_width="10dp"
                                 android:layout_height="20dp"
                                 android:layout_marginRight="15dp"

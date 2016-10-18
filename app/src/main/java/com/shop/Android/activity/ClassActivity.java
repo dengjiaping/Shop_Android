@@ -20,6 +20,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,6 +66,7 @@ public class ClassActivity extends BaseActvity implements onCallBackListener {
 
     private FrameLayout mCarFl;
     private TextView mRedTv;
+    private EditText mSearchEt;
 
 
     @Override
@@ -90,7 +92,7 @@ public class ClassActivity extends BaseActvity implements onCallBackListener {
     protected void init() {
         animation_viewGroup = createAnimLayout();
         F();
-        setOnClicks(mBgV, mOverTv, mCarIv, mBackTv, mCarFl);
+        setOnClicks(mBgV, mOverTv, mCarIv, mBackTv, mCarFl, mSearchEt);
     }
 
     private TextView mDefaultTv;
@@ -135,6 +137,9 @@ public class ClassActivity extends BaseActvity implements onCallBackListener {
                 MainActivity.index = 1;
                 openActivity(MainActivity.class);
                 break;
+            case R.id.ay_class_search_et:
+                openActivity(SearchActivity.class);
+                break;
 
         }
 
@@ -147,7 +152,6 @@ public class ClassActivity extends BaseActvity implements onCallBackListener {
     private List<ProductType> productCategorizes;
 
     private List<ShopProduct> shopProductsAll;
-
 
 
     public List<ProductType> getData() {
@@ -500,22 +504,19 @@ public class ClassActivity extends BaseActvity implements onCallBackListener {
      */
     @Override
     public void updateProduct(ShopProduct product, String type) {
-        if(ShopCar.getNum() > 0){
+        if (ShopCar.getNum() > 0) {
             mRedTv.setText(ShopCar.getNum() + "");
             mRedTv.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mRedTv.setVisibility(View.GONE);
         }
     }
-
-
 
 
     /**
      * 更新购物车价格
      */
     private TextView mPriceTv;
-
 
 
 }
