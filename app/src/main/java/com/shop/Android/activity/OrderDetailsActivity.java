@@ -137,6 +137,8 @@ public class OrderDetailsActivity extends BaseActvity {
                                 mFinishRl.setVisibility(View.GONE);
                                 mCancelRl.setVisibility(View.GONE);
                                 mTimesLl.setVisibility(View.GONE);
+                                mPayTv.setText("确认收货");
+                                mCancelTv.setVisibility(View.GONE);
                                 break;
                             case 3:
                                 mDistributionRl.setVisibility(View.VISIBLE);
@@ -145,6 +147,9 @@ public class OrderDetailsActivity extends BaseActvity {
                                 mFinishRl.setVisibility(View.GONE);
                                 mCancelRl.setVisibility(View.GONE);
                                 mTimesLl.setVisibility(View.GONE);
+                                mPayTv.setText("确认收货");
+                                mCancelTv.setVisibility(View.GONE);
+                                mPayTv.setVisibility(View.VISIBLE);
                                 break;
                             case 4:
                                 mUndistributionxRl.setVisibility(View.VISIBLE);
@@ -153,6 +158,8 @@ public class OrderDetailsActivity extends BaseActvity {
                                 mFinishRl.setVisibility(View.GONE);
                                 mCancelRl.setVisibility(View.GONE);
                                 mTimesLl.setVisibility(View.GONE);
+                                mCancelTv.setVisibility(View.GONE);
+                                mPayTv.setVisibility(View.GONE);
                                 break;
                             case 5:
                                 mFinishRl.setVisibility(View.VISIBLE);
@@ -162,7 +169,9 @@ public class OrderDetailsActivity extends BaseActvity {
                                 mCancelRl.setVisibility(View.GONE);
                                 mCancelTv.setVisibility(View.GONE);
                                 mPayTv.setText("评价商品");
+                                mPayTv.setVisibility(View.VISIBLE);
                                 mTimesLl.setVisibility(View.GONE);
+                                mCancelTv.setVisibility(View.GONE);
                                 break;
                             case 6:
                                 mCancelRl.setVisibility(View.VISIBLE);
@@ -171,6 +180,8 @@ public class OrderDetailsActivity extends BaseActvity {
                                 mDistributionRl.setVisibility(View.GONE);
                                 mWaitLl.setVisibility(View.GONE);
                                 mTimesLl.setVisibility(View.GONE);
+                                mPayTv.setVisibility(View.GONE);
+                                mCancelTv.setVisibility(View.VISIBLE);
                                 break;
                             case 7:
                                 mFinishRl.setVisibility(View.VISIBLE);
@@ -180,6 +191,8 @@ public class OrderDetailsActivity extends BaseActvity {
                                 mCancelRl.setVisibility(View.GONE);
                                 mCancelTv.setVisibility(View.GONE);
                                 mTimesLl.setVisibility(View.GONE);
+                                mPayTv.setVisibility(View.VISIBLE);
+                                mCancelTv.setVisibility(View.VISIBLE);
                                 mPayTv.setText("查看评价");
                                 break;
                         }
@@ -207,16 +220,69 @@ public class OrderDetailsActivity extends BaseActvity {
                 break;
 
             case ActionKey.CANCEL_ORDER + "CANCEL":
-               BaseBean baseBean = (BaseBean) result;
-                if (200==baseBean.getCode()){
+                BaseBean baseBean = (BaseBean) result;
+                if (200 == baseBean.getCode()) {
                     ToastInfo("取消成功");
-                    kingData.sendBroadCast(Config.ORDER_ID);
+                    kingData.sendBroadCast(Config.CANCEL_ORDER);
                     animFinsh();
+                } else if (2001 == baseBean.getCode()) {
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                } else {
+
                 }
                 break;
-            case ActionKey.ORDER_COMPLETE:
+            case ActionKey.ORDER_COMPLETE + "WAIT":
                 BaseBean bean = (BaseBean) result;
-               
+                if (200 == bean.getCode()) {
+                    ToastInfo("确认收货成功");
+                    kingData.sendBroadCast(Config.ORDER);
+                    animFinsh();
+                } else if (2001 == bean.getCode()) {
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                } else {
+                    ToastInfo(bean.getMsg());
+                }
+                break;
+            case ActionKey.ORDER_COMPLETE + "FINISH":
+                BaseBean bean3 = (BaseBean) result;
+                if (200 == bean3.getCode()) {
+                    ToastInfo("确认收货成功");
+                    kingData.sendBroadCast(Config.FINISH_ORDER);
+                    animFinsh();
+                } else if (2001 == bean3.getCode()) {
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                } else {
+                    ToastInfo(bean3.getMsg());
+                }
+                break;
+            case ActionKey.DEL_ORDER + "SEVEN":
+                BaseBean bean1 = (BaseBean) result;
+                if (200 == bean1.getCode()) {
+                    ToastInfo("删除成功");
+                    kingData.sendBroadCast(Config.FINISH_ORDER);
+                    animFinsh();
+                } else if (2001 == bean1.getCode()) {
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                } else {
+                    ToastInfo(bean1.getMsg());
+                }
+                break;
+            case ActionKey.DEL_ORDER + "DELETE":
+                BaseBean bean2 = (BaseBean) result;
+                if (200 == bean2.getCode()) {
+                    ToastInfo("删除成功");
+                    kingData.sendBroadCast(Config.CANCEL_ORDER);
+                    animFinsh();
+                } else if (2001 == bean2.getCode()) {
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                } else {
+                    ToastInfo(bean2.getMsg());
+                }
                 break;
         }
     }
@@ -228,16 +294,16 @@ public class OrderDetailsActivity extends BaseActvity {
             case R.id.ay_details_pay_tv:
                 switch (orderDetailsBean.getData().getStatus()) {
                     case 1://未付款
-                        kingData.putData(DataKey.ID,orderDetailsBean.getData().getId());
-                        kingData.putData(DataKey.PRICE,orderDetailsBean.getData().getTotal_price());
-                        kingData.putData(DataKey.TIME,orderDetailsBean.getData().getEnd_time());
+                        kingData.putData(DataKey.ID, orderDetailsBean.getData().getId());
+                        kingData.putData(DataKey.PRICE, orderDetailsBean.getData().getTotal_price());
+                        kingData.putData(DataKey.TIME, orderDetailsBean.getData().getEnd_time());
                         kingData.sendBroadCast("ZZREFRESHPAY");
                         break;
                     case 2://货到付款
-                         Post(ActionKey.ORDER_COMPLETE,new OrderDetailsParam(orderDetailsBean.getData().getId()),BaseBean.class);
+                        CallServer.Post(ActionKey.ORDER_COMPLETE + "WAIT", ActionKey.ORDER_COMPLETE, new OrderDetailsParam(orderDetailsBean.getData().getId()), BaseBean.class, OrderDetailsActivity.this);
                         break;
                     case 3://送货中
-
+                        CallServer.Post(ActionKey.ORDER_COMPLETE + "FINISH", ActionKey.ORDER_COMPLETE, new OrderDetailsParam(orderDetailsBean.getData().getId()), BaseBean.class, OrderDetailsActivity.this);
                         break;
                     case 4://未送货
 
@@ -260,8 +326,8 @@ public class OrderDetailsActivity extends BaseActvity {
                 }
                 break;
             case R.id.ay_details_cancel_tv:
-                switch (orderDetailsBean.getData().getStatus()){
-                    case 1:
+                switch (orderDetailsBean.getData().getStatus()) {
+                    case 1://未付款
                         final CustomDialog.Builder ibuilder = new CustomDialog.Builder(mActivity);
                         ibuilder.setTitle("取消订单");
                         ibuilder.setMessage("你确定要取消订单吗？");
@@ -275,22 +341,46 @@ public class OrderDetailsActivity extends BaseActvity {
                         ibuilder.setNegativeButton("取消", null);
                         ibuilder.create().show();
                         break;
-                    case 2:
+                    case 2://货到付款
 
                         break;
-                    case 3:
+                    case 3://送货中
 
                         break;
-                    case 4:
+                    case 4://未送货
 
                         break;
-                    case 5:
+                    case 5://未评价
 
                         break;
-                    case 6:
+                    case 6://已取消
+                        final CustomDialog.Builder ibuilder1 = new CustomDialog.Builder(mActivity);
+                        ibuilder1.setTitle("取消订单");
+                        ibuilder1.setMessage("你确定要取消订单吗？");
+                        ibuilder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialogInterface, int i) {
+                                CallServer.Post(ActionKey.DEL_ORDER + "DELETE", ActionKey.DEL_ORDER, new OrderDetailsParam(orderDetailsBean.getData().getId()), BaseBean.class, OrderDetailsActivity.this);
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        ibuilder1.setNegativeButton("取消", null);
+                        ibuilder1.create().show();
 
                         break;
-                    case 7:
+                    case 7:// 已评价
+                        final CustomDialog.Builder ibuilder2 = new CustomDialog.Builder(mActivity);
+                        ibuilder2.setTitle("取消订单");
+                        ibuilder2.setMessage("你确定要取消订单吗？");
+                        ibuilder2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialogInterface, int i) {
+                                CallServer.Post(ActionKey.DEL_ORDER + "SEVEN", ActionKey.DEL_ORDER, new OrderDetailsParam(orderDetailsBean.getData().getId()), BaseBean.class, OrderDetailsActivity.this);
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        ibuilder2.setNegativeButton("取消", null);
+                        ibuilder2.create().show();
 
                         break;
 

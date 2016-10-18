@@ -47,7 +47,6 @@ public class PayOrderFragment extends BaseFragment {
 
     @Override
     protected int loadLayout() {
-
         return R.layout.fragment_pay_order;
     }
 
@@ -57,21 +56,19 @@ public class PayOrderFragment extends BaseFragment {
         kingData.registerWatcher(Config.PAY_ORDER, new KingData.KingCallBack() {
             @Override
             public void onChange() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class);
+                CallServer.Post(ActionKey.ORDER_INDEX+"DATA",ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class,PayOrderFragment.this);
             }
         });
-        mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class);
+                CallServer.Post(ActionKey.ORDER_INDEX+"REFRESH",ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class,PayOrderFragment.this);
             }
-
             @Override
             public void onLoadMore() {
-
             }
         });
+        mListRv.setPullLoadEnable(false);
     }
 
     @Override
@@ -83,9 +80,7 @@ public class PayOrderFragment extends BaseFragment {
         }else {
 
         }
-
     }
-
     @Override
     public void onSuccess(String what, Object result) {
         mListRv.onRefreshComplete();
@@ -93,7 +88,6 @@ public class PayOrderFragment extends BaseFragment {
         switch (what) {
             case ActionKey.ORDER_INDEX:
                 orderBean = (OrderBean) result;
-                if (MainActivity.index==2) {
                     if (orderBean.getCode() == 200) {
                         if (orderBean.getData()==null || orderBean.getData().size()==0){
                             mRelayoutRl.setVisibility(View.VISIBLE);
@@ -103,24 +97,57 @@ public class PayOrderFragment extends BaseFragment {
                             mListRv.setAdapter(payOrderAdapter);
                         }
 
-                    } else if (orderBean.getCode()==2001){
-                        ToastInfo("请登录");
-                        openActivity(LoginActivity.class);
-                    }else {
+                    } else {
                         ToastInfo(orderBean.getMsg());
                     }
-                }
                 break;
 
             case ActionKey.ORDER_COMPLETE:
                 BaseBean baseBean = (BaseBean) result;
                 if (baseBean.getCode() == 200) {
                     ToastInfo("确认收货成功");
+                    kingData.sendBroadCast(Config.PAY_ORDER);
                 } else if (baseBean.getCode() == 2001) {
                     ToastInfo("请登录");
                     openActivity(LoginActivity.class);
                 } else {
                     ToastInfo(baseBean.getMsg());
+                }
+                break;
+            case ActionKey.ORDER_INDEX+"DATA":
+                orderBean = (OrderBean) result;
+                if (orderBean.getCode() == 200) {
+                    if (orderBean.getData()==null || orderBean.getData().size()==0){
+                        mRelayoutRl.setVisibility(View.VISIBLE);
+                    }else {
+                        mRelayoutRl.setVisibility(View.GONE);
+                        payOrderAdapter = new PayOrderAdapter(orderBean.getData().size(), R.layout.fragment_order_item, new PayViewHolder());
+                        mListRv.setAdapter(payOrderAdapter);
+                    }
+
+                } else if (2001==orderBean.getCode()){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                }else {
+                    ToastInfo(orderBean.getMsg());
+                }
+                break;
+            case ActionKey.ORDER_INDEX+"REFRESH":
+                orderBean = (OrderBean) result;
+                if (orderBean.getCode() == 200) {
+                    if (orderBean.getData()==null || orderBean.getData().size()==0){
+                        mRelayoutRl.setVisibility(View.VISIBLE);
+                    }else {
+                        mRelayoutRl.setVisibility(View.GONE);
+                        payOrderAdapter = new PayOrderAdapter(orderBean.getData().size(), R.layout.fragment_order_item, new PayViewHolder());
+                        mListRv.setAdapter(payOrderAdapter);
+                    }
+
+                } else if (2001==orderBean.getCode()){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                }else {
+                    ToastInfo(orderBean.getMsg());
                 }
                 break;
         }

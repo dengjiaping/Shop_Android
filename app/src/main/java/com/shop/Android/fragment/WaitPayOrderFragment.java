@@ -59,16 +59,15 @@ public class WaitPayOrderFragment extends BaseFragment {
         kingData.registerWatcher(Config.ORDER, new KingData.KingCallBack() {
             @Override
             public void onChange() {
-                Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class);
+                CallServer.Post(ActionKey.ORDER_INDEX+"DATA",ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class,WaitPayOrderFragment.this);
             }
         });
         mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {
-                Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class);
+                CallServer.Post(ActionKey.ORDER_INDEX+"REFRESH",ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class,WaitPayOrderFragment.this);
             }
-
             @Override
             public void onLoadMore() {
             }
@@ -95,9 +94,7 @@ public class WaitPayOrderFragment extends BaseFragment {
         switch (what){
             case ActionKey.ORDER_INDEX:
                orderBean = (OrderBean) result;
-                if (MainActivity.index==2){
                     if (orderBean.getCode()==200){
-
                             if (orderBean.getData()==null|| orderBean.getData().size()==0){
                                 mRelayoutRl.setVisibility(View.VISIBLE);
                             }else {
@@ -105,13 +102,42 @@ public class WaitPayOrderFragment extends BaseFragment {
                                 waitPayOrderAdapter = new WaitPayOrderAdapter(orderBean.getData().size(),R.layout.fragment_order_item,new WaitPayViewHolder());
                                 mListRv.setAdapter(waitPayOrderAdapter);
                             }
-
-                    }else if (orderBean.getCode()==2001){
-                        ToastInfo("请登录");
-                        openActivity(LoginActivity.class);
                     }else {
                         ToastInfo(orderBean.getMsg());
                     }
+                break;
+            case ActionKey.ORDER_INDEX+"DATA":
+                orderBean = (OrderBean) result;
+                if (orderBean.getCode()==200){
+                    if (orderBean.getData()==null|| orderBean.getData().size()==0){
+                        mRelayoutRl.setVisibility(View.VISIBLE);
+                    }else {
+                        mRelayoutRl.setVisibility(View.GONE);
+                        waitPayOrderAdapter = new WaitPayOrderAdapter(orderBean.getData().size(),R.layout.fragment_order_item,new WaitPayViewHolder());
+                        mListRv.setAdapter(waitPayOrderAdapter);
+                    }
+                }else if (2001==orderBean.getCode()){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                }else {
+                    ToastInfo(orderBean.getMsg());
+                }
+                break;
+            case ActionKey.ORDER_INDEX+"REFRESH":
+                orderBean = (OrderBean) result;
+                if (orderBean.getCode()==200){
+                    if (orderBean.getData()==null|| orderBean.getData().size()==0){
+                        mRelayoutRl.setVisibility(View.VISIBLE);
+                    }else {
+                        mRelayoutRl.setVisibility(View.GONE);
+                        waitPayOrderAdapter = new WaitPayOrderAdapter(orderBean.getData().size(),R.layout.fragment_order_item,new WaitPayViewHolder());
+                        mListRv.setAdapter(waitPayOrderAdapter);
+                    }
+                }else if (2001==orderBean.getCode()){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                }else {
+                    ToastInfo(orderBean.getMsg());
                 }
                 break;
 

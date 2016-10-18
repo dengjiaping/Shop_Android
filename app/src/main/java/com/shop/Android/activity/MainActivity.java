@@ -16,6 +16,9 @@ import com.shop.Android.fragment.CarFragment;
 import com.shop.Android.fragment.IndexFragment;
 import com.shop.Android.fragment.MineFragment;
 import com.shop.Android.fragment.OrderFragment;
+import com.shop.Net.ActionKey;
+import com.shop.Net.Bean.BaseBean;
+import com.shop.Net.Param.Token;
 import com.shop.R;
 
 import java.util.ArrayList;
@@ -93,14 +96,33 @@ public class MainActivity extends BaseActvity {
             @Override
             public void onTabSelect(int i) {
                 index = i;
+                if (i==2){
+                    Post(ActionKey.CHECK_TOKEN,new Token(), BaseBean.class);
+                }
             }
-
             @Override
             public void onTabReselect(int i) {
 
             }
         });
 
+    }
+
+    @Override
+    public void onSuccess(String what, Object result) {
+        switch (what){
+            case ActionKey.CHECK_TOKEN:
+                BaseBean baseBean = (BaseBean) result;
+                if (200==baseBean.getCode()){
+
+                }else if (2001==baseBean.getCode()){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
+                }else {
+                    ToastInfo(baseBean.getMsg());
+                }
+                break;
+        }
     }
 
     @Override
