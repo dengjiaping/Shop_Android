@@ -42,6 +42,7 @@ public class PayOrderFragment extends BaseFragment {
     private PayGoodsAdapter payGoodsAdapter;
     private int page = 0;
     private OrderBean orderBean;
+    private boolean isFirst = true;
     private List<OrderBean.DataBean.GoodsBean> goodBean;
 
     @Override
@@ -76,7 +77,13 @@ public class PayOrderFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class);
+        if (isFirst){
+            Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class);
+            isFirst=false;
+        }else {
+
+        }
+
     }
 
     @Override

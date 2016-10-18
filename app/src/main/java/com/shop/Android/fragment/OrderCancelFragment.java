@@ -153,7 +153,7 @@ public class OrderCancelFragment extends BaseFragment {
                 case 6:
                     viewHolder.mTypeTv.setText("已取消");
                     viewHolder.mDelTv.setText("删除订单");
-                    viewHolder.mPayTv.setText("重新购买");
+                    viewHolder.mPayTv.setVisibility(View.GONE);
                     viewHolder.mDelTv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -209,16 +209,7 @@ public class OrderCancelFragment extends BaseFragment {
                             ibuilder.create().show();
                         }
                     });
-                    viewHolder.mPayTv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            kingData.putData(DataKey.ID, bean.getId());
-                            kingData.putData(DataKey.PRICE,bean.getTotal_price());
-                            kingData.putData(DataKey.TIME,bean.getEnd_time());
-                            kingData.sendBroadCast("ZZREFRESHPAY");
-                            openActivity(WXPayEntryActivity.class);
-                        }
-                    });
+
                     break;
 
             }

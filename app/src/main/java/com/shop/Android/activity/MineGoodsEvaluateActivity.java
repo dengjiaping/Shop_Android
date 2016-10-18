@@ -109,10 +109,11 @@ public class MineGoodsEvaluateActivity extends BaseActvity {
         @Override
         public void padData(final int i, Object o) {
             final EvaluateViewHolder viewHolder = (EvaluateViewHolder) o;
-            viewHolder.mNameTv.setText(evaluateBean.getData().get(i).getContent());
+            viewHolder.mNameTv.setText(evaluateBean.getData().get(i).getGoods_title());
             viewHolder.mPriceTv.setText("￥"+evaluateBean.getData().get(i).getGoods_price());
             viewHolder.mContentTv.setText(evaluateBean.getData().get(i).getGoods_subtitle());
             Glide(evaluateBean.getData().get(i).getGoods_image(),viewHolder.mImgIv);
+            viewHolder.mFeelEt.setText(evaluateBean.getData().get(i).getContent());
             switch (Integer.valueOf(evaluateBean.getData().get(i).getType())){
                 case 1:
                     viewHolder.mPraiseRb.setChecked(true);

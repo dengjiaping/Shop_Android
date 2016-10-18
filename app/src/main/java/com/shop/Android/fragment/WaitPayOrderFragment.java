@@ -45,6 +45,7 @@ public class WaitPayOrderFragment extends BaseFragment {
     private WaitPayOrderAdapter waitPayOrderAdapter;
     private GoodsAdapter goodsAdapter;
     private OrderBean orderBean ;
+    private boolean isFirst = true;
     private List<OrderBean.DataBean.GoodsBean> goodsBean;
     @Override
     protected int loadLayout() {
@@ -78,7 +79,13 @@ public class WaitPayOrderFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class);
+        if (isFirst){
+            Post(ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class);
+            isFirst=false;
+        }else {
+
+        }
+
     }
 
     @Override
@@ -233,7 +240,6 @@ public class WaitPayOrderFragment extends BaseFragment {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     kingData.putData(DataKey.ORDER,bean.getId());
                     kingData.sendBroadCast(Config.ORDER_ID);
-
                     openActivity(OrderDetailsActivity.class);
 
                 }
