@@ -61,6 +61,7 @@ public class OrderFinishFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 CallServer.Post(ActionKey.ORDER_INDEX+"REFRESH",ActionKey.ORDER_INDEX, new OrderWaitPayParam("3"), OrderBean.class,OrderFinishFragment.this);
+                mListRv.setAdapter(finishOrderAdapter);
             }
 
             @Override
@@ -111,6 +112,7 @@ public class OrderFinishFragment extends BaseFragment {
                 if (orderBean.getCode() == 200) {
                     if (orderBean.getData() == null || orderBean.getData().size()==0) {
                         mRelayoutRl.setVisibility(View.VISIBLE);
+                        mListRv.setAdapter(null);
                     } else {
                         mRelayoutRl.setVisibility(View.GONE);
                         try {

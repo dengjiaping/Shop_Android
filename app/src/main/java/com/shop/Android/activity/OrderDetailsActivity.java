@@ -113,22 +113,6 @@ public class OrderDetailsActivity extends BaseActvity {
                                         mTimesTv.run();
                                     }
                                 }
-                                mCancelTv.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Post(ActionKey.CANCEL_ORDER, new OrderDetailsParam(orderDetailsBean.getData().getId()), BaseBean.class);
-                                    }
-                                });
-                                mPayTv.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        kingData.putData(DataKey.ID, orderDetailsBean.getData().getId());
-                                        kingData.putData(DataKey.PRICE, orderDetailsBean.getData().getTotal_price());
-                                        kingData.putData(DataKey.TIME, orderDetailsBean.getData().getEnd_time());
-                                        kingData.sendBroadCast("ZZREFRESHPAY");
-                                        openActivity(WXPayEntryActivity.class);
-                                    }
-                                });
                                 break;
                             case 2:
                                 mWaitLl.setVisibility(View.VISIBLE);
@@ -224,7 +208,7 @@ public class OrderDetailsActivity extends BaseActvity {
                 BaseBean baseBean = (BaseBean) result;
                 if (200 == baseBean.getCode()) {
                     ToastInfo("取消成功");
-                    kingData.sendBroadCast(Config.CANCEL_ORDER);
+                    kingData.sendBroadCast(Config.ORDER);
                     animFinsh();
                 } else if (2001 == baseBean.getCode()) {
                     ToastInfo("请登录");
@@ -335,8 +319,8 @@ public class OrderDetailsActivity extends BaseActvity {
                         ibuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
                                 CallServer.Post(ActionKey.CANCEL_ORDER+ "CANCEL", ActionKey.CANCEL_ORDER, new OrderDetailsParam(orderDetailsBean.getData().getId()), BaseBean.class, OrderDetailsActivity.this);
+                                dialogInterface.dismiss();
 
                             }
                         });
