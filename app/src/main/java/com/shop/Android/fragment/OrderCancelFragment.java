@@ -44,28 +44,29 @@ public class OrderCancelFragment extends BaseFragment {
     private OrderBean orderBean;
     private List<OrderBean.DataBean.GoodsBean> goodBeanCancel;
     private OrderBean.DataBean bean;
+    private boolean isFirst = true;
 
 
     @Override
     protected int loadLayout() {
-
+        kingData.registerWatcher(Config.CANCEL_ORDER, new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                CallServer.Post(ActionKey.ORDER_INDEX+"DATA",ActionKey.ORDER_INDEX, new OrderWaitPayParam("4"), OrderBean.class,OrderCancelFragment.this);
+                mListRv.setAdapter(cancelOrderAdapter);
+            }
+        });
         return R.layout.fragment_cancel_order;
     }
 
     @Override
     protected void init() {
         F();
-        kingData.registerWatcher(Config.CANCEL_ORDER, new KingData.KingCallBack() {
-            @Override
-            public void onChange() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4"), OrderBean.class);
-            }
-        });
         mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {
-                Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4"), OrderBean.class);
+                CallServer.Post(ActionKey.ORDER_INDEX+"REFRESH", ActionKey.ORDER_INDEX,new OrderWaitPayParam("4"), OrderBean.class,OrderCancelFragment.this);
             }
 
             @Override
@@ -76,7 +77,14 @@ public class OrderCancelFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4"), OrderBean.class);
+        if (isFirst){
+            Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("4"), OrderBean.class);
+            isFirst=false;
+        }else {
+
+        }
+
+
     }
 
     @Override
@@ -86,7 +94,6 @@ public class OrderCancelFragment extends BaseFragment {
         switch (what) {
             case ActionKey.ORDER_INDEX:
                 orderBean = (OrderBean) result;
-                if (MainActivity.index==2) {
                     if (orderBean.getCode() == 200) {
                         if (orderBean.getData() == null || orderBean.getData().size()==0) {
                             mRelayoutRl.setVisibility(View.VISIBLE);
@@ -100,12 +107,52 @@ public class OrderCancelFragment extends BaseFragment {
                             }
 
                         }
-                    } else if (orderBean.getCode()==2001){
-                        ToastInfo("请登录");
-                        openActivity(LoginActivity.class);
-                    }else {
+                    } else {
                         ToastInfo(orderBean.getMsg());
                     }
+                break;
+            case ActionKey.ORDER_INDEX+"DATA":
+                orderBean = (OrderBean) result;
+                if (orderBean.getCode() == 200) {
+                    if (orderBean.getData() == null || orderBean.getData().size()==0) {
+                        mRelayoutRl.setVisibility(View.VISIBLE);
+                    } else {
+                        mRelayoutRl.setVisibility(View.GONE);
+                        try {
+                            cancelOrderAdapter .setSize(orderBean.getData().size());
+//                            mListRv.setAdapter(cancelOrderAdapter);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
+                } else if (2001==orderBean.getCode()){
+                    ToastInfo(orderBean.getMsg());
+                    openActivity(LoginActivity.class);
+                }else {
+                     ToastInfo(orderBean.getMsg());
+                }
+                break;
+            case ActionKey.ORDER_INDEX+"REFRESH":
+                orderBean = (OrderBean) result;
+                if (orderBean.getCode() == 200) {
+                    if (orderBean.getData() == null || orderBean.getData().size()==0) {
+                        mRelayoutRl.setVisibility(View.VISIBLE);
+                    } else {
+                        mRelayoutRl.setVisibility(View.GONE);
+                        try {
+                            cancelOrderAdapter = new CancelOrderAdapter(orderBean.getData().size(), R.layout.fragment_order_item, new CancelViewHolder());
+                            mListRv.setAdapter(cancelOrderAdapter);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
+                } else if (2001==orderBean.getCode()){
+                    ToastInfo(orderBean.getMsg());
+                    openActivity(LoginActivity.class);
+                }else {
+                    ToastInfo(orderBean.getMsg());
                 }
                 break;
 
@@ -162,7 +209,7 @@ public class OrderCancelFragment extends BaseFragment {
                             ibuilder.setMessage("你确定要删除订单吗？");
                             ibuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(final DialogInterface dialogInterface, int i) {
+                                public void onClick(final DialogInterface dialogInterface, final int i) {
                                     CallServer.Post(ActionKey.DEL_ORDER, ActionKey.DEL_ORDER, new OrderDetailsParam(bean.getId()), BaseBean.class, new xCallback() {
                                         @Override
                                         public void onSuccess(String s, Object o) {
@@ -170,9 +217,9 @@ public class OrderCancelFragment extends BaseFragment {
                                             mListRv.onLoadComplete();
                                             BaseBean baseBean = (BaseBean) o;
                                             if (baseBean.getCode() == 200) {
+                                                dialogInterface.dismiss();
                                                 ToastInfo("删除成功");
                                                 kingData.sendBroadCast(Config.CANCEL_ORDER);
-                                                dialogInterface.dismiss();
                                             } else if (baseBean.getCode() == 2001) {
                                                 ToastInfo("请登录");
                                                 openActivity(LoginActivity.class);

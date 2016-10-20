@@ -241,6 +241,7 @@ public class IndexFragment extends BaseFragment {
             mArrowIv.setVisibility(View.GONE);
             mRecycleRv.setVisibility(View.GONE);
         }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -87,6 +87,13 @@ public class ActionKey {
     //商品详情
     public static final String GOODSDETAIL = "goods/detail";
 
+    //check/token
+    public static final String CHECK_TOKEN = "user/checktoken";
+
+    //我的评价
+
+    public static final String EVALUATE_MINE = "user/mycomment";
+
     //搜索
     public static final String SEARCH = "goods/search";
     //商品分类列表

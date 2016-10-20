@@ -122,12 +122,12 @@ public class AddressManagerActivity extends BaseActvity {
             case ActionKey.ADDRESS_INDEX:
                 addressBean = (AddressBean) result;
                 if (addressBean.getCode() == 200) {
-                    if (addressBean.getData() != null) {
+                    if (addressBean.getData() == null || addressBean.getData().size()==0) {
+                        mNoneRl.setVisibility(View.VISIBLE);
+                    } else {
                         mNoneRl.setVisibility(View.GONE);
                         addressAdapter = new AddressAdapter(addressBean.getData().size(), R.layout.activity_address_item, new AddressViewHolder());
                         mListRv.setAdapter(addressAdapter);
-                    } else {
-                        mNoneRl.setVisibility(View.VISIBLE);
                     }
                 } else if (addressBean.getCode()==2001){
                     ToastInfo("请登录");
