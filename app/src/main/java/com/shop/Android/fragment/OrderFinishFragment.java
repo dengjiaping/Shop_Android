@@ -41,22 +41,21 @@ public class OrderFinishFragment extends BaseFragment {
     private FinishGoodsAdapter finishGoodsAdapter;
     private OrderBean orderBean;
     private List<OrderBean.DataBean.GoodsBean> goodsBeen;
-
+    private boolean isFirst = true;
     @Override
     protected int loadLayout() {
-
-        return R.layout.fragment_finish_order;
-    }
-
-    @Override
-    protected void init() {
-        F();
         kingData.registerWatcher(Config.FINISH_ORDER, new KingData.KingCallBack() {
             @Override
             public void onChange() {
                 CallServer.Post(ActionKey.ORDER_INDEX+"DATA",ActionKey.ORDER_INDEX, new OrderWaitPayParam("3"), OrderBean.class,OrderFinishFragment.this);
             }
         });
+        return R.layout.fragment_finish_order;
+    }
+
+    @Override
+    protected void init() {
+        F();
         mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
@@ -73,8 +72,15 @@ public class OrderFinishFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("3"), OrderBean.class);
+        if (isFirst){
+            Post(ActionKey.ORDER_INDEX, new OrderWaitPayParam("3"), OrderBean.class);
+            isFirst=false;
+        }else {
+        }
+
     }
+
+
 
     @Override
     public void onSuccess(String what, Object result) {
@@ -191,7 +197,7 @@ public class OrderFinishFragment extends BaseFragment {
                             ibuilder.setMessage("你确定要删除订单吗？");
                             ibuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(final DialogInterface dialogInterface, int i) {
+                                public void onClick(final DialogInterface dialogInterface, final int i) {
                                     CallServer.Post(ActionKey.DEL_ORDER, ActionKey.DEL_ORDER, new OrderDetailsParam(bean.getId()), BaseBean.class, new xCallback() {
                                         @Override
                                         public void onSuccess(String s, Object o) {
@@ -199,9 +205,9 @@ public class OrderFinishFragment extends BaseFragment {
                                             mListRv.onRefreshComplete();
                                             BaseBean baseBean = (BaseBean) o;
                                             if (baseBean.getCode() == 200) {
+                                                dialogInterface.dismiss();
                                                 ToastInfo("删除成功 ");
                                                 kingData.sendBroadCast(Config.FINISH_ORDER);
-                                                dialogInterface.dismiss();
                                             } else if (baseBean.getCode() == 2001) {
                                                 ToastInfo("请登录");
                                                 openActivity(LoginActivity.class);

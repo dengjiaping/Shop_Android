@@ -47,18 +47,19 @@ public class PayOrderFragment extends BaseFragment {
 
     @Override
     protected int loadLayout() {
-        return R.layout.fragment_pay_order;
-    }
-
-    @Override
-    protected void init() {
-        F();
         kingData.registerWatcher(Config.PAY_ORDER, new KingData.KingCallBack() {
             @Override
             public void onChange() {
                 CallServer.Post(ActionKey.ORDER_INDEX+"DATA",ActionKey.ORDER_INDEX, new OrderWaitPayParam("2"), OrderBean.class,PayOrderFragment.this);
             }
         });
+        return R.layout.fragment_pay_order;
+    }
+
+    @Override
+    protected void init() {
+        F();
+
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
             public void onRefresh() {

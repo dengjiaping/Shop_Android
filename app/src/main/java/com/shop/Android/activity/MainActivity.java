@@ -10,6 +10,7 @@ import com.king.FlycoTableLayout.listener.CustomTabEntity;
 import com.king.FlycoTableLayout.listener.OnTabSelectListener;
 import com.king.Utils.LogCat;
 import com.king.Utils.SPrefUtil;
+import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.fragment.CarFragment;
@@ -97,7 +98,9 @@ public class MainActivity extends BaseActvity {
             public void onTabSelect(int i) {
                 index = i;
                 if (i==2){
-                    Post(ActionKey.CHECK_TOKEN,new Token(), BaseBean.class);
+                        Post(ActionKey.CHECK_TOKEN,new Token(), BaseBean.class);
+                }else {
+
                 }
             }
             @Override
@@ -105,7 +108,16 @@ public class MainActivity extends BaseActvity {
 
             }
         });
+    }
 
+    @Override
+    public void onStart(String what) {
+        switch (what){
+            case ActionKey.CHECK_TOKEN:
+                break;
+            default:
+                super.onStart(what);
+        }
     }
 
     @Override

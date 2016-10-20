@@ -88,7 +88,7 @@ public class ActionKey {
     public static final String GOODSDETAIL = "goods/detail";
 
     //check/token
-    public static final String CHECK_TOKEN = "check/token";
+    public static final String CHECK_TOKEN = "user/checktoken";
 
     //我的评价
 

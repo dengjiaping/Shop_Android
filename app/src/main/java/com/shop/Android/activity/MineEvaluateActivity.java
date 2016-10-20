@@ -61,7 +61,6 @@ public class MineEvaluateActivity extends BaseActvity {
             case ActionKey.EVALUATE_MINE:
                 evaluateListBean = (EvaluateListBean) result;
                 if (evaluateListBean.getCode()==200){
-
                     goodsEvaluateAdapter = new GoodsEvaluateAdapter(evaluateListBean.getData().size(),R.layout.activity_mine_evaluate_item,new GoodsEvaluateViewHolder());
                     mListRv.setAdapter(goodsEvaluateAdapter);
                 }else if (2001==evaluateListBean.getCode()){

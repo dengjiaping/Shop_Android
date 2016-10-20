@@ -181,6 +181,7 @@ public class OrderDetailsActivity extends BaseActvity {
                                 mWaitLl.setVisibility(View.GONE);
                                 mTimesLl.setVisibility(View.GONE);
                                 mPayTv.setVisibility(View.GONE);
+                                mCancelTv.setText("删除订单");
                                 mCancelTv.setVisibility(View.VISIBLE);
                                 break;
                             case 7:
@@ -219,7 +220,7 @@ public class OrderDetailsActivity extends BaseActvity {
                 }
                 break;
 
-            case ActionKey.CANCEL_ORDER + "CANCEL":
+            case ActionKey.CANCEL_ORDER+ "CANCEL":
                 BaseBean baseBean = (BaseBean) result;
                 if (200 == baseBean.getCode()) {
                     ToastInfo("取消成功");
@@ -334,8 +335,9 @@ public class OrderDetailsActivity extends BaseActvity {
                         ibuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialogInterface, int i) {
-                                CallServer.Post(ActionKey.CANCEL_ORDER, ActionKey.CANCEL_ORDER, new OrderDetailsParam(orderDetailsBean.getData().getId()), BaseBean.class, OrderDetailsActivity.this);
                                 dialogInterface.dismiss();
+                                CallServer.Post(ActionKey.CANCEL_ORDER+ "CANCEL", ActionKey.CANCEL_ORDER, new OrderDetailsParam(orderDetailsBean.getData().getId()), BaseBean.class, OrderDetailsActivity.this);
+
                             }
                         });
                         ibuilder.setNegativeButton("取消", null);
@@ -355,8 +357,8 @@ public class OrderDetailsActivity extends BaseActvity {
                         break;
                     case 6://已取消
                         final CustomDialog.Builder ibuilder1 = new CustomDialog.Builder(mActivity);
-                        ibuilder1.setTitle("取消订单");
-                        ibuilder1.setMessage("你确定要取消订单吗？");
+                        ibuilder1.setTitle("删除订单");
+                        ibuilder1.setMessage("你确定要删除订单吗？");
                         ibuilder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialogInterface, int i) {
@@ -370,8 +372,8 @@ public class OrderDetailsActivity extends BaseActvity {
                         break;
                     case 7:// 已评价
                         final CustomDialog.Builder ibuilder2 = new CustomDialog.Builder(mActivity);
-                        ibuilder2.setTitle("取消订单");
-                        ibuilder2.setMessage("你确定要取消订单吗？");
+                        ibuilder2.setTitle("删除订单");
+                        ibuilder2.setMessage("你确定要删除订单吗？");
                         ibuilder2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialogInterface, int i) {

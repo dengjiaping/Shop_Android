@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
 import com.king.Base.KingData;
+import com.king.Base.KingNoFragment;
 import com.king.Dialog.CustomDialog;
 import com.king.Internet.user_interface.xCallback;
 import com.king.Internet.user_method.CallServer;
@@ -49,6 +50,15 @@ public class WaitPayOrderFragment extends BaseFragment {
     private List<OrderBean.DataBean.GoodsBean> goodsBean;
     @Override
     protected int loadLayout() {
+        kingData.registerWatcher(Config.ORDER, new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                CallServer.Post(ActionKey.ORDER_INDEX+"DATA",ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class,WaitPayOrderFragment.this);
+
+                mListRv.setAdapter(waitPayOrderAdapter);
+
+            }
+        });
         return R.layout.fragment_wait_pay_order;
 
     }
@@ -56,12 +66,6 @@ public class WaitPayOrderFragment extends BaseFragment {
     @Override
     protected void init() {
         F();
-        kingData.registerWatcher(Config.ORDER, new KingData.KingCallBack() {
-            @Override
-            public void onChange() {
-                CallServer.Post(ActionKey.ORDER_INDEX+"DATA",ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class,WaitPayOrderFragment.this);
-            }
-        });
         mListRv.setPullLoadEnable(false);
         mListRv.setListener(new AnimNoLineRefreshListView.onListener() {
             @Override
@@ -213,17 +217,16 @@ public class WaitPayOrderFragment extends BaseFragment {
                    ibuilder.setMessage("你确定要取消订单吗？");
                    ibuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                        @Override
-                       public void onClick(final DialogInterface dialogInterface, int i) {
+                       public void onClick(final DialogInterface dialogInterface, final int i) {
                            CallServer.Post(ActionKey.CANCEL_ORDER, ActionKey.CANCEL_ORDER, new OrderDetailsParam(bean.getId()), BaseBean.class, new xCallback() {
                                @Override
                                public void onSuccess(String s, Object o) {
-                                   mListRv.onLoadComplete();
                                    mListRv.onRefreshComplete();
                                    BaseBean bean = (BaseBean) o;
                                    if (bean.getCode()==200){
                                        ToastInfo("取消成功");
-                                       kingData.sendBroadCast(Config.ORDER);
                                        dialogInterface.dismiss();
+                                       kingData.sendBroadCast(Config.ORDER);
                                    }else if (bean.getCode()==2001){
                                        ToastInfo("请登录");
                                        openActivity(LoginActivity.class);
@@ -234,13 +237,11 @@ public class WaitPayOrderFragment extends BaseFragment {
 
                                @Override
                                public void onFinished(String s) {
-                                mListRv.onLoadComplete();
                                    mListRv.onRefreshComplete();
                                }
 
                                @Override
                                public void onError(String s) {
-                                   mListRv.onLoadComplete();
                                    mListRv.onRefreshComplete();
                                }
 
