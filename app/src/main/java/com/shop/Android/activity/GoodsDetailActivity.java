@@ -459,6 +459,7 @@ public class GoodsDetailActivity extends BaseActvity {
                         thing1.setTitle(recommendBean.getTitle());
                         thing1.setSubTitle(recommendBean.getSubtitled());
                         thing1.setPrice(recommendBean.getPrice());
+                        thing1.setType(recommendBean.getType());
                     } else {
                         thing1.setId(recommendBean.getId() + "");
                         thing1.setCount("1");
@@ -466,6 +467,7 @@ public class GoodsDetailActivity extends BaseActvity {
                         thing1.setTitle(recommendBean.getTitle());
                         thing1.setSubTitle(recommendBean.getSubtitled());
                         thing1.setPrice(recommendBean.getActivity_price());
+                        thing1.setType(recommendBean.getType());
                     }
                     addCart1((ImageView) ((LinearLayout) (view.getParent().getParent())).getChildAt(0));
                 }
@@ -759,13 +761,15 @@ public class GoodsDetailActivity extends BaseActvity {
                         thing.setTitle(goodsDetailBean.getData().getTitle());
                         thing.setSubTitle(goodsDetailBean.getData().getSubtitled());
                         thing.setPrice(goodsDetailBean.getData().getPrice());
+                        thing.setType(goodsDetailBean.getData().getType());
                     } else {
-                        thing.setId(goodsDetailBean.getData().getId());
+                        thing.setId(goodsDetailBean.getData().getActivity_id());
                         thing.setCount("1");
                         thing.setImage(goodsDetailBean.getData().getImage());
                         thing.setTitle(goodsDetailBean.getData().getTitle());
                         thing.setSubTitle(goodsDetailBean.getData().getSubtitled());
                         thing.setPrice(goodsDetailBean.getData().getActivity_price());
+                        thing.setType(goodsDetailBean.getData().getType());
                     }
 
                 } catch (Exception e) {

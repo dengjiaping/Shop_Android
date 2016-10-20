@@ -103,9 +103,9 @@ public class TMShopCar {
         for (String key : keys) {
             if (((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).isValid()) {
                 if (result.isEmpty()) {
-                    result = result + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getId() + ":" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getPrice() + ":" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getCount() + ":1";
+                    result = result + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getId() + ":" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getPrice() + ":" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getCount() + ":" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getType();
                 } else {
-                    result = result + "#" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getId() + ":" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getPrice() + ":" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getCount() + ":1";
+                    result = result + "#" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getId() + ":" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getPrice() + ":" + ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getCount() + ":"+ ((Goods) GsonUtil.Str2Bean(map.get(key), Goods.class)).getType();
                 }
             }
         }

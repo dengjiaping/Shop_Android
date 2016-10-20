@@ -156,19 +156,19 @@ public class ClassActivity extends BaseActvity implements onCallBackListener {
 
     public List<ProductType> getData() {
         productCategorizes = new ArrayList<>();
-        for (int i = 1; i < bean.getData().size(); i++) {
+        for (int i = 1; i < bean.getData().size() + 1; i++) {
             ProductType productCategorize = new ProductType();
-            productCategorize.setType(bean.getData().get(i).getName());
+            productCategorize.setType(bean.getData().get(i - 1).getName());
             shopProductsAll = new ArrayList<>();
-            for (int j = 0; j < bean.getData().get(i).getList().size(); j++) {
+            for (int j = 0; j < bean.getData().get(i - 1).getList().size(); j++) {
                 ShopProduct product = new ShopProduct();
-                product.setId(bean.getData().get(i).getList().get(j).getId());
-                product.setGoods(bean.getData().get(i).getList().get(j).getTitle());
-                product.setPrice(bean.getData().get(i).getList().get(j).getPrice());
-                product.setPicture(bean.getData().get(i).getList().get(j).getImage());
-                product.setType(bean.getData().get(i).getList().get(j).getSubtitled());
-                if (ShopCar.getMap().containsKey(bean.getData().get(i).getList().get(j).getId())) {
-                    product.setNumber(Integer.parseInt(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(bean.getData().get(i).getList().get(j).getId()), Goods.class)).getCount()));
+                product.setId(bean.getData().get(i - 1).getList().get(j).getId());
+                product.setGoods(bean.getData().get(i - 1).getList().get(j).getTitle());
+                product.setPrice(bean.getData().get(i - 1).getList().get(j).getPrice());
+                product.setPicture(bean.getData().get(i - 1).getList().get(j).getImage());
+                product.setType(bean.getData().get(i - 1).getList().get(j).getSubtitled());
+                if (ShopCar.getMap().containsKey(bean.getData().get(i - 1).getList().get(j).getId())) {
+                    product.setNumber(Integer.parseInt(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(bean.getData().get(i - 1).getList().get(j).getId()), Goods.class)).getCount()));
                 }
                 shopProductsAll.add(product);
             }

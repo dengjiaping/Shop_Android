@@ -170,6 +170,7 @@ public class StorageFragment extends KingFragment {
                         thing.setImage(dataBean.getImage());
                         thing.setTitle(dataBean.getTitle());
                         thing.setPrice(dataBean.getActivity_price());
+                        thing.setType(dataBean.getType());
                         addCart((ImageView) ((RelativeLayout) view.getParent()).getChildAt(0));
                     }
                 });

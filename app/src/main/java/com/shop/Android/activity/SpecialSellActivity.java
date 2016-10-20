@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.king.Base.KingActivity;
+import com.king.Base.KingData;
 import com.king.FlycoTableLayout.SlidingTabLayout;
 import com.king.Utils.GsonUtil;
 import com.shop.Android.fragment.StorageFragment;
@@ -59,6 +60,43 @@ public class SpecialSellActivity extends KingActivity {
         initTitle("今日特卖");
         mTitleBgRl.setBackgroundColor(Color(R.color.my_color));
         mTitleLeftIv.setImageResource(R.mipmap.back);
+
+        kingData.registerWatcher("REDUCE", new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                productList = new ArrayList<>();
+                for (String key : TMShopCar.getKeys()) {
+                    ShopProduct shopProduct = new ShopProduct();
+                    shopProduct.setId(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getId());
+                    shopProduct.setGoods(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getTitle());
+                    shopProduct.setPrice(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getPrice());
+                    shopProduct.setPicture(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getImage());
+                    shopProduct.setType(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getSubTitle());
+                    shopProduct.setNumber(Integer.parseInt(((Goods) GsonUtil.Str2Bean(TMShopCar.getMap().get(key), Goods.class)).getCount()));
+                    productList.add(shopProduct);
+                }
+                shopAdapter = new ShopAdapter(mContext, productList);
+                mShoplistLv.setAdapter(shopAdapter);
+
+                if (TMShopCar.getMap().size() == 0) {
+                    mRedTv.setVisibility(View.GONE);
+                    mDefaultTv.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
+        kingData.registerWatcher("NUM", new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                if (TMShopCar.getNum() != 0) {
+                    mRedTv.setText(TMShopCar.getNum() + "");
+                } else {
+                    mRedTv.setVisibility(View.GONE);
+                    mDefaultTv.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private String[] titles = new String[]{

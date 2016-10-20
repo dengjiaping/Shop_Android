@@ -84,11 +84,16 @@ public class GoodsClassActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
+        setOnClicks(mCarFl);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if(ShopCar.getNum() > 0){
             mRedTv.setVisibility(View.VISIBLE);
         }
         mRedTv.setText(ShopCar.getNum() + "");
-        setOnClicks(mCarFl);
     }
 
     @Override
