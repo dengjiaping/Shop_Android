@@ -216,7 +216,7 @@ public class IndexFragment extends BaseFragment {
             }
         }
         //今日特卖
-        if (indexBean.getData().getActivity().getGoods() != null && indexBean.getData().getActivity().getGoods().size() != 0) {
+        if (indexBean.getData().getActivity() != null && indexBean.getData().getActivity().getGoods() != null && indexBean.getData().getActivity().getGoods().size() != 0) {
             mTitleoneTv.setVisibility(View.INVISIBLE);
             mArrowIv.setVisibility(View.VISIBLE);
             LinearLayoutManager layoutManager = new LinearLayoutManager(KingApplication.getAppContext());
@@ -233,7 +233,11 @@ public class IndexFragment extends BaseFragment {
 
         } else {
             mTitleoneTv.setVisibility(View.VISIBLE);
-            mTitleoneTv.setText(indexBean.getData().getActivity().getName());
+            try {
+                mTitleoneTv.setText(indexBean.getData().getActivity().getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             mArrowIv.setVisibility(View.GONE);
             mRecycleRv.setVisibility(View.GONE);
         }

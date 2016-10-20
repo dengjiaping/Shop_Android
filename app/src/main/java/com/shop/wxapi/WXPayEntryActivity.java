@@ -25,6 +25,7 @@ import com.shop.Android.alipy.PayResult;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.AlipayBean;
+import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.IndexBean;
 import com.shop.Net.Bean.WeixinBean;
 import com.shop.Net.Param.Pay;
@@ -56,6 +57,8 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
     private TextView mNumberTv;
     private RelativeLayout mWeixinRl;
     private RelativeLayout mAlipayRl;
+    private CheckBox mHdfkCb;
+    private RelativeLayout mHdfkRl;
 
     private int state = 0;
 
@@ -125,6 +128,7 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
             public void onClick(View view) {
                 mWeixinCb.setChecked(true);
                 mAlipayCb.setChecked(false);
+                mHdfkCb.setChecked(false);
             }
         });
 
@@ -133,10 +137,21 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
             public void onClick(View view) {
                 mAlipayCb.setChecked(true);
                 mWeixinCb.setChecked(false);
+                mHdfkCb.setChecked(false);
             }
         });
 
-        setOnClicks(mOrderTv, mWeixinRl, mAlipayRl);
+        mHdfkCb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAlipayCb.setChecked(false);
+                mWeixinCb.setChecked(false);
+                mHdfkCb.setChecked(true);
+            }
+        });
+
+
+        setOnClicks(mOrderTv, mWeixinRl, mAlipayRl, mHdfkRl);
 
 
     }
@@ -149,16 +164,26 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
                     Post(ActionKey.PAY, new Pay(kingData.getData(DataKey.ID), "2"), WeixinBean.class);
                 } else if (mAlipayCb.isChecked()) {
                     Post(ActionKey.PAY, new Pay(kingData.getData(DataKey.ID), "1"), AlipayBean.class);
+                } else if (mHdfkCb.isChecked()) {
+                    Post(ActionKey.PAY, new Pay(kingData.getData(DataKey.ID), "3"), BaseBean.class);
                 }
                 break;
             case R.id.ay_pay_alipay_rl:
                 mAlipayCb.setChecked(true);
                 mWeixinCb.setChecked(false);
+                mHdfkCb.setChecked(false);
                 break;
             case R.id.ay_pay_weixin_rl:
                 mWeixinCb.setChecked(true);
                 mAlipayCb.setChecked(false);
+                mHdfkCb.setChecked(false);
                 break;
+            case R.id.ay_pay_hdfk_rl:
+                mWeixinCb.setChecked(false);
+                mAlipayCb.setChecked(false);
+                mHdfkCb.setChecked(true);
+                break;
+
 
         }
 
@@ -183,6 +208,20 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
                     } else if (alipayBean.getCode() == 2001) {
                         ToastInfo(alipayBean.getMsg());
                         openActivity(LoginActivity.class);
+                    }
+                } else if (mHdfkCb.isChecked()) {
+                    BaseBean baseBean = (BaseBean) result;
+                    if (baseBean.getCode() == 200) {
+                        ToastInfo("提交成功");
+                        kingData.sendBroadCast("CAR");
+                        animFinsh();
+                        MainActivity.index = 2;
+                        openActivity(MainActivity.class);
+                    } else if (baseBean.getCode() == 2001) {
+                        ToastInfo(baseBean.getMsg());
+                        openActivity(LoginActivity.class);
+                    } else {
+                        ToastInfo(baseBean.getMsg());
                     }
                 }
 

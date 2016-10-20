@@ -14,6 +14,16 @@ public class Goods {
     private String maxNum = "10000";//商品库存
     private String title;//商品名称
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    private String type;
+
     public boolean isValid() {
         return isValid;
     }

@@ -265,6 +265,63 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:background="#F9F9F9" />
+
+        <RelativeLayout
+            android:id="@+id/ay_pay_hdfk_rl"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/icon2"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/hdfk" />
+
+            <TextView
+                android:id="@+id/flag2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/icon2"
+                android:text="货到付款"
+                android:textColor="#333"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flag2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/icon2"
+                android:text="推荐没有支付宝和微信的用户使用"
+                android:textColor="#9E9E9E"
+                android:textSize="13dp" />
+
+
+            <CheckBox
+                android:id="@+id/ay_pay_hdfk_cb"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/submit_order_selector"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:background="#D2D2D2" />
 
         <TextView

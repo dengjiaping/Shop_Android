@@ -26,11 +26,34 @@ public class GoodsDetailBean extends BaseBean{
         private String image;
         private String price;
         private String intro;
+
+        public String getActivity_id() {
+            return activity_id;
+        }
+
+        public void setActivity_id(String activity_id) {
+            this.activity_id = activity_id;
+        }
+
+        private String activity_id;
         private String comment_num;
         private List<String> detail_image;
         private List<RecommendBean> recommend;
         private String activity_price;
         private String is_collect;
+
+        public DataBean() {
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        private String type;
 
 
         public String getId() {
@@ -128,6 +151,16 @@ public class GoodsDetailBean extends BaseBean{
             private String subtitled;
             private String image;
             private String price;
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            private String type;
             /**
              * activity_price : 8.00
              */
