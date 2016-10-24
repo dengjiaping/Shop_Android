@@ -54,7 +54,6 @@ public class WaitPayOrderFragment extends BaseFragment {
             @Override
             public void onChange() {
                 CallServer.Post(ActionKey.ORDER_INDEX+"DATA",ActionKey.ORDER_INDEX,new OrderWaitPayParam("1"), OrderBean.class,WaitPayOrderFragment.this);
-
                 mListRv.setAdapter(waitPayOrderAdapter);
 
             }
@@ -115,6 +114,7 @@ public class WaitPayOrderFragment extends BaseFragment {
                 if (orderBean.getCode()==200){
                     if (orderBean.getData()==null|| orderBean.getData().size()==0){
                         mRelayoutRl.setVisibility(View.VISIBLE);
+                        mListRv.setAdapter(null);
                     }else {
                         mRelayoutRl.setVisibility(View.GONE);
                         waitPayOrderAdapter = new WaitPayOrderAdapter(orderBean.getData().size(),R.layout.fragment_order_item,new WaitPayViewHolder());

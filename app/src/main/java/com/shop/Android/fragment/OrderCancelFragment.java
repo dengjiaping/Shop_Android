@@ -116,11 +116,12 @@ public class OrderCancelFragment extends BaseFragment {
                 if (orderBean.getCode() == 200) {
                     if (orderBean.getData() == null || orderBean.getData().size()==0) {
                         mRelayoutRl.setVisibility(View.VISIBLE);
+                        mListRv.setAdapter(null);
                     } else {
                         mRelayoutRl.setVisibility(View.GONE);
                         try {
-                            cancelOrderAdapter .setSize(orderBean.getData().size());
-//                            mListRv.setAdapter(cancelOrderAdapter);
+                            cancelOrderAdapter = new CancelOrderAdapter(orderBean.getData().size(), R.layout.fragment_order_item, new CancelViewHolder());
+                            mListRv.setAdapter(cancelOrderAdapter);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
