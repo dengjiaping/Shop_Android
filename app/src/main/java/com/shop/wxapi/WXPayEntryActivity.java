@@ -17,10 +17,12 @@ import com.king.Utils.DateUtil;
 import com.king.Utils.GsonUtil;
 import com.king.Utils.SPrefUtil;
 import com.king.Utils.ToastUtil;
+import com.shop.Android.Config;
 import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
 import com.shop.Android.activity.LoginActivity;
 import com.shop.Android.activity.MainActivity;
+import com.shop.Android.activity.OrderDetailsActivity;
 import com.shop.Android.alipy.PayResult;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Net.ActionKey;
@@ -213,10 +215,19 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
                     BaseBean baseBean = (BaseBean) result;
                     if (baseBean.getCode() == 200) {
                         ToastInfo("提交成功");
+                        switch (kingData.getData(DataKey.TYPE)) {
+                            case "0":
+                                TMShopCar.ClearSelf();
+                                break;
+                            case "1":
+                                ShopCar.ClearSelf();
+                                break;
+                        }
                         kingData.sendBroadCast("CAR");
                         animFinsh();
-                        MainActivity.index = 2;
-                        openActivity(MainActivity.class);
+                        kingData.putData(DataKey.ORDER, kingData.getData(DataKey.ID));
+                        kingData.sendBroadCast(Config.ORDER_ID);
+                        openActivity(OrderDetailsActivity.class);
                     } else if (baseBean.getCode() == 2001) {
                         ToastInfo(baseBean.getMsg());
                         openActivity(LoginActivity.class);
@@ -252,8 +263,9 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
                         }
                         kingData.sendBroadCast("CAR");
                         animFinsh();
-                        MainActivity.index = 2;
-                        openActivity(MainActivity.class);
+                        kingData.putData(DataKey.ORDER, kingData.getData(DataKey.ID));
+                        kingData.sendBroadCast(Config.ORDER_ID);
+                        openActivity(OrderDetailsActivity.class);
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -347,8 +359,9 @@ public class WXPayEntryActivity extends BaseActvity implements IWXAPIEventHandle
                 }
                 kingData.sendBroadCast("CAR");
                 animFinsh();
-                MainActivity.index = 2;
-                openActivity(MainActivity.class);
+                kingData.putData(DataKey.ORDER, kingData.getData(DataKey.ID));
+                kingData.sendBroadCast(Config.ORDER_ID);
+                openActivity(OrderDetailsActivity.class);
             } else if (baseResp.errCode == -1) {
                 ToastInfo("支付失败");
             } else if (baseResp.errCode == -2) {
