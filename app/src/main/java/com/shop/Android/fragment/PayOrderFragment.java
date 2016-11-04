@@ -1,6 +1,5 @@
 package com.shop.Android.fragment;
 
-import android.content.DialogInterface;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -9,22 +8,17 @@ import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
 import com.king.Base.KingData;
-import com.king.Dialog.CustomDialog;
-import com.king.Internet.user_interface.xCallback;
 import com.king.Internet.user_method.CallServer;
 import com.shop.Android.Config;
 import com.shop.Android.DataKey;
 import com.shop.Android.activity.LoginActivity;
-import com.shop.Android.activity.MainActivity;
 import com.shop.Android.activity.OrderDetailsActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.NoScrollListView;
-import com.shop.Android.widget.RefreshListView;
 import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.OrderBean;
-import com.shop.Net.Param.Order;
 import com.shop.Net.Param.OrderDetailsParam;
 import com.shop.Net.Param.OrderWaitPayParam;
 import com.shop.R;

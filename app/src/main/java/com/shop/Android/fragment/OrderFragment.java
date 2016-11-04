@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.shop.Android.Config;
 import com.shop.Android.base.BaseFragment;
 import com.shop.R;
 
@@ -71,24 +72,28 @@ public class OrderFragment extends BaseFragment {
                 tx.hide(cache.get("mPayRb"));
                 tx.hide(cache.get("mFinishRb"));
                 tx.hide(cache.get("mCancelRb"));
+                kingData.sendBroadCast(Config.ORDER);
                 break;
             case R.id.ft_order_pay_rb:
                 tx.hide(cache.get("mNopayRb"));
                 tx.show(cache.get("mPayRb"));
                 tx.hide(cache.get("mFinishRb"));
                 tx.hide(cache.get("mCancelRb"));
+                kingData.sendBroadCast(Config.PAY_ORDER);
                 break;
             case R.id.ft_order_finish_rb:
                 tx.hide(cache.get("mNopayRb"));
                 tx.hide(cache.get("mPayRb"));
                 tx.show(cache.get("mFinishRb"));
                 tx.hide(cache.get("mCancelRb"));
+                kingData.sendBroadCast(Config.FINISH_ORDER);
                 break;
             case R.id.ft_order_cancel_rb:
                 tx.hide(cache.get("mNopayRb"));
                 tx.hide(cache.get("mPayRb"));
                 tx.hide(cache.get("mFinishRb"));
                 tx.show(cache.get("mCancelRb"));
+                kingData.sendBroadCast(Config.CANCEL_ORDER);
                 break;
         }
         tx.commit();

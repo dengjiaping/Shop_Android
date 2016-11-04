@@ -11,6 +11,7 @@ import com.king.Base.KingAdapter;
 import com.king.Base.KingData;
 import com.king.Utils.GsonUtil;
 import com.king.Utils.SPrefUtil;
+import com.shop.Android.Config;
 import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
 import com.shop.Android.base.BaseActvity;
@@ -133,6 +134,7 @@ public class SubmitOrderActivity extends BaseActvity {
                         } else {
                             Order order = new Order(1 + "", TMShopCar.commit(), getText(mAddressTv) + getText(mDetailsTv), getText(mPriceTv).substring(1), getText(mContentEt), getText(mNameTv), getText(mPhoneTv));
                             Post(ActionKey.COMMITORDER, order, OrderInfoBean.class);
+                            kingData.sendBroadCast(Config.ORDER);
                         }
                         break;
                     case 1:
@@ -141,6 +143,7 @@ public class SubmitOrderActivity extends BaseActvity {
                         } else {
                             Order order = new Order(0 + "", ShopCar.commit(), getText(mAddressTv) + getText(mDetailsTv), getText(mPriceTv).substring(1), getText(mContentEt), getText(mNameTv), getText(mPhoneTv));
                             Post(ActionKey.COMMITORDER, order, OrderInfoBean.class);
+                            kingData.sendBroadCast(Config.ORDER);
                         }
                         break;
                     case 2:

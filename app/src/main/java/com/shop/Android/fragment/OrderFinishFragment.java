@@ -1,6 +1,7 @@
 package com.shop.Android.fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.shop.Android.Config;
 import com.shop.Android.DataKey;
 import com.shop.Android.activity.LoginActivity;
 import com.shop.Android.activity.MainActivity;
+import com.shop.Android.activity.MineGoodsEvaluateActivity;
 import com.shop.Android.activity.OrderDetailsActivity;
 import com.shop.Android.base.BaseFragment;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
@@ -168,7 +170,7 @@ public class OrderFinishFragment extends BaseFragment {
         }
 
         @Override
-        public void padData(int i, Object o) {
+        public void padData(final int i, Object o) {
             FinishViewHolder viewHolder = (FinishViewHolder) o;
            final OrderBean.DataBean bean= orderBean.getData().get(i);
             goodsBeen = orderBean.getData().get(i).getGoods();
@@ -257,7 +259,10 @@ public class OrderFinishFragment extends BaseFragment {
                     viewHolder.mPayTv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            Intent intent = new Intent(mActivity, MineGoodsEvaluateActivity.class);
+                            intent.putExtra("id",orderBean.getData().get(i).getId());
+                            startActivity(intent);
+                            mActivity.overridePendingTransition(com.king.R.anim.in_from_right, com.king.R.anim.out_to_left);
                         }
                     });
                     break;
