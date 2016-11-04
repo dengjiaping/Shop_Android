@@ -33,9 +33,9 @@
 
             <com.shop.Android.widget.EImageView
                 android:id="@+id/item_index_one_iv"
-                android:background="@drawable/eimage_bg"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:background="@drawable/eimage_bg"
                 android:src="@drawable/default_image" />
 
             <TextView
@@ -43,9 +43,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:maxLines="1"
-                android:text="安卓"
                 android:ellipsize="end"
+                android:singleLine="true"
+                android:text="安卓"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
@@ -55,9 +55,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="￥59.9"
                 android:textColor="@color/my_color"
-                android:textSize="16dp" />
+                android:textSize="13dp" />
 
         </LinearLayout>
 
@@ -82,8 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:singleLine="true"
                 android:text="AnchorAnchorAnchorAnchorAnchorAnchor "
                 android:textColor="@color/black"
                 android:textSize="14dp" />
@@ -93,9 +95,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="￥59.9"
                 android:textColor="@color/my_color"
-                android:textSize="16dp" />
+                android:textSize="13dp" />
 
         </LinearLayout>
 
@@ -120,9 +124,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:maxLines="1"
-                android:text="An"
                 android:ellipsize="end"
+                android:singleLine="true"
+                android:text="An"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
@@ -131,9 +135,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="￥59.9"
                 android:textColor="@color/my_color"
-                android:textSize="16dp" />
+                android:textSize="13dp" />
 
         </LinearLayout>
 

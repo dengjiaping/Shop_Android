@@ -167,6 +167,8 @@ public class ClassActivity extends BaseActvity implements onCallBackListener {
                 product.setPrice(bean.getData().get(i - 1).getList().get(j).getPrice());
                 product.setPicture(bean.getData().get(i - 1).getList().get(j).getImage());
                 product.setType(bean.getData().get(i - 1).getList().get(j).getSubtitled());
+                product.setUnit(bean.getData().get(i - 1).getList().get(j).getUnit());
+                product.setPre_price(bean.getData().get(i - 1).getList().get(j).getPre_price());
                 if (ShopCar.getMap().containsKey(bean.getData().get(i - 1).getList().get(j).getId())) {
                     product.setNumber(Integer.parseInt(((Goods) GsonUtil.Str2Bean(ShopCar.getMap().get(bean.getData().get(i - 1).getList().get(j).getId()), Goods.class)).getCount()));
                 }

@@ -2,7 +2,13 @@ package com.shop.Android.widget.ClassView.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,11 +93,25 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.name.setText(pruductCagests.get(section).getProduct().get(position).getGoods());
-        viewHolder.prise.setText(String.valueOf(pruductCagests.get(section).getProduct().get(position).getPrice()));
+        viewHolder.name.setText(pruductCagests.get(section).getProduct().get(position).getGoods() + " " + pruductCagests.get(section).getProduct().get(position).getType());
+
+
+        SpannableString msp = new SpannableString(pruductCagests.get(section).getProduct().get(position).getPre_price());
+        msp.setSpan(new RelativeSizeSpan(0.8f), pruductCagests.get(section).getProduct().get(position).getPre_price().indexOf(".") + 1, pruductCagests.get(section).getProduct().get(position).getPre_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+        SpannableString msp1 = new SpannableString("￥" + pruductCagests.get(section).getProduct().get(position).getPrice() + " ");
+        msp1.setSpan(new RelativeSizeSpan(0.8f), 0, pruductCagests.get(section).getProduct().get(position).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+        msp1.setSpan(new StrikethroughSpan(), 0, pruductCagests.get(section).getProduct().get(position).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, pruductCagests.get(section).getProduct().get(position).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        viewHolder.prise.setText("");
+        viewHolder.prise.append("￥");
+        viewHolder.prise.append(msp);
+        viewHolder.prise.append("  ");
+        viewHolder.prise.append(msp1);
+        viewHolder.prise.append(" ");
+        
         viewHolder.shoppingNum.setText(String.valueOf(pruductCagests.get(section).getProduct().get(position).getNumber()));
         PictureUtil.Glide(pruductCagests.get(section).getProduct().get(position).getPicture(),viewHolder.head);
-        viewHolder.type.setText(pruductCagests.get(section).getProduct().get(position).getType());
+        viewHolder.type.setText(pruductCagests.get(section).getProduct().get(position).getUnit());
         if (pruductCagests.get(section).getProduct().get(position).getNumber() == 0) {
             viewHolder.reduce.setVisibility(View.INVISIBLE);
             viewHolder.shoppingNum.setVisibility(View.INVISIBLE);

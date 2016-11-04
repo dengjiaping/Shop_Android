@@ -118,6 +118,8 @@ public class GoodsDetailActivity extends BaseActvity {
     private TextView mStatusTv;
     private TextView mTimeTv;
     private TextView mShopTv;
+    private TextView mHotTv;
+    private RelativeLayout mZgRl;
 
 
     @Override
@@ -237,8 +239,8 @@ public class GoodsDetailActivity extends BaseActvity {
             case ActionKey.GOODSDETAIL:
                 goodsDetailBean = (GoodsDetailBean) result;
                 if (goodsDetailBean.getCode() == 200) {
-                    mNameTv.setText(goodsDetailBean.getData().getTitle());
-                    mSubtitleTv.setText(goodsDetailBean.getData().getSubtitled());
+                    mNameTv.setText(goodsDetailBean.getData().getTitle() + " " + goodsDetailBean.getData().getSubtitled());
+                    mSubtitleTv.setText(goodsDetailBean.getData().getUnit());
                     if (goodsDetailBean.getData().getActivity_price() != null) {
                         TYPE = "2";
                         SpannableString msp = new SpannableString(goodsDetailBean.getData().getActivity_price());
@@ -255,10 +257,18 @@ public class GoodsDetailActivity extends BaseActvity {
                         mPriceTv.append(" ");
                     } else {
                         TYPE = "1";
-                        mPriceTv.setText("￥" + goodsDetailBean.getData().getPrice());
-                        SpannableString msp = new SpannableString(mPriceTv.getText().toString());
-                        msp.setSpan(new RelativeSizeSpan(0.7f), mPriceTv.getText().toString().indexOf(".") + 1, mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
-                        mPriceTv.setText(msp);
+                        SpannableString msp = new SpannableString(goodsDetailBean.getData().getPre_price());
+                        msp.setSpan(new RelativeSizeSpan(0.8f), goodsDetailBean.getData().getPre_price().indexOf(".") + 1, goodsDetailBean.getData().getPre_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                        SpannableString msp1 = new SpannableString("￥" + goodsDetailBean.getData().getPrice() + " ");
+                        msp1.setSpan(new RelativeSizeSpan(0.8f), 0, goodsDetailBean.getData().getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                        msp1.setSpan(new StrikethroughSpan(), 0, goodsDetailBean.getData().getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, goodsDetailBean.getData().getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        mPriceTv.setText("");
+                        mPriceTv.append("￥");
+                        mPriceTv.append(msp);
+                        mPriceTv.append("  ");
+                        mPriceTv.append(msp1);
+                        mPriceTv.append(" ");
                     }
 
                     if (TYPE.equals("1")) {
@@ -287,8 +297,11 @@ public class GoodsDetailActivity extends BaseActvity {
                         mCollectTv.setTextColor(Color.rgb(0xFF, 0x9C, 0x47));
                         isCollect = true;
                     }
-
-                    mIntroTv.setText(goodsDetailBean.getData().getIntro());
+                    if (goodsDetailBean.getData().getRemark().equals("") || goodsDetailBean.getData().getRemark() == null) {
+                        mZgRl.setVisibility(View.GONE);
+                    } else {
+                        mIntroTv.setText(goodsDetailBean.getData().getRemark());
+                    }
                     mCommentTv.setText("" + goodsDetailBean.getData().getComment_num() + "人评价");
                     addViewPager();
                     addRecycleView();
@@ -332,7 +345,7 @@ public class GoodsDetailActivity extends BaseActvity {
 
             @Override
             public void onLoadMore(boolean isSilence) {
-                mWebWv.loadUrl("http://www.baidu.com/");
+                mWebWv.loadUrl(goodsDetailBean.getData().getUrl());
                 mWebWv.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -378,6 +391,11 @@ public class GoodsDetailActivity extends BaseActvity {
     }
 
     private void addRecycleView() {
+        if (goodsDetailBean.getData().getRecommend().size() == 0 || goodsDetailBean.getData().getRecommend() == null) {
+            mHotRv.setVisibility(View.GONE);
+            mHotTv.setVisibility(View.GONE);
+            return;
+        }
         LinearLayoutManager layoutManager = new LinearLayoutManager(KingApplication.getAppContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mHotRv.setLayoutManager(layoutManager);
@@ -413,11 +431,12 @@ public class GoodsDetailActivity extends BaseActvity {
             return holder;
         }
 
+
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final GoodsDetailBean.DataBean.RecommendBean recommendBean = goodsDetailBean.getData().getRecommend().get(position);
             Glide(recommendBean.getImage(), holder.mIconIv);
-            holder.mNameTv.setText(recommendBean.getTitle());
+            holder.mNameTv.setText(recommendBean.getTitle() + " " + recommendBean.getSubtitled());
 
             if (recommendBean.getActivity_price() != null) {
                 SpannableString msp = new SpannableString(recommendBean.getActivity_price());
@@ -433,10 +452,18 @@ public class GoodsDetailActivity extends BaseActvity {
                 holder.mPriceTv.append(msp1);
                 holder.mPriceTv.append(" ");
             } else {
-                holder.mPriceTv.setText("￥" + recommendBean.getPrice());
-                SpannableString msp = new SpannableString(holder.mPriceTv.getText().toString());
-                msp.setSpan(new RelativeSizeSpan(0.7f), holder.mPriceTv.getText().toString().indexOf(".") + 1, holder.mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
-                holder.mPriceTv.setText(msp);
+                SpannableString msp = new SpannableString(goodsDetailBean.getData().getPre_price());
+                msp.setSpan(new RelativeSizeSpan(0.8f), goodsDetailBean.getData().getPre_price().indexOf(".") + 1, goodsDetailBean.getData().getPre_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                SpannableString msp1 = new SpannableString("￥" + goodsDetailBean.getData().getPrice() + " ");
+                msp1.setSpan(new RelativeSizeSpan(0.8f), 0, goodsDetailBean.getData().getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                msp1.setSpan(new StrikethroughSpan(), 0, goodsDetailBean.getData().getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, goodsDetailBean.getData().getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                holder.mPriceTv.setText("");
+                holder.mPriceTv.append("￥");
+                holder.mPriceTv.append(msp);
+                holder.mPriceTv.append("  ");
+                holder.mPriceTv.append(msp1);
+                holder.mPriceTv.append(" ");
             }
 
 
@@ -742,14 +769,14 @@ public class GoodsDetailActivity extends BaseActvity {
                         mCardshopLl.setVisibility(View.VISIBLE);
                         mCardshopLl.startAnimation(animation);
                         mBgV.setVisibility(View.VISIBLE);
-
+                        mOrderTv.setVisibility(View.VISIBLE);
                     } else {
                         mCardFl.setVisibility(View.GONE);
                         mBgV.setVisibility(View.GONE);
                         mCardshopLl.setVisibility(View.GONE);
-                        mOrderTv.setVisibility(View.GONE);
+                        mOrderTv.setVisibility(View.INVISIBLE);
                     }
-                    mOrderTv.setVisibility(View.VISIBLE);
+
                 }
                 break;
             case R.id.ay_detail_add_tv:

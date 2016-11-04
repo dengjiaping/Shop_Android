@@ -27,6 +27,31 @@ public class GoodsDetailBean extends BaseBean{
         private String price;
         private String intro;
 
+
+
+
+        /**
+         * url : http://eshop.ittapp.com/api.php/question/intro?id=110
+         */
+
+        private String url;
+        /**
+         * remark :
+         */
+
+        private String remark;
+        /**
+         * unit :
+         */
+
+        private String unit;
+        /**
+         * pre_price : 100.00
+         */
+
+        private String pre_price;
+
+
         public String getActivity_id() {
             return activity_id;
         }
@@ -144,6 +169,38 @@ public class GoodsDetailBean extends BaseBean{
             this.is_collect = is_collect;
         }
 
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
+        public String getUnit() {
+            return unit;
+        }
+
+        public void setUnit(String unit) {
+            this.unit = unit;
+        }
+
+        public String getPre_price() {
+            return pre_price;
+        }
+
+        public void setPre_price(String pre_price) {
+            this.pre_price = pre_price;
+        }
+
         public static class RecommendBean {
             private int id;
 
@@ -151,6 +208,16 @@ public class GoodsDetailBean extends BaseBean{
             private String subtitled;
             private String image;
             private String price;
+            /**
+             * activity_id : 8
+             * unit :
+             * pre_price : 100.00
+             */
+
+            private String activity_id;
+            private String unit;
+            private String pre_price;
+
 
             public String getType() {
                 return type;
@@ -213,6 +280,30 @@ public class GoodsDetailBean extends BaseBean{
 
             public void setActivity_price(String activity_price) {
                 this.activity_price = activity_price;
+            }
+
+            public String getActivity_id() {
+                return activity_id;
+            }
+
+            public void setActivity_id(String activity_id) {
+                this.activity_id = activity_id;
+            }
+
+            public String getUnit() {
+                return unit;
+            }
+
+            public void setUnit(String unit) {
+                this.unit = unit;
+            }
+
+            public String getPre_price() {
+                return pre_price;
+            }
+
+            public void setPre_price(String pre_price) {
+                this.pre_price = pre_price;
             }
         }
     }

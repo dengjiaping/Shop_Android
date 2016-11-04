@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
     android:id="@+id/item_index_bg_ll"
+    android:layout_width="120dp"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
@@ -25,12 +25,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:maxEms="5"
-            android:maxLines="1"
             android:ellipsize="end"
-            android:text="安卓12进口儿童牛奶1安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml安卓12进口儿童牛奶125ml25ml"
+            android:singleLine="true"
+            android:text="安卓进 口儿童牛.."
             android:textColor="#333"
-            android:textSize="14dp" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/item_index_price_tv"
@@ -38,12 +37,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="￥59.9  ￥12.8 "
             android:textColor="@color/my_color"
-            android:textSize="16dp" />
+            android:textSize="12dp" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

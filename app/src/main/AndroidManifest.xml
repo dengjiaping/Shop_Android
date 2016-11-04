@@ -82,9 +82,7 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="57c15630f29d987ab2000118">
-
-        </meta-data>
+            android:value="57c15630f29d987ab2000118"/>
 
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
@@ -126,8 +124,8 @@
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"
-            android:launchMode="singleTask"
             android:exported="true"
+            android:launchMode="singleTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".Android.activity.ClassActivity"
@@ -152,7 +150,8 @@
             android:theme="@android:style/Theme.Translucent">
 
         </activity>
-        <activity android:name=".Android.activity.MineEvaluateActivity"
+        <activity
+            android:name=".Android.activity.MineEvaluateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -277,8 +276,7 @@
 
         <meta-data
             android:name="PGYER_APPID"
-            android:value="dc900a2dc13242c51827bc5b58e5fee3" >
-        </meta-data>
+            android:value="dc900a2dc13242c51827bc5b58e5fee3"></meta-data>
     </application>
 
 </manifest>

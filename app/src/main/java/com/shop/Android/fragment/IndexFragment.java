@@ -480,10 +480,21 @@ public class IndexFragment extends BaseFragment {
 
                 Glide(bean.getList().get(0).getImage(), viewHolder.mOneIv);
                 viewHolder.mOnenameTv.setText(bean.getList().get(0).getTitle());
-                viewHolder.mOnepriceTv.setText("￥" + bean.getList().get(0).getPrice());
-                SpannableString msp = new SpannableString(viewHolder.mOnepriceTv.getText().toString());
-                msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mOnepriceTv.getText().toString().indexOf(".") + 1, viewHolder.mOnepriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
-                viewHolder.mOnepriceTv.setText(msp);
+
+
+                SpannableString msp = new SpannableString(bean.getList().get(0).getPre_price());
+                msp.setSpan(new RelativeSizeSpan(0.8f), bean.getList().get(0).getPre_price().indexOf(".") + 1, bean.getList().get(0).getPre_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                SpannableString msp1 = new SpannableString("￥" + bean.getList().get(0).getPrice() + " ");
+                msp1.setSpan(new RelativeSizeSpan(0.8f), 0, bean.getList().get(0).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                msp1.setSpan(new StrikethroughSpan(), 0, bean.getList().get(0).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, bean.getList().get(0).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                viewHolder.mOnepriceTv.setText("");
+                viewHolder.mOnepriceTv.append("￥");
+                viewHolder.mOnepriceTv.append(msp);
+                viewHolder.mOnepriceTv.append("  ");
+                viewHolder.mOnepriceTv.append(msp1);
+                viewHolder.mOnepriceTv.append(" ");
+
                 viewHolder.mOnebgLl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -495,10 +506,21 @@ public class IndexFragment extends BaseFragment {
 
                 Glide(bean.getList().get(1).getImage(), viewHolder.mTwoIv);
                 viewHolder.mTwonameTv.setText(bean.getList().get(1).getTitle());
-                viewHolder.mTwopriceTv.setText("￥" + bean.getList().get(1).getPrice());
-                msp = new SpannableString(viewHolder.mTwopriceTv.getText().toString());
-                msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mTwopriceTv.getText().toString().indexOf(".") + 1, viewHolder.mTwopriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
-                viewHolder.mTwopriceTv.setText(msp);
+
+
+                msp = new SpannableString(bean.getList().get(1).getPre_price());
+                msp.setSpan(new RelativeSizeSpan(0.8f), bean.getList().get(1).getPre_price().indexOf(".") + 1, bean.getList().get(1).getPre_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                msp1 = new SpannableString("￥" + bean.getList().get(1).getPrice() + " ");
+                msp1.setSpan(new RelativeSizeSpan(0.8f), 0, bean.getList().get(1).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                msp1.setSpan(new StrikethroughSpan(), 0, bean.getList().get(1).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, bean.getList().get(1).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                viewHolder.mTwopriceTv.setText("");
+                viewHolder.mTwopriceTv.append("￥");
+                viewHolder.mTwopriceTv.append(msp);
+                viewHolder.mTwopriceTv.append("  ");
+                viewHolder.mTwopriceTv.append(msp1);
+                viewHolder.mTwopriceTv.append(" ");
+
                 viewHolder.mTwobgLl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -510,10 +532,20 @@ public class IndexFragment extends BaseFragment {
 
                 Glide(bean.getList().get(2).getImage(), viewHolder.mThreeIv);
                 viewHolder.mThreenameTv.setText(bean.getList().get(2).getTitle());
-                viewHolder.mThreepriceTv.setText("￥" + bean.getList().get(2).getPrice());
-                msp = new SpannableString(viewHolder.mThreepriceTv.getText().toString());
-                msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mThreepriceTv.getText().toString().indexOf(".") + 1, viewHolder.mThreepriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
-                viewHolder.mThreepriceTv.setText(msp);
+
+                msp = new SpannableString(bean.getList().get(2).getPre_price());
+                msp.setSpan(new RelativeSizeSpan(0.8f), bean.getList().get(2).getPre_price().indexOf(".") + 1, bean.getList().get(2).getPre_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                msp1 = new SpannableString("￥" + bean.getList().get(2).getPrice() + " ");
+                msp1.setSpan(new RelativeSizeSpan(0.8f), 0, bean.getList().get(2).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+                msp1.setSpan(new StrikethroughSpan(), 0, bean.getList().get(2).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, bean.getList().get(2).getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                viewHolder.mThreepriceTv.setText("");
+                viewHolder.mThreepriceTv.append("￥");
+                viewHolder.mThreepriceTv.append(msp);
+                viewHolder.mThreepriceTv.append("  ");
+                viewHolder.mThreepriceTv.append(msp1);
+                viewHolder.mThreepriceTv.append(" ");
+
                 viewHolder.mThreebgLl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

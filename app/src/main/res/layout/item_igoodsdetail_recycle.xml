@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
     android:id="@+id/item_hist_bg_ll"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="8dp"
@@ -20,12 +20,12 @@
         android:id="@+id/item_hist_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
-        android:maxLines="2"
+        android:ellipsize="end"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:text="江山如"
+        android:singleLine="true"
+        android:text="江山如江山如江山江山如江山如江山如江山如江山如江山如江山如江山如江山如江山如江山如江山如如江山如"
         android:textColor="#333"
         android:textSize="14dp" />
 
@@ -42,10 +42,12 @@
 
             <TextView
                 android:id="@+id/item_hist_price_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:paddingLeft="10dp"
                 android:paddingTop="15dp"
+                android:singleLine="true"
                 android:text="￥27.90"
                 android:textColor="@color/my_color"
                 android:textSize="16dp" />

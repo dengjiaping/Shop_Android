@@ -9,7 +9,9 @@ import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.text.style.StrikethroughSpan;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
@@ -131,13 +133,23 @@ public class GoodsClassActivity extends BaseActvity {
             GridViewHolder viewHolder = (GridViewHolder) o;
             final GoodsCateBean.DataBean.GoodsListBean dataBean = goodsCateBean.getData().getGoods_list().get(i);
             Glide(dataBean.getImage(), viewHolder.mIconIv);
-            viewHolder.mNameTv.setText(dataBean.getTitle());
-            viewHolder.mSubtitleTv.setText(dataBean.getSubtitled());
+            viewHolder.mNameTv.setText(dataBean.getTitle() + " " + dataBean.getSubtitled());
+            viewHolder.mSubtitleTv.setText(dataBean.getUnit());
 
-            viewHolder.mPriceTv.setText("￥" + dataBean.getPrice());
-            SpannableString msp = new SpannableString(viewHolder.mPriceTv.getText().toString());
-            msp.setSpan(new RelativeSizeSpan(0.8f), viewHolder.mPriceTv.getText().toString().indexOf(".") + 1, viewHolder.mPriceTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
-            viewHolder.mPriceTv.setText(msp);
+
+            SpannableString msp = new SpannableString(dataBean.getPre_price());
+            msp.setSpan(new RelativeSizeSpan(0.8f), dataBean.getPre_price().indexOf(".") + 1,dataBean.getPre_price().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+            SpannableString msp1 = new SpannableString("￥" + dataBean.getPrice() + " ");
+            msp1.setSpan(new RelativeSizeSpan(0.8f), 0, dataBean.getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //0.5f表示默认字体大小的一半
+            msp1.setSpan(new StrikethroughSpan(), 0, dataBean.getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            msp1.setSpan(new ForegroundColorSpan(Color.rgb(0x98, 0x98, 0x98)), 0, dataBean.getPrice().length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            viewHolder.mPriceTv.setText("");
+            viewHolder.mPriceTv.append("￥");
+            viewHolder.mPriceTv.append(msp);
+            viewHolder.mPriceTv.append("  ");
+            viewHolder.mPriceTv.append(msp1);
+            viewHolder.mPriceTv.append(" ");
+
 
             viewHolder.mBgLl.setOnClickListener(new View.OnClickListener() {
                 @Override
