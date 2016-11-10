@@ -7,6 +7,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.king.Base.KingAdapter;
+import com.king.Base.KingData;
+import com.shop.Android.Config;
 import com.shop.Android.base.BaseActvity;
 import com.shop.Android.widget.AnimNoLineRefreshListView;
 import com.shop.Android.widget.RefreshListView;
@@ -26,12 +28,18 @@ public class MineGoodsEvaluateActivity extends BaseActvity {
     private MineEvaluateAdapter mineEvaluateAdapter;
     private String id;
     private EvaluateBean evaluateBean;
-    private String type ;
+    private String type;
 
 
     @Override
     protected int loadLayout() {
         id = getIntent().getStringExtra("id");
+        kingData.registerWatcher(Config.EVALUATE, new KingData.KingCallBack() {
+            @Override
+            public void onChange() {
+                Post(ActionKey.EVALUATE_INDEXT, new OrderDetailsParam(id), EvaluateBean.class);
+            }
+        });
         return R.layout.activity_evaluate_goods;
     }
 
@@ -80,13 +88,14 @@ public class MineGoodsEvaluateActivity extends BaseActvity {
                 break;
             case ActionKey.SUBMIT_GOODS:
                 BaseBean baseBean = (BaseBean) result;
-                if (baseBean.getCode()==200){
+                if (baseBean.getCode() == 200) {
                     ToastInfo("提交成功");
-                    animFinsh();
-                }else if (baseBean.getCode()==2001){
+                    kingData.sendBroadCast(Config.EVALUATE);
+                    kingData.sendBroadCast(Config.FINISH_ORDER);
+                } else if (baseBean.getCode() == 2001) {
                     ToastInfo("请登录");
                     openActivity(LoginActivity.class);
-                }else {
+                } else {
                     ToastInfo(baseBean.getMsg());
                 }
                 break;
@@ -110,22 +119,31 @@ public class MineGoodsEvaluateActivity extends BaseActvity {
         public void padData(final int i, Object o) {
             final EvaluateViewHolder viewHolder = (EvaluateViewHolder) o;
             viewHolder.mNameTv.setText(evaluateBean.getData().get(i).getGoods_title());
-            viewHolder.mPriceTv.setText("￥"+evaluateBean.getData().get(i).getGoods_price());
+            viewHolder.mPriceTv.setText("￥" + evaluateBean.getData().get(i).getGoods_price());
             viewHolder.mContentTv.setText(evaluateBean.getData().get(i).getGoods_subtitle());
-            Glide(evaluateBean.getData().get(i).getGoods_image(),viewHolder.mImgIv);
-            viewHolder.mFeelEt.setText(evaluateBean.getData().get(i).getContent());
-            switch (Integer.valueOf(evaluateBean.getData().get(i).getType())){
-                case 1:
-                    viewHolder.mPraiseRb.setChecked(true);
-                    break;
-                case 2:
-                    viewHolder.mMiddleRb.setChecked(true);
-                    break;
-                case 3:
-                    viewHolder.mBadRb.setChecked(true);
-                    break;
+            Glide(evaluateBean.getData().get(i).getGoods_image(), viewHolder.mImgIv);
+            if (evaluateBean.getData().get(i).getType().equals("0")) {
+                viewHolder.mFeelEt.setText("说说你的感受");
+            } else {
+                switch (Integer.valueOf(evaluateBean.getData().get(i).getType())) {
+                    case 1:
+                        viewHolder.mPraiseRb.setChecked(true);
+                        break;
+                    case 2:
+                        viewHolder.mMiddleRb.setChecked(true);
+                        break;
+                    case 3:
+                        viewHolder.mBadRb.setChecked(true);
+                        break;
 
+                }
+                viewHolder.mFeelEt.setText(evaluateBean.getData().get(i).getContent());
+                viewHolder.mPraiseRb.setEnabled(false);
+                viewHolder.mMiddleRb.setEnabled(false);
+                viewHolder.mBadRb.setEnabled(false);
+                viewHolder.mFeelEt.setEnabled(false);
             }
+
 
             viewHolder.mBadRb.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -145,15 +163,21 @@ public class MineGoodsEvaluateActivity extends BaseActvity {
                     type = "1";
                 }
             });
-            if (evaluateBean.getData().get(i).getType().equals("0")){
+            if (evaluateBean.getData().get(i).getType().equals("0")) {
                 viewHolder.mSubmitTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         String content = viewHolder.mFeelEt.getText().toString().trim();
-                        Post(ActionKey.SUBMIT_GOODS,new SubmitEvaluateParam(evaluateBean.getData().get(i).getId(),type,content), BaseBean.class);
+                        if (type!=null){
+                            Post(ActionKey.SUBMIT_GOODS, new SubmitEvaluateParam(evaluateBean.getData().get(i).getId(), type, content), BaseBean.class);
+                        }else {
+                            ToastInfo("请选择评价");
+                        }
+
                     }
                 });
-            }else {
+            } else {
                 viewHolder.mSubmitTv.setBackgroundResource(R.drawable.order_btn);
                 viewHolder.mSubmitTv.setTextColor(Color(R.color.color_888));
             }

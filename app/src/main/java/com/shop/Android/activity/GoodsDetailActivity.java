@@ -60,6 +60,7 @@ import com.king.Utils.UIUtil;
 import com.king.View.gradationscroll.GradationScrollView;
 import com.king.View.refreshview.XRefreshView;
 import com.king.View.refreshview.XScrollView;
+import com.shop.Android.Config;
 import com.shop.Android.DataKey;
 import com.shop.Android.SPKey;
 import com.shop.Android.adapter.ImagePaperAdapter;
@@ -227,6 +228,7 @@ public class GoodsDetailActivity extends BaseActvity {
                     mStarIv.setImageResource(R.drawable.gray_star);
                     mCollectTv.setTextColor(Color.rgb(0x88, 0x88, 0x88));
                     ToastInfo("取消收藏成功");
+                    kingData.sendBroadCast(Config.COLLECT);
                 } else if (baseBean.getCode() == 2001) {
                     ToastInfo(baseBean.getMsg());
                     openActivity(LoginActivity.class);

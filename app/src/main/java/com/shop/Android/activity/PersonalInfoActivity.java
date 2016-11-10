@@ -63,6 +63,19 @@ public class PersonalInfoActivity extends BaseActvity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        CutActivity.setCallback(new CutActivity.OnPostFile() {
+            @Override
+            public void onPost(File file, Activity activity) {
+                poster = file;
+                GlideCircle(file.getAbsolutePath(), mHeaderIv);
+                activity.finish();
+            }
+        });
+    }
+
+    @Override
     protected void init() {
         F();
         userBean= ((UserBean) GsonUtil.Str2Bean(SPrefUtil.Function.getData(DataKey.USER,""), UserBean.class));
@@ -81,14 +94,6 @@ public class PersonalInfoActivity extends BaseActvity {
                 mBoysIv.setVisibility(View.VISIBLE);
             }
         }
-        CutActivity.setCallback(new CutActivity.OnPostFile() {
-            @Override
-            public void onPost(File file, Activity activity) {
-                activity.finish();
-                poster = file;
-                GlideCircle(file, mHeaderIv);
-            }
-        });
         setOnClicks(mNickRl, mNicknameRl, mCauseRl, mHeaderRl, mSexRl, mBoysRl, mGirlsRl, mOkRl, mGenderRl);
         mTitleRightTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +117,9 @@ public class PersonalInfoActivity extends BaseActvity {
                     SPrefUtil.Function.putData(DataKey.USER, GsonUtil.Bean2Str(userBean));
                     kingData.sendBroadCast(Config.ICON);
                     animFinsh();
+                }else  if (bean.getCode()==2001){
+                    ToastInfo("请登录");
+                    openActivity(LoginActivity.class);
                 }else {
                     ToastInfo(bean.getMsg());
                 }

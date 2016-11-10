@@ -45,6 +45,7 @@
               android:layout_height="30dp"
               android:layout_toRightOf="@+id/item_collect_photo_iv"
               android:orientation="horizontal"
+              android:visibility="gone"
               >
               <TextView
                   android:layout_width="wrap_content"

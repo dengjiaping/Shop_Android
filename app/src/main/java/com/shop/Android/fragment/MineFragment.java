@@ -55,15 +55,12 @@ public class MineFragment extends BaseFragment {
 
 
         if (userBean==null){
-            GlideCircle("http://img.firefoxchina.cn/2016/09/5/201609230915030.jpg",mIconIv);
+           mIconIv.setImageResource(R.mipmap.default_hader);
+            mNameTv.setText("e闪生活购");
         }else {
             GlideCircle(userBean.getData().getUser_info().getPoster(),mIconIv);
             mNameTv.setText(userBean.getData().getUser_info().getNick_name());
         }
-
-
-
-
         setOnClicks(mLeftIv, mIconIv,mAddressMv,mCollectMv,mContactLl,mIntegralMv,mEvaluateMv,mHelpMv,mOpinionMv,mSetMv,mShareMv);
     }
 

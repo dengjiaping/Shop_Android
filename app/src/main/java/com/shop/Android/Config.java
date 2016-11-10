@@ -15,6 +15,7 @@ public class Config {
     public static final String CANCEL_ORDER = "cancel_order";
     public static final String FINISH_ORDER = "finish_order";
     public static final String ORDER_ID = "order_id";
+    public static final String EVALUATE = "evaluate";
 
 
 

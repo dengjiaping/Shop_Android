@@ -2,6 +2,7 @@ package com.shop.Android.activity;
 
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.shop.Net.ActionKey;
 import com.shop.Net.Bean.BaseBean;
 import com.shop.Net.Bean.CollectBean;
 import com.shop.Net.Param.CancelCollectParam;
+import com.shop.Net.Param.GoodsDetail;
 import com.shop.Net.Param.Token;
 import com.shop.R;
 
@@ -45,7 +47,6 @@ public class MineCollectActivity extends BaseActvity {
     @Override
     protected void init() {
         F();
-
         Post(ActionKey.COLLECT_INDEX, new Token(), CollectBean.class);
         kingData.registerWatcher(Config.COLLECT, new KingData.KingCallBack() {
             @Override
@@ -63,6 +64,14 @@ public class MineCollectActivity extends BaseActvity {
             @Override
             public void onLoadMore() {
 
+            }
+        });
+        mListRv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                 GoodsDetail.type = "1";
+                 GoodsDetail.goods_id = collectBean.getData().get(i).getGoods_id();
+                 openActivity(GoodsDetailActivity.class);
             }
         });
 
@@ -116,7 +125,7 @@ public class MineCollectActivity extends BaseActvity {
         @Override
         public void padData(final int i, SlideItemWrapLayout slideItemWrapLayout, Object o) {
             CollectViewHolder viewHolder = (CollectViewHolder) o;
-            viewHolder.mNameTv.setText(collectBean.getData().get(i).getTitle());
+            viewHolder.mNameTv.setText(collectBean.getData().get(i).getTitle()+collectBean.getData().get(i).getSubtitled());
             viewHolder.mNumTv.setText(collectBean.getData().get(i).getSubtitled());
             Glide(collectBean.getData().get(i).getImage(), viewHolder.mPhotoIv);
 

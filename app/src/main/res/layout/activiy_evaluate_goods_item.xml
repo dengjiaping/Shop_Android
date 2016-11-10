@@ -82,10 +82,11 @@
 
             <RadioButton
                 android:id="@+id/item_evaluate_praise_rb"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:button="@null"
                 android:text="好评"
+                android:layout_weight="1"
                 android:textSize="12dp"
                 android:gravity="center"
                 android:textColor="@color/text_color"
@@ -94,10 +95,11 @@
                 android:background="@drawable/evaluate_select"/>
             <RadioButton
                 android:id="@+id/item_evaluate_middle_rb"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:button="@null"
                 android:text="中评"
+                android:layout_weight="1"
                 android:textSize="12dp"
                 android:gravity="center"
                 android:textColor="@color/text_color"
@@ -106,14 +108,16 @@
                 android:background="@drawable/evaluate_select"/>
             <RadioButton
                 android:id="@+id/item_evaluate_bad_rb"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:layout_weight="1"
                 android:button="@null"
                 android:text="差评"
                 android:textSize="12dp"
                 android:gravity="center"
                 android:textColor="@color/text_color"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_gravity="center"
                 android:background="@drawable/evaluate_select"/>
 
