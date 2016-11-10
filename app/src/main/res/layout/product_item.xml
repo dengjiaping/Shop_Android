@@ -25,10 +25,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:paddingTop="11dp"
             android:layout_toLeftOf="@+id/action"
             android:layout_toRightOf="@+id/head"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="11dp">
 
             <TextView
                 android:id="@+id/name"
@@ -60,16 +60,18 @@
                     android:layout_height="wrap_content"
                     android:text="¥"
                     android:textColor="@color/benefit_style"
-                    android:textSize="10dp" />
+                    android:textSize="10dp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/prise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
+                    android:singleLine="true"
                     android:text="78"
                     android:textColor="@color/benefit_style"
-                    android:textSize="13dp" />
+                    android:textSize="12dp" />
 
             </LinearLayout>
 

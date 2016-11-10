@@ -8,9 +8,29 @@ public class ShopProduct {
     private String id;
     private String shopName;//店名
     private String price;//单价
+
+    public String getPre_price() {
+        return pre_price;
+    }
+
+    public void setPre_price(String pre_price) {
+        this.pre_price = pre_price;
+    }
+
+    private String pre_price;//单价
     private String goods;//货物名称
     private String picture;//货物图片
     private String type;//货物类型
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    private String unit;
     private String createtime;
 
     /**

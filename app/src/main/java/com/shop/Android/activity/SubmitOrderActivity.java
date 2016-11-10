@@ -175,7 +175,7 @@ public class SubmitOrderActivity extends BaseActvity {
                             kingData.sendBroadCast("ZZREFRESHPAY");
                             animFinsh();
                             openActivity(WXPayEntryActivity.class);
-                        } else {
+                        } else if (orderInfoBean.getCode() == 405) {
                             for (int i = 0; i < orderInfoBean.getData().getFail().size(); i++) {
                                 thing.setId(orderInfoBean.getData().getFail().get(i).getId());
                                 thing.setImage(orderInfoBean.getData().getFail().get(i).getImage());
@@ -220,6 +220,8 @@ public class SubmitOrderActivity extends BaseActvity {
                             }
                             fillData();
                             ToastInfo(msg);
+                        } else {
+                            ToastInfo(orderInfoBean.getMsg());
                         }
                         break;
                     case 1:
@@ -234,7 +236,7 @@ public class SubmitOrderActivity extends BaseActvity {
                             kingData.sendBroadCast("CAR");
                             animFinsh();
                             openActivity(WXPayEntryActivity.class);
-                        } else {
+                        } else if (orderInfoBean.getCode() == 405) {
                             for (int i = 0; i < orderInfoBean.getData().getFail().size(); i++) {
                                 thing.setId(orderInfoBean.getData().getFail().get(i).getId());
                                 thing.setImage(orderInfoBean.getData().getFail().get(i).getImage());
@@ -267,6 +269,8 @@ public class SubmitOrderActivity extends BaseActvity {
                             }
                             fillData();
                             ToastInfo(msg);
+                        } else {
+                            ToastInfo(orderInfoBean.getMsg());
                         }
                         break;
                     case 2:

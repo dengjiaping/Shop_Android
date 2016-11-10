@@ -120,6 +120,7 @@ public class IndexBean extends BaseBean {
                 private String title;
                 private String image;
 
+
                 public String getType() {
                     return type;
                 }
@@ -384,6 +385,12 @@ public class IndexBean extends BaseBean {
                 private String title;
                 private String image;
                 private String price;
+                /**
+                 * pre_price : 100.00
+                 */
+
+                private String pre_price;
+
 
                 public String getId() {
                     return id;
@@ -415,6 +422,14 @@ public class IndexBean extends BaseBean {
 
                 public void setPrice(String price) {
                     this.price = price;
+                }
+
+                public String getPre_price() {
+                    return pre_price;
+                }
+
+                public void setPre_price(String pre_price) {
+                    this.pre_price = pre_price;
                 }
             }
         }

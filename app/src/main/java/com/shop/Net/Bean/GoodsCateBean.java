@@ -101,6 +101,9 @@ public class GoodsCateBean extends BaseBean {
             private String price;
             private String stock;
             private String created_time;
+            private String unit;
+            private String pre_price;
+
 
             public String getId() {
                 return id;
@@ -172,6 +175,22 @@ public class GoodsCateBean extends BaseBean {
 
             public void setCreated_time(String created_time) {
                 this.created_time = created_time;
+            }
+
+            public String getUnit() {
+                return unit;
+            }
+
+            public void setUnit(String unit) {
+                this.unit = unit;
+            }
+
+            public String getPre_price() {
+                return pre_price;
+            }
+
+            public void setPre_price(String pre_price) {
+                this.pre_price = pre_price;
             }
         }
     }

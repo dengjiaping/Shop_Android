@@ -54,6 +54,7 @@ import com.shop.R;
 import com.shop.ShopCar.Goods;
 import com.shop.ShopCar.ShopCar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -532,6 +533,8 @@ public class CarFragment extends BaseFragment {
 
                 }
             });
+            finalKeys.clear();
+            finalKeys.addAll(ShopCar.getKeys());
             ((SlideItemWrapLayout) view).getRightBackView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -542,9 +545,12 @@ public class CarFragment extends BaseFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int p) {
                             ((SlideItemWrapLayout) v.getParent()).removeAllViews();
-                            ShopCar.delete(ShopCar.getKeys().get(i - 1));
+                            ShopCar.delete(finalKeys.get(i - 1));
                             mPriceTv.setText("  ￥" + ShopCar.allPrice());
                             dialogInterface.dismiss();
+                            if (ShopCar.getKeys().size() == 0) {
+                                noData();
+                            }
                         }
                     });
                     ibuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -562,6 +568,9 @@ public class CarFragment extends BaseFragment {
             return view;
         }
     }
+
+    private ArrayList<String> finalKeys = new ArrayList<>();
+
 
     private int temp = 0;
 
