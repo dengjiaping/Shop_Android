@@ -5,13 +5,13 @@
     android:background="@color/bg"
     android:orientation="vertical">
 
-<com.shop.Android.widget.AnimNoLineRefreshListView
+<com.xiaojishop.Android.widget.AnimNoLineRefreshListView
     android:id="@+id/ft_finish_list_rv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none">
 
-</com.shop.Android.widget.AnimNoLineRefreshListView>
+</com.xiaojishop.Android.widget.AnimNoLineRefreshListView>
 
     <RelativeLayout
         android:id="@+id/ft_finish_relayout_rl"

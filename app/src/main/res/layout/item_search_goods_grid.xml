@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.shop.Android.widget.EImageView
+    <com.xiaojishop.Android.widget.EImageView
         android:id="@+id/item_hist_icon_iv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

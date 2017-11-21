@@ -48,13 +48,13 @@
 
         </LinearLayout>
 
-        <com.shop.Android.widget.AnimNoLineRefreshListView
+        <com.xiaojishop.Android.widget.AnimNoLineRefreshListView
             android:id="@+id/ay_search_al"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none">
 
-        </com.shop.Android.widget.AnimNoLineRefreshListView>
+        </com.xiaojishop.Android.widget.AnimNoLineRefreshListView>
 
     </LinearLayout>
 

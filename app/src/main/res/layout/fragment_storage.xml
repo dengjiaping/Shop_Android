@@ -18,7 +18,7 @@
             android:layout_height="20dp"
             android:background="#F9F9F9" />
 
-        <com.shop.Android.widget.AnimNoLineRefreshListView
+        <com.xiaojishop.Android.widget.AnimNoLineRefreshListView
             android:id="@+id/ft_storage_list_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

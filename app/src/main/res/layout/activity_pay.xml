@@ -110,8 +110,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/mine_pic_bg_gray"
-                    android:src="@drawable/default_image" />
+                    android:src="@drawable/logo" />
 
                 <TextView
                     android:id="@+id/ay_pay_price_tv"

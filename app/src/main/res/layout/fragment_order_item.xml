@@ -36,7 +36,7 @@
             android:textColor="@color/text_color"
             android:textSize="14dp" />
 
-        <com.shop.Android.widget.TimeTextView
+        <com.xiaojishop.Android.widget.TimeTextView
             android:id="@+id/item_order_time_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         android:layout_height="0.5dp"
         android:background="@color/color_fe"/>
 
-    <com.shop.Android.widget.NoScrollListView
+    <com.xiaojishop.Android.widget.NoScrollListView
         android:id="@+id/item_order_list_sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         android:divider="@null"
         android:listSelector="@android:color/transparent">
 
-    </com.shop.Android.widget.NoScrollListView>
+    </com.xiaojishop.Android.widget.NoScrollListView>
 
     <View
         android:layout_width="match_parent"

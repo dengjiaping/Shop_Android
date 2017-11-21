@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.shop">
+    package="com.xiaojishop">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -31,14 +31,14 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <application
-        android:name=".Android.BaseApplication"
+        android:name="com.xiaojishop.Android.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Light.NoTitleBar">
         <activity
-            android:name=".Android.activity.MainActivity"
+            android:name="com.xiaojishop.Android.activity.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,35 +47,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Android.activity.LoginActivity"
+            android:name="com.xiaojishop.Android.activity.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
 
         <activity
-            android:name=".Android.activity.EvalueActivity"
+            android:name="com.xiaojishop.Android.activity.EvalueActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Android.activity.EachOtherActivity"
+            android:name="com.xiaojishop.Android.activity.EachOtherActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".Android.activity.DisplayActivity"
+            android:name="com.xiaojishop.Android.activity.DisplayActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".Android.activity.SpecialSellActivity"
+            android:name="com.xiaojishop.Android.activity.SpecialSellActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
 
         <activity
-            android:name=".Android.activity.GoodsClassActivity"
+            android:name="com.xiaojishop.Android.activity.GoodsClassActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
@@ -103,7 +103,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Android.activity.GoodsDetailActivity"
+            android:name="com.xiaojishop.Android.activity.GoodsDetailActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
@@ -116,64 +116,49 @@
 
         </activity>
 
-        <receiver android:name=".wxapi.AppRegister">
+        <receiver android:name="com.xiaojishop.wxapi.AppRegister">
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="com.xiaojishop.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".Android.activity.ClassActivity"
+            android:name="com.xiaojishop.Android.activity.ClassActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".Android.activity.SearchActivity"
+            android:name="com.xiaojishop.Android.activity.SearchActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".Android.activity.MsgActivity"
+            android:name="com.xiaojishop.Android.activity.MsgActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
 
         <activity
-            android:name=".Android.activity.MineGoodsEvaluateActivity"
+            android:name="com.xiaojishop.Android.activity.MineGoodsEvaluateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
 
         </activity>
         <activity
-            android:name=".Android.activity.MineEvaluateActivity"
+            android:name="com.xiaojishop.Android.activity.MineEvaluateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
 
         </activity>
         <activity
-            android:name=".Android.activity.MineCollectActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent">
-
-        </activity>
-
-        <activity
-            android:name=".Android.activity.IntegralActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent">
-
-        </activity>
-        <activity
-            android:name=".Android.activity.AddressManagerActivity"
+            android:name="com.xiaojishop.Android.activity.MineCollectActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -181,7 +166,14 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.EditorAddressActivity"
+            android:name="com.xiaojishop.Android.activity.IntegralActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+        <activity
+            android:name="com.xiaojishop.Android.activity.AddressManagerActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -189,7 +181,7 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.ShareActivity"
+            android:name="com.xiaojishop.Android.activity.EditorAddressActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -197,7 +189,7 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.PersonalInfoActivity"
+            android:name="com.xiaojishop.Android.activity.ShareActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -205,7 +197,7 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.SetActivity"
+            android:name="com.xiaojishop.Android.activity.PersonalInfoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -213,7 +205,7 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.UserAgreementActivity"
+            android:name="com.xiaojishop.Android.activity.SetActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -221,7 +213,7 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.UserServiceActivity"
+            android:name="com.xiaojishop.Android.activity.UserAgreementActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -229,7 +221,7 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.SuggestionFeedbackActivity"
+            android:name="com.xiaojishop.Android.activity.UserServiceActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -237,7 +229,7 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.UserHelperActivity"
+            android:name="com.xiaojishop.Android.activity.SuggestionFeedbackActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -245,7 +237,7 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.OrderDetailsActivity"
+            android:name="com.xiaojishop.Android.activity.UserHelperActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
@@ -253,20 +245,28 @@
         </activity>
 
         <activity
-            android:name=".Android.activity.SubmitOrderActivity"
+            android:name="com.xiaojishop.Android.activity.OrderDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+        </activity>
+
+        <activity
+            android:name="com.xiaojishop.Android.activity.SubmitOrderActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent"></activity>
 
         <activity
-            android:name=".Android.activity.ChooseAddressActivity"
+            android:name="com.xiaojishop.Android.activity.ChooseAddressActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">
 
         </activity>
         <activity
-            android:name=".Android.activity.MessageContentActivity"
+            android:name="com.xiaojishop.Android.activity.MessageContentActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent">

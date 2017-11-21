@@ -14,7 +14,7 @@
         android:paddingLeft="13dp"
         android:paddingRight="8dp">
 
-        <com.shop.Android.widget.EImageView
+        <com.xiaojishop.Android.widget.EImageView
             android:id="@+id/item_index_icon_iv"
             android:layout_width="match_parent"
             android:layout_height="100dp"

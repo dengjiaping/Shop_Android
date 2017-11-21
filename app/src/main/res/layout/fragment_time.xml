@@ -76,7 +76,7 @@
 
         </LinearLayout>
 
-        <com.shop.Android.widget.AnimNoLineRefreshListView
+        <com.xiaojishop.Android.widget.AnimNoLineRefreshListView
             android:id="@+id/ft_time_list_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

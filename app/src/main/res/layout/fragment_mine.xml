@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.shop.Android.widget.MineView
+                <com.xiaojishop.Android.widget.MineView
                     android:id="@+id/ft_mine_evaluate_mv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                     app:mv_icon="@mipmap/evaluate"
                     app:mv_content="我的评价" />
 
-                <com.shop.Android.widget.MineView
+                <com.xiaojishop.Android.widget.MineView
                     android:id="@+id/ft_mine_collect_mv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                     app:mv_icon="@mipmap/collect"
                     app:mv_content="我的收藏" />
 
-                <com.shop.Android.widget.MineView
+                <com.xiaojishop.Android.widget.MineView
                     android:id="@+id/ft_mine_integral_mv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     app:mv_icon="@mipmap/grade"
                     app:mv_content="积分等级" />
 
-                <com.shop.Android.widget.MineView
+                <com.xiaojishop.Android.widget.MineView
                     android:id="@+id/ft_mine_address_mv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.shop.Android.widget.MineView
+                <com.xiaojishop.Android.widget.MineView
                     android:id="@+id/ft_mine_share_mv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                     app:mv_content="分享好友" />
 
 
-                <com.shop.Android.widget.MineView
+                <com.xiaojishop.Android.widget.MineView
                     android:id="@+id/ft_mine_help_mv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                     app:mv_icon="@mipmap/help"
                     app:mv_content="疑问帮助" />
 
-                <com.shop.Android.widget.MineView
+                <com.xiaojishop.Android.widget.MineView
                     android:id="@+id/ft_mine_opinion_mv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
                     app:mv_icon="@mipmap/opinion"
                     app:mv_content="意见反馈" />
 
-                <com.shop.Android.widget.MineView
+                <com.xiaojishop.Android.widget.MineView
                     android:id="@+id/ft_mine_set_mv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/ft_mine_phone_tv"
-            android:text="400-020-1158"
+            android:text="178-5512-8137"
             android:layout_marginLeft="10dp"
             android:textSize="14dp"
             android:textColor="#159EEE"

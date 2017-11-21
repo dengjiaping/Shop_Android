@@ -91,7 +91,7 @@
                     android:textColor="#333"
                     android:textSize="16dp" />
 
-                <com.shop.Android.widget.NoScrollListView
+                <com.xiaojishop.Android.widget.NoScrollListView
                     android:id="@+id/ay_search_history_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
 
             </LinearLayout>
 
-            <com.shop.Android.widget.NoScrollGridView
+            <com.xiaojishop.Android.widget.NoScrollGridView
                 android:id="@+id/ay_search_grid_gv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

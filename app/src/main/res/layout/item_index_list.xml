@@ -31,7 +31,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <com.shop.Android.widget.EImageView
+            <com.xiaojishop.Android.widget.EImageView
                 android:id="@+id/item_index_one_iv"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -73,7 +73,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <com.shop.Android.widget.EImageView
+            <com.xiaojishop.Android.widget.EImageView
                 android:id="@+id/item_index_two_iv"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -113,7 +113,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <com.shop.Android.widget.EImageView
+            <com.xiaojishop.Android.widget.EImageView
                 android:id="@+id/item_index_three_iv"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"

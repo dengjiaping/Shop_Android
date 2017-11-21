@@ -7,12 +7,12 @@
 
   <include layout="@layout/com_title_system"/>
 
-    <com.shop.Android.widget.AnimNoLineRefreshListView
+    <com.xiaojishop.Android.widget.AnimNoLineRefreshListView
         android:id="@+id/ay_evaluate_list_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
 
-    </com.shop.Android.widget.AnimNoLineRefreshListView>
+    </com.xiaojishop.Android.widget.AnimNoLineRefreshListView>
 
 </LinearLayout>

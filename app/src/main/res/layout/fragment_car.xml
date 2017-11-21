@@ -10,7 +10,7 @@
     <include layout="@layout/layout_no"/>
 
 
-    <com.shop.Android.widget.AnimRefreshListView
+    <com.xiaojishop.Android.widget.AnimRefreshListView
         android:id="@+id/ft_car_list_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

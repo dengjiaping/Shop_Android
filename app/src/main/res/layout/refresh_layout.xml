@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.shop.Android.widget.NoScrollListView
+            <com.xiaojishop.Android.widget.NoScrollListView
                 android:id="@+id/refresh_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

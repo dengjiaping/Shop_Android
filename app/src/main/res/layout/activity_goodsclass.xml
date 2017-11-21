@@ -32,7 +32,7 @@
                     android:background="@drawable/test_pic5" />
 
 
-                <com.shop.Android.widget.NoScrollGridView
+                <com.xiaojishop.Android.widget.NoScrollGridView
                     android:id="@+id/ay_class_grid_gv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

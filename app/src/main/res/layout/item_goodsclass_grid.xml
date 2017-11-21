@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <com.shop.Android.widget.EImageView
+    <com.xiaojishop.Android.widget.EImageView
         android:id="@+id/item_goodsclass_icon_iv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

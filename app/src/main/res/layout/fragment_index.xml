@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.shop.Android.widget.PlayViewPager
+                    <com.xiaojishop.Android.widget.PlayViewPager
                         android:id="@+id/ft_index_playview_pvp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.shop.Android.widget.MineView
+                        <com.xiaojishop.Android.widget.MineView
                             android:id="@+id/ft_index_class_mv"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
@@ -56,7 +56,7 @@
                             app:mv_icon="@drawable/index_icon1"
                             app:mv_right_line_isvisible="false" />
 
-                        <com.shop.Android.widget.MineView
+                        <com.xiaojishop.Android.widget.MineView
                             android:id="@+id/ft_index_help_mv"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
@@ -66,7 +66,7 @@
                             app:mv_icon="@drawable/index_icon2"
                             app:mv_right_line_isvisible="false" />
 
-                        <com.shop.Android.widget.MineView
+                        <com.xiaojishop.Android.widget.MineView
                             android:id="@+id/ft_index_each_mv"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
@@ -76,7 +76,7 @@
                             app:mv_icon="@drawable/index_icon3"
                             app:mv_right_line_isvisible="false" />
 
-                        <com.shop.Android.widget.MineView
+                        <com.xiaojishop.Android.widget.MineView
                             android:id="@+id/ft_index_credit_mv"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
@@ -237,7 +237,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="15dp" />
 
-                        <com.shop.Android.widget.NoScrollListView
+                        <com.xiaojishop.Android.widget.NoScrollListView
                             android:id="@+id/ft_index_list_nlv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

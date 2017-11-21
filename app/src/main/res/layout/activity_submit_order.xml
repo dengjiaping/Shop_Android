@@ -271,14 +271,14 @@
                     android:layout_height="0.5dp"
                     android:background="@color/color_fe" />
 
-                <com.shop.Android.widget.NoScrollListView
+                <com.xiaojishop.Android.widget.NoScrollListView
                     android:id="@+id/ay_submit_scroll_lv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
                     android:divider="@null">
 
-                </com.shop.Android.widget.NoScrollListView>
+                </com.xiaojishop.Android.widget.NoScrollListView>
 
                 <View
                     android:layout_width="match_parent"
